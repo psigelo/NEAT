@@ -1,0 +1,25 @@
+{
+	"Genetic_Encoding":
+	{
+		"nodes":
+		[
+			{"exist": 1,"node": 0,"type": 0},
+			{"exist": 1,"node": 1,"type": 0},
+			{"exist": 1,"node": 2,"type": 2},
+			{"exist": 1,"node": 3,"type": 1}
+		],
+		"connection_genes":
+		[
+			{"exist": 1,"innovation": 0,"in": 0,"out": 2,"weight": 0.091,"enable": 1},
+			{"exist": 1,"innovation": 1,"in": 1,"out": 2,"weight": 0.309,"enable": 1},
+			{"exist": 1,"innovation": 2,"in": 3,"out": 2,"weight": 0.116,"enable": 1},
+			{"exist": 1,"innovation": 3,"in": 1,"out": 3,"weight": 0.482,"enable": 1},
+			{"exist": 1,"innovation": 4,"in": 0,"out": 2,"weight": 0.228,"enable": 1},
+			{"exist": 0},
+			{"exist": 0},
+			{"exist": 0},
+			{"exist": 0},
+			{"exist": 1,"innovation": 9,"in": 0,"out": 3,"weight": 0.536,"enable": 1}
+		]
+	}
+}

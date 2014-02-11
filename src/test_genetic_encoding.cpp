@@ -8,8 +8,10 @@ using namespace ANN_USM;
 
 int main(){
 
-	std::srand(std::time(0)); // use current time as seed for random generator
 	Genetic_Encoding * encoding = new Genetic_Encoding();
+	char path[]="./files/enc1";
+	
+	std::srand(std::time(0)); // use current time as seed for random generator
 	
 	encoding->add_node(0,INPUT);
 	encoding->add_node(3,HIDDEN);
@@ -25,7 +27,13 @@ int main(){
 	encoding->add_connection(9,0,3,(rand()%1000)/1000.0);
 
 	cout << *encoding << endl;
-
+	
+	encoding->save(path);
+	
+	Genetic_Encoding * encoding2 = new Genetic_Encoding();
+	cout << "\n\n\n\nReading to file: \n"<< endl;
+	encoding2->load(path);
+	cout << *encoding2 << endl;
 }
 
 #endif

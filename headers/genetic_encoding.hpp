@@ -5,6 +5,10 @@
 #include <vector>
 #include <cstdlib>
 #include <iostream>
+#include <string>
+#include <sstream>
+#include <fstream>
+#include <strings.h>
 
 using namespace std;
 
@@ -17,8 +21,9 @@ namespace ANN_USM{
 
 	class connection_gene{
 		public:
-			void c_g(int innovation, int in, int out, double weight, bool enable);
+			void c_g(int innovation, int in, int out, double weight, bool enable); // fill a conection gene
 			void c_g(bool exist);
+
 			int innovation;
 			int in;
 			int out;
@@ -29,8 +34,9 @@ namespace ANN_USM{
 
 	class node_gene{
 		public:
-			void n_g(int node, gene_type type);
+			void n_g(int node, gene_type type); // fill a node gene
 			void n_g(bool exist);
+		
 			bool exist;
 			int node;
 			gene_type type;
@@ -38,13 +44,13 @@ namespace ANN_USM{
 
 	class Genetic_Encoding{
 		public:
-			//Genetic_Encoding();
 			void add_node(int node, gene_type type);
 			void add_connection(int innovation, int in, int out, double weight);
 			void change_weight(int innovation, double weight);
-			Genetic_Encoding * duplicate();
-			//friend ostream& operator<<(ostream &o, Genetic_Encoding & encoding);
-		
+			string JSON();
+			void save(char path[]); // save to a file
+			void load(char path[]); // Load an genetic_encoding from a file.
+		//private:
 			vector <connection_gene> Lconnection_genes; //List of connections genes
 			vector <node_gene> Lnode_genes;
 	};
@@ -53,6 +59,4 @@ namespace ANN_USM{
 }
 
 ostream & operator<<(ostream & o, ANN_USM::Genetic_Encoding & encoding);
-
-
 #endif

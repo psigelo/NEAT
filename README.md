@@ -1,4 +1,4 @@
 NEAT
 ====
 
-ANN NEAT in CPP
+A NEAT library for CPP

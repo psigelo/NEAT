@@ -2,6 +2,8 @@
 #define GENETIC_ENCODING_CPP
 
 #include "genetic_encoding.hpp"
+#include <stdio.h>
+#include <cstring>
 
 using namespace ANN_USM;
 
@@ -77,59 +79,158 @@ void Genetic_Encoding::add_node(int node, gene_type type){
 			cerr << "ERROR::In function add_node , you wanted to add a node gene with a node number that already exists" << endl;	
 		else
 			Lnode_genes[node].n_g(node, type);
-			
+	
 }
 
 
 ostream & operator<<(ostream & o, Genetic_Encoding & encoding) { 
-	o << "{\n\t\"Genetic_Encoding\":\n\t{\n\t\t\"nodes\":\n\t\t[\n";
-
-	int node_size(encoding.Lnode_genes.size());
-	int connection_size(encoding.Lconnection_genes.size());
-
-	for (int i = 0; i < node_size-1; ++i)
-	{
-		if(encoding.Lnode_genes[i].exist){
-			o << "\t\t\t{\"exist\": " << encoding.Lnode_genes[i].exist  << ",\"node\": " <<encoding.Lnode_genes[i].node << ",\"type\": " << encoding.Lnode_genes[i].type << "},\n";
-		}
-		else{
-			o << "\t\t\t{\"exist\": " << encoding.Lnode_genes[i].exist << "},\n";
-		}
-	}
-
-	if(encoding.Lnode_genes[node_size-1].exist)
-	{
-		o << "\t\t\t{\"exist\": " << encoding.Lnode_genes[node_size-1].exist  << ",\"node\": " <<encoding.Lnode_genes[node_size-1].node << ",\"type\": " << encoding.Lnode_genes[node_size-1].type << "}\n";
-	}
-	else{
-		o << "\t\t\t{\"exist\": " << encoding.Lnode_genes[node_size-1].exist << "}\n";
-	}
-
-
-	o << "\t\t],\n\t\t\"connection_genes\":\n\t\t[\n";
-	for (int i = 0; i < connection_size-1; ++i)
-	{
-		if(encoding.Lconnection_genes[i].exist){
-			o << "\t\t\t{\"exist\": " << encoding.Lconnection_genes[i].exist << ",\"innovation\": " << encoding.Lconnection_genes[i].innovation << ",\"in\": " << encoding.Lconnection_genes[i].in << ",\"out\": " << encoding.Lconnection_genes[i].out << ",\"weight\": " << encoding.Lconnection_genes[i].weight << ",\"enable\": " << encoding.Lconnection_genes[i].enable << "},\n";
-		}
-		else{
-			o << "\t\t\t{\"exist\": " << encoding.Lconnection_genes[i].exist << "},\n";
-		}
-	}
-
-	if(encoding.Lconnection_genes[connection_size-1].exist)
-	{
-		o << "\t\t\t{\"exist\": " << encoding.Lconnection_genes[connection_size-1].exist << ",\"innovation\": " << encoding.Lconnection_genes[connection_size-1].innovation << ",\"in\": " << encoding.Lconnection_genes[connection_size-1].in << ",\"out\": " << encoding.Lconnection_genes[connection_size-1].out << ",\"weight\": " << encoding.Lconnection_genes[connection_size-1].weight << ",\"enable\": " << encoding.Lconnection_genes[connection_size-1].enable << "}\n";
-	}
-	else
-	{
-		o << "\t\t\t{\"exist\": " << encoding.Lconnection_genes[connection_size-1].exist << "}\n";
-	}
-	
-	o << "\t\t]\n\t}\n}";
+	o << encoding.JSON();	
 	return o;
 }
 
 
+
+string Genetic_Encoding::JSON(){
+	stringstream o;
+	o << "{\n\t\"Genetic_Encoding\":\n\t{\n\t\t\"nodes\":\n\t\t[\n";
+
+	int node_size(Lnode_genes.size());
+	int connection_size(Lconnection_genes.size());
+
+	for (int i = 0; i < node_size; ++i)
+	{
+		if(Lnode_genes[i].exist)
+			o << "\t\t\t{\"exist\": " << Lnode_genes[i].exist  << ",\"node\": " <<Lnode_genes[i].node << ",\"type\": " << Lnode_genes[i].type;
+		else
+			o << "\t\t\t{\"exist\": " << Lnode_genes[i].exist ;
+		
+
+		if(i<node_size-1)
+			o <<  "},\n";
+		else
+			o <<  "}\n";
+		
+	}
+
+	o << "\t\t],\n\t\t\"connection_genes\":\n\t\t[\n";
+	for (int i = 0; i < connection_size; ++i)
+	{
+		if(Lconnection_genes[i].exist)
+			o << "\t\t\t{\"exist\": " << Lconnection_genes[i].exist << ",\"innovation\": " << Lconnection_genes[i].innovation << ",\"in\": " << Lconnection_genes[i].in << ",\"out\": " << Lconnection_genes[i].out << ",\"weight\": " << Lconnection_genes[i].weight << ",\"enable\": " << Lconnection_genes[i].enable;
+		else
+			o << "\t\t\t{\"exist\": " << Lconnection_genes[i].exist;
+		
+		if(i<connection_size-1)
+			o <<  "},\n";
+		else
+			o <<  "}\n";
+	}
+	
+	o << "\t\t]\n\t}\n}";
+	return o.str();
+}
+
+
+void Genetic_Encoding::save(char path[]){
+	ofstream file;
+	file.open (path);
+	file << JSON();
+	file.close();
+}
+
+void Genetic_Encoding::load(char path[]){
+
+	node_gene Nnew_node;
+	connection_gene Cnew_node;
+
+	Lconnection_genes.clear(); 
+	Lnode_genes.clear();
+
+	ifstream file (path);
+	file.seekg (0, file.end);
+    int length = file.tellg();
+    file.seekg (0, file.beg);
+	char buffer[length]; // In JSON format
+	file.read (buffer,length);
+	file.close();
+
+	bool exist;
+	int node;
+	int type;
+	int innovation;
+	int in;
+	int out;
+	double weight;
+	int enable;
+	int contador(0);
+	bool connection(false);
+
+	char * pch;
+	char delimiters[] = " \n\":\t{},[";
+	pch = strtok (buffer,delimiters);
+	
+	do{
+		pch = strtok (NULL, delimiters);
+		if(!(pch[0] == ']')){
+			if(connection){
+				if(!strncmp(pch, "exist",5)){
+					pch = strtok (NULL, delimiters);
+					exist = atoi(pch);
+					if(exist){
+						pch = strtok (NULL, delimiters);
+						pch = strtok (NULL, delimiters);
+						innovation = atoi(pch);
+						pch = strtok (NULL, delimiters);
+						pch = strtok (NULL, delimiters);
+						in = atoi(pch);
+						pch = strtok (NULL, delimiters);
+						pch = strtok (NULL, delimiters);
+						out = atoi(pch);
+						pch = strtok (NULL, delimiters);
+						pch = strtok (NULL, delimiters);
+						weight = (double)atof(pch);
+						pch = strtok (NULL, delimiters);
+						pch = strtok (NULL, delimiters);
+						enable = atoi(pch);
+						Cnew_node.c_g(innovation, in, out, weight, (bool)enable);
+						Lconnection_genes.push_back(Cnew_node);
+					}
+					else{
+						Cnew_node.c_g(false);
+						Lconnection_genes.push_back(Cnew_node);
+					}
+				} 
+			}
+			else{
+				if(!strncmp(pch, "exist",5)){
+					pch = strtok (NULL, delimiters);
+					exist = atoi(pch);
+					if(exist){
+						pch = strtok (NULL, delimiters);
+						pch = strtok (NULL, delimiters);
+						node = atoi(pch);
+						pch = strtok (NULL, delimiters);
+						pch = strtok (NULL, delimiters);
+						type = atoi(pch);
+						Nnew_node.n_g(node, (gene_type) type);
+						Lnode_genes.push_back(Nnew_node);
+					}
+					else{
+						Nnew_node.n_g(false);
+						Lnode_genes.push_back(Nnew_node);
+					}
+				} 
+			}
+		}
+		else{
+			contador=contador+1;
+			connection = true;
+			if(contador==2){
+				break;
+			}
+		}
+	cout << pch  << "\n";
+	}while (pch != NULL);
+}
 
 #endif

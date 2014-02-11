@@ -6,13 +6,13 @@ CFLAGS = -g -Wall -I./headers -I./objects -I./src
 
 
 neat: NEAT.o 
-	$(CC) $(CFLAGS) $(LIBS) -larmadillo example1.o NEAT.o  -o $(EXECUTABLE)
+	$(CC) $(CFLAGS) $(LIBS) example1.o NEAT.o  -o $(EXECUTABLE)
 
 test_genetic_encoding: genetic_encoding.o test_genetic_encoding.cpp 
-	$(CC) $(CFLAGS)  $^ -o $@
+	$(CC) $(CFLAGS)  ./src/test_genetic_encoding.cpp ./objects/genetic_encoding.o -o ./executables/$@
 
-NEAT.o: NEAT.cpp NEAT.hpp
-	$(CC) $(CFLAGS) -c NEAT.cpp -o ./objects/NEAT.o
+NEAT.o: NEAT.cpp genetic_encoding.o
+	$(CC) $(CFLAGS) -c ./src/NEAT.cpp ./objects/genetic_encoding.o -o ./objects/NEAT.o
 
 example1.o: example1.cpp example1.hpp 
 	$(CC) $(CFLAGS) -c example1.cpp -o ./objects/example1.o	
@@ -20,6 +20,5 @@ example1.o: example1.cpp example1.hpp
 genetic_encoding.o: genetic_encoding.cpp 
 	$(CC) $(CFLAGS) -c $^ -o ./objects/genetic_encoding.o
 	
-
 clean:
-	rm -f ./objects/*.o $(EXECUTABLE)
+	rm -f ./objects/*.o ./executables/$(EXECUTABLE)
