@@ -2,7 +2,7 @@
 #define NEAT_HPP
 
 #include "genetic_encoding.hpp"
-
+#include <cmath>
 namespace ANN_USM{
 
 	class Niche{
@@ -22,21 +22,22 @@ namespace ANN_USM{
 			vector <int> current_niches;
 			Genetic_Encoding * best_organism;
 
-			vector <int> innovation_to_node;
 			vector < vector<int> > historical_nodes;
 			vector< vector<int> > historical_innovation;
 
 			Genetic_Encoding mutation_node(Genetic_Encoding organism);
 			Genetic_Encoding mutation_create_new_node(Genetic_Encoding organism);
 			Genetic_Encoding mutation_connection(Genetic_Encoding organism);
+			Genetic_Encoding mutation_change_weight(Genetic_Encoding organism);
 
 			int verification_of_historical_node(connection_gene);
 			int last_innovation;
 			int last_node;
 
-			int node_innovation_verificator(int innovation);
-			int innovation_verificator(int in, int out);
-			void add_node_to_historical_nodes(int in, int out, int node);
+
+
+			int obtain_historical_node(int initial_in, int initial_out);
+			int obtain_innovation(int in, int out);
 	};
 }
 
