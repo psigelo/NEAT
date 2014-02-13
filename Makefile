@@ -5,11 +5,11 @@ CFLAGS = -g -Wall -I./headers -I./objects -I./src
 
 
 
-neat: NEAT.o 
-	$(CC) $(CFLAGS) $(LIBS) example1.o NEAT.o  -o $(EXECUTABLE)
-
 test_genetic_encoding: genetic_encoding.o test_genetic_encoding.cpp 
 	$(CC) $(CFLAGS)  ./src/test_genetic_encoding.cpp ./objects/genetic_encoding.o -o ./executables/$@
+
+test_NEAT: test_NEAT.cpp NEAT.o  genetic_encoding.o
+	$(CC) $(CFLAGS)  ./src/test_NEAT.cpp ./objects/NEAT.o ./objects/genetic_encoding.o -o ./executables/NEAT_test
 
 NEAT.o: NEAT.cpp genetic_encoding.o
 	$(CC) $(CFLAGS) -c ./src/NEAT.cpp ./objects/genetic_encoding.o -o ./objects/NEAT.o

@@ -31,7 +31,7 @@ int main(){
 	encoding->save(path);
 	
 	Genetic_Encoding * encoding2 = new Genetic_Encoding();
-	cout << "\n\n\n\nReading to file: \n"<< endl;
+	cout << "\n\n\n\nReading fromm file in ./files/enc1: \n"<< endl;
 	encoding2->load(path);
 	cout << *encoding2 << endl;
 }

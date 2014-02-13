@@ -229,7 +229,6 @@ void Genetic_Encoding::load(char path[]){
 				break;
 			}
 		}
-	cout << pch  << "\n";
 	}while (pch != NULL);
 }
 
