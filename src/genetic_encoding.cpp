@@ -32,7 +32,6 @@ void node_gene::n_g(bool exist){
 
 
 void Genetic_Encoding::add_connection(int innovation, int in, int out, double weight){
-	//connection_gene * new_connection = new connection_gene(int innovation, int in, int out, double weight);
 	int list_size(Lconnection_genes.size());
 	if(innovation >= list_size)
 	{
@@ -56,6 +55,29 @@ void Genetic_Encoding::add_connection(int innovation, int in, int out, double we
 			Lconnection_genes[innovation].c_g(innovation,in,out,weight,true);
 }
 
+void Genetic_Encoding::add_connection(connection_gene conn){
+	int list_size(Lconnection_genes.size());
+	if(conn.innovation >= list_size)
+	{
+		connection_gene missing_connection_gene;
+		connection_gene new_connection;
+
+		missing_connection_gene.c_g(false); // conection that not exist in this genoma
+		new_connection.c_g(conn.innovation,conn.in,conn.out,conn.weight, conn.enable);
+
+		for (int i = 0; i < conn.innovation-list_size; ++i)
+		{
+			Lconnection_genes.push_back(missing_connection_gene);
+		}
+		Lconnection_genes.push_back(new_connection);
+	}
+
+	else 
+		if(Lconnection_genes[conn.innovation].exist)
+			cerr << "ERROR::In function add_connection, you wanted to add a connection gene with an innovation that already exists" << endl;	
+		else
+			Lconnection_genes[conn.innovation].c_g(conn.innovation,conn.in,conn.out,conn.weight,conn.enable);
+}
 
 
 void Genetic_Encoding::add_node(int node, gene_type type){
@@ -79,9 +101,30 @@ void Genetic_Encoding::add_node(int node, gene_type type){
 			cerr << "ERROR::In function add_node , you wanted to add a node gene with a node number that already exists" << endl;	
 		else
 			Lnode_genes[node].n_g(node, type);
-	
 }
 
+void Genetic_Encoding::add_node(node_gene node){
+	int list_size(Lnode_genes.size());
+	if(node.node >= list_size)
+	{
+		node_gene missing_node_gene;
+		node_gene new_node;
+
+		missing_node_gene.n_g(false);
+		new_node.n_g(node.node, node.type);
+
+		for (int i = 0; i < node.node - list_size; ++i)
+		{
+			Lnode_genes.push_back(missing_node_gene);
+		}
+		Lnode_genes.push_back(new_node);
+	}
+	else
+		if(Lnode_genes[node.node].exist)
+			cerr << "ERROR::In function add_node , you wanted to add a node gene with a node number that already exists" << endl;	
+		else
+			Lnode_genes[node.node].n_g(node.node, node.type);
+}
 
 ostream & operator<<(ostream & o, Genetic_Encoding & encoding) { 
 	o << encoding.JSON();	

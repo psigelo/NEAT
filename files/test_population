@@ -1,0 +1,2400 @@
+{
+	"Genetic_Encoding":
+	{
+		"nodes":
+		[
+			{"exist": 1,"node": 0,"type": 0},
+			{"exist": 1,"node": 1,"type": 0},
+			{"exist": 1,"node": 2,"type": 2}
+		],
+		"connection_genes":
+		[
+			{"exist": 1,"innovation": 0,"in": 0,"out": 2,"weight": 0.8766,"enable": 1},
+			{"exist": 1,"innovation": 1,"in": 1,"out": 2,"weight": -0.8228,"enable": 1}
+		]
+	}
+}
+{
+	"Genetic_Encoding":
+	{
+		"nodes":
+		[
+			{"exist": 1,"node": 0,"type": 0},
+			{"exist": 1,"node": 1,"type": 0},
+			{"exist": 1,"node": 2,"type": 2}
+		],
+		"connection_genes":
+		[
+			{"exist": 1,"innovation": 0,"in": 0,"out": 2,"weight": -0.4446,"enable": 1},
+			{"exist": 1,"innovation": 1,"in": 1,"out": 2,"weight": 0.383,"enable": 1}
+		]
+	}
+}
+{
+	"Genetic_Encoding":
+	{
+		"nodes":
+		[
+			{"exist": 1,"node": 0,"type": 0},
+			{"exist": 1,"node": 1,"type": 0},
+			{"exist": 1,"node": 2,"type": 2}
+		],
+		"connection_genes":
+		[
+			{"exist": 1,"innovation": 0,"in": 0,"out": 2,"weight": 0.5586,"enable": 1},
+			{"exist": 1,"innovation": 1,"in": 1,"out": 2,"weight": 0.667,"enable": 1}
+		]
+	}
+}
+{
+	"Genetic_Encoding":
+	{
+		"nodes":
+		[
+			{"exist": 1,"node": 0,"type": 0},
+			{"exist": 1,"node": 1,"type": 0},
+			{"exist": 1,"node": 2,"type": 2}
+		],
+		"connection_genes":
+		[
+			{"exist": 1,"innovation": 0,"in": 0,"out": 2,"weight": 0.0772,"enable": 1},
+			{"exist": 1,"innovation": 1,"in": 1,"out": 2,"weight": -0.9016,"enable": 1}
+		]
+	}
+}
+{
+	"Genetic_Encoding":
+	{
+		"nodes":
+		[
+			{"exist": 1,"node": 0,"type": 0},
+			{"exist": 1,"node": 1,"type": 0},
+			{"exist": 1,"node": 2,"type": 2}
+		],
+		"connection_genes":
+		[
+			{"exist": 1,"innovation": 0,"in": 0,"out": 2,"weight": 0.3298,"enable": 1},
+			{"exist": 1,"innovation": 1,"in": 1,"out": 2,"weight": -0.7158,"enable": 1}
+		]
+	}
+}
+{
+	"Genetic_Encoding":
+	{
+		"nodes":
+		[
+			{"exist": 1,"node": 0,"type": 0},
+			{"exist": 1,"node": 1,"type": 0},
+			{"exist": 1,"node": 2,"type": 2}
+		],
+		"connection_genes":
+		[
+			{"exist": 1,"innovation": 0,"in": 0,"out": 2,"weight": -0.5276,"enable": 1},
+			{"exist": 1,"innovation": 1,"in": 1,"out": 2,"weight": -0.9946,"enable": 1}
+		]
+	}
+}
+{
+	"Genetic_Encoding":
+	{
+		"nodes":
+		[
+			{"exist": 1,"node": 0,"type": 0},
+			{"exist": 1,"node": 1,"type": 0},
+			{"exist": 1,"node": 2,"type": 2}
+		],
+		"connection_genes":
+		[
+			{"exist": 1,"innovation": 0,"in": 0,"out": 2,"weight": 0.738,"enable": 1},
+			{"exist": 1,"innovation": 1,"in": 1,"out": 2,"weight": -0.9882,"enable": 1}
+		]
+	}
+}
+{
+	"Genetic_Encoding":
+	{
+		"nodes":
+		[
+			{"exist": 1,"node": 0,"type": 0},
+			{"exist": 1,"node": 1,"type": 0},
+			{"exist": 1,"node": 2,"type": 2}
+		],
+		"connection_genes":
+		[
+			{"exist": 1,"innovation": 0,"in": 0,"out": 2,"weight": 0.5526,"enable": 1},
+			{"exist": 1,"innovation": 1,"in": 1,"out": 2,"weight": -0.2148,"enable": 1}
+		]
+	}
+}
+{
+	"Genetic_Encoding":
+	{
+		"nodes":
+		[
+			{"exist": 1,"node": 0,"type": 0},
+			{"exist": 1,"node": 1,"type": 0},
+			{"exist": 1,"node": 2,"type": 2}
+		],
+		"connection_genes":
+		[
+			{"exist": 1,"innovation": 0,"in": 0,"out": 2,"weight": -0.892,"enable": 1},
+			{"exist": 1,"innovation": 1,"in": 1,"out": 2,"weight": -0.3148,"enable": 1}
+		]
+	}
+}
+{
+	"Genetic_Encoding":
+	{
+		"nodes":
+		[
+			{"exist": 1,"node": 0,"type": 0},
+			{"exist": 1,"node": 1,"type": 0},
+			{"exist": 1,"node": 2,"type": 2}
+		],
+		"connection_genes":
+		[
+			{"exist": 1,"innovation": 0,"in": 0,"out": 2,"weight": 0.8344,"enable": 1},
+			{"exist": 1,"innovation": 1,"in": 1,"out": 2,"weight": 0.1472,"enable": 1}
+		]
+	}
+}
+{
+	"Genetic_Encoding":
+	{
+		"nodes":
+		[
+			{"exist": 1,"node": 0,"type": 0},
+			{"exist": 1,"node": 1,"type": 0},
+			{"exist": 1,"node": 2,"type": 2}
+		],
+		"connection_genes":
+		[
+			{"exist": 1,"innovation": 0,"in": 0,"out": 2,"weight": 0.0422,"enable": 1},
+			{"exist": 1,"innovation": 1,"in": 1,"out": 2,"weight": 0.0736,"enable": 1}
+		]
+	}
+}
+{
+	"Genetic_Encoding":
+	{
+		"nodes":
+		[
+			{"exist": 1,"node": 0,"type": 0},
+			{"exist": 1,"node": 1,"type": 0},
+			{"exist": 1,"node": 2,"type": 2}
+		],
+		"connection_genes":
+		[
+			{"exist": 1,"innovation": 0,"in": 0,"out": 2,"weight": -0.4866,"enable": 1},
+			{"exist": 1,"innovation": 1,"in": 1,"out": 2,"weight": 0.2858,"enable": 1}
+		]
+	}
+}
+{
+	"Genetic_Encoding":
+	{
+		"nodes":
+		[
+			{"exist": 1,"node": 0,"type": 0},
+			{"exist": 1,"node": 1,"type": 0},
+			{"exist": 1,"node": 2,"type": 2}
+		],
+		"connection_genes":
+		[
+			{"exist": 1,"innovation": 0,"in": 0,"out": 2,"weight": 0.1564,"enable": 1},
+			{"exist": 1,"innovation": 1,"in": 1,"out": 2,"weight": -0.694,"enable": 1}
+		]
+	}
+}
+{
+	"Genetic_Encoding":
+	{
+		"nodes":
+		[
+			{"exist": 1,"node": 0,"type": 0},
+			{"exist": 1,"node": 1,"type": 0},
+			{"exist": 1,"node": 2,"type": 2}
+		],
+		"connection_genes":
+		[
+			{"exist": 1,"innovation": 0,"in": 0,"out": 2,"weight": -0.4276,"enable": 1},
+			{"exist": 1,"innovation": 1,"in": 1,"out": 2,"weight": 0.0246,"enable": 1}
+		]
+	}
+}
+{
+	"Genetic_Encoding":
+	{
+		"nodes":
+		[
+			{"exist": 1,"node": 0,"type": 0},
+			{"exist": 1,"node": 1,"type": 0},
+			{"exist": 1,"node": 2,"type": 2}
+		],
+		"connection_genes":
+		[
+			{"exist": 1,"innovation": 0,"in": 0,"out": 2,"weight": -0.1866,"enable": 1},
+			{"exist": 1,"innovation": 1,"in": 1,"out": 2,"weight": -0.373,"enable": 1}
+		]
+	}
+}
+{
+	"Genetic_Encoding":
+	{
+		"nodes":
+		[
+			{"exist": 1,"node": 0,"type": 0},
+			{"exist": 1,"node": 1,"type": 0},
+			{"exist": 1,"node": 2,"type": 2}
+		],
+		"connection_genes":
+		[
+			{"exist": 1,"innovation": 0,"in": 0,"out": 2,"weight": -0.2142,"enable": 1},
+			{"exist": 1,"innovation": 1,"in": 1,"out": 2,"weight": 0.9604,"enable": 1}
+		]
+	}
+}
+{
+	"Genetic_Encoding":
+	{
+		"nodes":
+		[
+			{"exist": 1,"node": 0,"type": 0},
+			{"exist": 1,"node": 1,"type": 0},
+			{"exist": 1,"node": 2,"type": 2}
+		],
+		"connection_genes":
+		[
+			{"exist": 1,"innovation": 0,"in": 0,"out": 2,"weight": -0.1956,"enable": 1},
+			{"exist": 1,"innovation": 1,"in": 1,"out": 2,"weight": -0.3884,"enable": 1}
+		]
+	}
+}
+{
+	"Genetic_Encoding":
+	{
+		"nodes":
+		[
+			{"exist": 1,"node": 0,"type": 0},
+			{"exist": 1,"node": 1,"type": 0},
+			{"exist": 1,"node": 2,"type": 2}
+		],
+		"connection_genes":
+		[
+			{"exist": 1,"innovation": 0,"in": 0,"out": 2,"weight": -0.3862,"enable": 1},
+			{"exist": 1,"innovation": 1,"in": 1,"out": 2,"weight": 0.6334,"enable": 1}
+		]
+	}
+}
+{
+	"Genetic_Encoding":
+	{
+		"nodes":
+		[
+			{"exist": 1,"node": 0,"type": 0},
+			{"exist": 1,"node": 1,"type": 0},
+			{"exist": 1,"node": 2,"type": 2}
+		],
+		"connection_genes":
+		[
+			{"exist": 1,"innovation": 0,"in": 0,"out": 2,"weight": -0.7214,"enable": 1},
+			{"exist": 1,"innovation": 1,"in": 1,"out": 2,"weight": 0.6912,"enable": 1}
+		]
+	}
+}
+{
+	"Genetic_Encoding":
+	{
+		"nodes":
+		[
+			{"exist": 1,"node": 0,"type": 0},
+			{"exist": 1,"node": 1,"type": 0},
+			{"exist": 1,"node": 2,"type": 2}
+		],
+		"connection_genes":
+		[
+			{"exist": 1,"innovation": 0,"in": 0,"out": 2,"weight": 0.0022,"enable": 1},
+			{"exist": 1,"innovation": 1,"in": 1,"out": 2,"weight": 0.6084,"enable": 1}
+		]
+	}
+}
+{
+	"Genetic_Encoding":
+	{
+		"nodes":
+		[
+			{"exist": 1,"node": 0,"type": 0},
+			{"exist": 1,"node": 1,"type": 0},
+			{"exist": 1,"node": 2,"type": 2}
+		],
+		"connection_genes":
+		[
+			{"exist": 1,"innovation": 0,"in": 0,"out": 2,"weight": 0.2458,"enable": 1},
+			{"exist": 1,"innovation": 1,"in": 1,"out": 2,"weight": 0.4746,"enable": 1}
+		]
+	}
+}
+{
+	"Genetic_Encoding":
+	{
+		"nodes":
+		[
+			{"exist": 1,"node": 0,"type": 0},
+			{"exist": 1,"node": 1,"type": 0},
+			{"exist": 1,"node": 2,"type": 2}
+		],
+		"connection_genes":
+		[
+			{"exist": 1,"innovation": 0,"in": 0,"out": 2,"weight": -0.1158,"enable": 1},
+			{"exist": 1,"innovation": 1,"in": 1,"out": 2,"weight": -0.0162,"enable": 1}
+		]
+	}
+}
+{
+	"Genetic_Encoding":
+	{
+		"nodes":
+		[
+			{"exist": 1,"node": 0,"type": 0},
+			{"exist": 1,"node": 1,"type": 0},
+			{"exist": 1,"node": 2,"type": 2}
+		],
+		"connection_genes":
+		[
+			{"exist": 1,"innovation": 0,"in": 0,"out": 2,"weight": -0.2432,"enable": 1},
+			{"exist": 1,"innovation": 1,"in": 1,"out": 2,"weight": 0.7074,"enable": 1}
+		]
+	}
+}
+{
+	"Genetic_Encoding":
+	{
+		"nodes":
+		[
+			{"exist": 1,"node": 0,"type": 0},
+			{"exist": 1,"node": 1,"type": 0},
+			{"exist": 1,"node": 2,"type": 2}
+		],
+		"connection_genes":
+		[
+			{"exist": 1,"innovation": 0,"in": 0,"out": 2,"weight": 0.0396,"enable": 1},
+			{"exist": 1,"innovation": 1,"in": 1,"out": 2,"weight": -0.1352,"enable": 1}
+		]
+	}
+}
+{
+	"Genetic_Encoding":
+	{
+		"nodes":
+		[
+			{"exist": 1,"node": 0,"type": 0},
+			{"exist": 1,"node": 1,"type": 0},
+			{"exist": 1,"node": 2,"type": 2}
+		],
+		"connection_genes":
+		[
+			{"exist": 1,"innovation": 0,"in": 0,"out": 2,"weight": 0.663,"enable": 1},
+			{"exist": 1,"innovation": 1,"in": 1,"out": 2,"weight": -0.126,"enable": 1}
+		]
+	}
+}
+{
+	"Genetic_Encoding":
+	{
+		"nodes":
+		[
+			{"exist": 1,"node": 0,"type": 0},
+			{"exist": 1,"node": 1,"type": 0},
+			{"exist": 1,"node": 2,"type": 2}
+		],
+		"connection_genes":
+		[
+			{"exist": 1,"innovation": 0,"in": 0,"out": 2,"weight": 0.2826,"enable": 1},
+			{"exist": 1,"innovation": 1,"in": 1,"out": 2,"weight": -0.2948,"enable": 1}
+		]
+	}
+}
+{
+	"Genetic_Encoding":
+	{
+		"nodes":
+		[
+			{"exist": 1,"node": 0,"type": 0},
+			{"exist": 1,"node": 1,"type": 0},
+			{"exist": 1,"node": 2,"type": 2}
+		],
+		"connection_genes":
+		[
+			{"exist": 1,"innovation": 0,"in": 0,"out": 2,"weight": 0.2182,"enable": 1},
+			{"exist": 1,"innovation": 1,"in": 1,"out": 2,"weight": 0.796,"enable": 1}
+		]
+	}
+}
+{
+	"Genetic_Encoding":
+	{
+		"nodes":
+		[
+			{"exist": 1,"node": 0,"type": 0},
+			{"exist": 1,"node": 1,"type": 0},
+			{"exist": 1,"node": 2,"type": 2}
+		],
+		"connection_genes":
+		[
+			{"exist": 1,"innovation": 0,"in": 0,"out": 2,"weight": 0.9912,"enable": 1},
+			{"exist": 1,"innovation": 1,"in": 1,"out": 2,"weight": -0.6254,"enable": 1}
+		]
+	}
+}
+{
+	"Genetic_Encoding":
+	{
+		"nodes":
+		[
+			{"exist": 1,"node": 0,"type": 0},
+			{"exist": 1,"node": 1,"type": 0},
+			{"exist": 1,"node": 2,"type": 2}
+		],
+		"connection_genes":
+		[
+			{"exist": 1,"innovation": 0,"in": 0,"out": 2,"weight": 0.3724,"enable": 1},
+			{"exist": 1,"innovation": 1,"in": 1,"out": 2,"weight": 0.834,"enable": 1}
+		]
+	}
+}
+{
+	"Genetic_Encoding":
+	{
+		"nodes":
+		[
+			{"exist": 1,"node": 0,"type": 0},
+			{"exist": 1,"node": 1,"type": 0},
+			{"exist": 1,"node": 2,"type": 2}
+		],
+		"connection_genes":
+		[
+			{"exist": 1,"innovation": 0,"in": 0,"out": 2,"weight": 0.3992,"enable": 1},
+			{"exist": 1,"innovation": 1,"in": 1,"out": 2,"weight": 0.4562,"enable": 1}
+		]
+	}
+}
+{
+	"Genetic_Encoding":
+	{
+		"nodes":
+		[
+			{"exist": 1,"node": 0,"type": 0},
+			{"exist": 1,"node": 1,"type": 0},
+			{"exist": 1,"node": 2,"type": 2}
+		],
+		"connection_genes":
+		[
+			{"exist": 1,"innovation": 0,"in": 0,"out": 2,"weight": -0.539,"enable": 1},
+			{"exist": 1,"innovation": 1,"in": 1,"out": 2,"weight": -0.815,"enable": 1}
+		]
+	}
+}
+{
+	"Genetic_Encoding":
+	{
+		"nodes":
+		[
+			{"exist": 1,"node": 0,"type": 0},
+			{"exist": 1,"node": 1,"type": 0},
+			{"exist": 1,"node": 2,"type": 2}
+		],
+		"connection_genes":
+		[
+			{"exist": 1,"innovation": 0,"in": 0,"out": 2,"weight": 0.4168,"enable": 1},
+			{"exist": 1,"innovation": 1,"in": 1,"out": 2,"weight": 0.2654,"enable": 1}
+		]
+	}
+}
+{
+	"Genetic_Encoding":
+	{
+		"nodes":
+		[
+			{"exist": 1,"node": 0,"type": 0},
+			{"exist": 1,"node": 1,"type": 0},
+			{"exist": 1,"node": 2,"type": 2}
+		],
+		"connection_genes":
+		[
+			{"exist": 1,"innovation": 0,"in": 0,"out": 2,"weight": -0.9328,"enable": 1},
+			{"exist": 1,"innovation": 1,"in": 1,"out": 2,"weight": 0.301,"enable": 1}
+		]
+	}
+}
+{
+	"Genetic_Encoding":
+	{
+		"nodes":
+		[
+			{"exist": 1,"node": 0,"type": 0},
+			{"exist": 1,"node": 1,"type": 0},
+			{"exist": 1,"node": 2,"type": 2}
+		],
+		"connection_genes":
+		[
+			{"exist": 1,"innovation": 0,"in": 0,"out": 2,"weight": -0.8308,"enable": 1},
+			{"exist": 1,"innovation": 1,"in": 1,"out": 2,"weight": -0.6542,"enable": 1}
+		]
+	}
+}
+{
+	"Genetic_Encoding":
+	{
+		"nodes":
+		[
+			{"exist": 1,"node": 0,"type": 0},
+			{"exist": 1,"node": 1,"type": 0},
+			{"exist": 1,"node": 2,"type": 2}
+		],
+		"connection_genes":
+		[
+			{"exist": 1,"innovation": 0,"in": 0,"out": 2,"weight": -0.7374,"enable": 1},
+			{"exist": 1,"innovation": 1,"in": 1,"out": 2,"weight": 0.1714,"enable": 1}
+		]
+	}
+}
+{
+	"Genetic_Encoding":
+	{
+		"nodes":
+		[
+			{"exist": 1,"node": 0,"type": 0},
+			{"exist": 1,"node": 1,"type": 0},
+			{"exist": 1,"node": 2,"type": 2}
+		],
+		"connection_genes":
+		[
+			{"exist": 1,"innovation": 0,"in": 0,"out": 2,"weight": 0.2248,"enable": 1},
+			{"exist": 1,"innovation": 1,"in": 1,"out": 2,"weight": -0.221,"enable": 1}
+		]
+	}
+}
+{
+	"Genetic_Encoding":
+	{
+		"nodes":
+		[
+			{"exist": 1,"node": 0,"type": 0},
+			{"exist": 1,"node": 1,"type": 0},
+			{"exist": 1,"node": 2,"type": 2}
+		],
+		"connection_genes":
+		[
+			{"exist": 1,"innovation": 0,"in": 0,"out": 2,"weight": 0.9164,"enable": 1},
+			{"exist": 1,"innovation": 1,"in": 1,"out": 2,"weight": -0.891,"enable": 1}
+		]
+	}
+}
+{
+	"Genetic_Encoding":
+	{
+		"nodes":
+		[
+			{"exist": 1,"node": 0,"type": 0},
+			{"exist": 1,"node": 1,"type": 0},
+			{"exist": 1,"node": 2,"type": 2}
+		],
+		"connection_genes":
+		[
+			{"exist": 1,"innovation": 0,"in": 0,"out": 2,"weight": 0.7628,"enable": 1},
+			{"exist": 1,"innovation": 1,"in": 1,"out": 2,"weight": -0.3266,"enable": 1}
+		]
+	}
+}
+{
+	"Genetic_Encoding":
+	{
+		"nodes":
+		[
+			{"exist": 1,"node": 0,"type": 0},
+			{"exist": 1,"node": 1,"type": 0},
+			{"exist": 1,"node": 2,"type": 2}
+		],
+		"connection_genes":
+		[
+			{"exist": 1,"innovation": 0,"in": 0,"out": 2,"weight": 0.0868,"enable": 1},
+			{"exist": 1,"innovation": 1,"in": 1,"out": 2,"weight": -0.9272,"enable": 1}
+		]
+	}
+}
+{
+	"Genetic_Encoding":
+	{
+		"nodes":
+		[
+			{"exist": 1,"node": 0,"type": 0},
+			{"exist": 1,"node": 1,"type": 0},
+			{"exist": 1,"node": 2,"type": 2}
+		],
+		"connection_genes":
+		[
+			{"exist": 1,"innovation": 0,"in": 0,"out": 2,"weight": -0.1914,"enable": 1},
+			{"exist": 1,"innovation": 1,"in": 1,"out": 2,"weight": -0.25,"enable": 1}
+		]
+	}
+}
+{
+	"Genetic_Encoding":
+	{
+		"nodes":
+		[
+			{"exist": 1,"node": 0,"type": 0},
+			{"exist": 1,"node": 1,"type": 0},
+			{"exist": 1,"node": 2,"type": 2}
+		],
+		"connection_genes":
+		[
+			{"exist": 1,"innovation": 0,"in": 0,"out": 2,"weight": -0.7826,"enable": 1},
+			{"exist": 1,"innovation": 1,"in": 1,"out": 2,"weight": 0.3616,"enable": 1}
+		]
+	}
+}
+{
+	"Genetic_Encoding":
+	{
+		"nodes":
+		[
+			{"exist": 1,"node": 0,"type": 0},
+			{"exist": 1,"node": 1,"type": 0},
+			{"exist": 1,"node": 2,"type": 2}
+		],
+		"connection_genes":
+		[
+			{"exist": 1,"innovation": 0,"in": 0,"out": 2,"weight": 0.4552,"enable": 1},
+			{"exist": 1,"innovation": 1,"in": 1,"out": 2,"weight": 0.4356,"enable": 1}
+		]
+	}
+}
+{
+	"Genetic_Encoding":
+	{
+		"nodes":
+		[
+			{"exist": 1,"node": 0,"type": 0},
+			{"exist": 1,"node": 1,"type": 0},
+			{"exist": 1,"node": 2,"type": 2}
+		],
+		"connection_genes":
+		[
+			{"exist": 1,"innovation": 0,"in": 0,"out": 2,"weight": 0.1576,"enable": 1},
+			{"exist": 1,"innovation": 1,"in": 1,"out": 2,"weight": -0.2832,"enable": 1}
+		]
+	}
+}
+{
+	"Genetic_Encoding":
+	{
+		"nodes":
+		[
+			{"exist": 1,"node": 0,"type": 0},
+			{"exist": 1,"node": 1,"type": 0},
+			{"exist": 1,"node": 2,"type": 2}
+		],
+		"connection_genes":
+		[
+			{"exist": 1,"innovation": 0,"in": 0,"out": 2,"weight": 0.0806,"enable": 1},
+			{"exist": 1,"innovation": 1,"in": 1,"out": 2,"weight": -0.4698,"enable": 1}
+		]
+	}
+}
+{
+	"Genetic_Encoding":
+	{
+		"nodes":
+		[
+			{"exist": 1,"node": 0,"type": 0},
+			{"exist": 1,"node": 1,"type": 0},
+			{"exist": 1,"node": 2,"type": 2}
+		],
+		"connection_genes":
+		[
+			{"exist": 1,"innovation": 0,"in": 0,"out": 2,"weight": -0.4492,"enable": 1},
+			{"exist": 1,"innovation": 1,"in": 1,"out": 2,"weight": -0.5202,"enable": 1}
+		]
+	}
+}
+{
+	"Genetic_Encoding":
+	{
+		"nodes":
+		[
+			{"exist": 1,"node": 0,"type": 0},
+			{"exist": 1,"node": 1,"type": 0},
+			{"exist": 1,"node": 2,"type": 2}
+		],
+		"connection_genes":
+		[
+			{"exist": 1,"innovation": 0,"in": 0,"out": 2,"weight": 0.9864,"enable": 1},
+			{"exist": 1,"innovation": 1,"in": 1,"out": 2,"weight": 0.012,"enable": 1}
+		]
+	}
+}
+{
+	"Genetic_Encoding":
+	{
+		"nodes":
+		[
+			{"exist": 1,"node": 0,"type": 0},
+			{"exist": 1,"node": 1,"type": 0},
+			{"exist": 1,"node": 2,"type": 2}
+		],
+		"connection_genes":
+		[
+			{"exist": 1,"innovation": 0,"in": 0,"out": 2,"weight": 0.9352,"enable": 1},
+			{"exist": 1,"innovation": 1,"in": 1,"out": 2,"weight": -0.3264,"enable": 1}
+		]
+	}
+}
+{
+	"Genetic_Encoding":
+	{
+		"nodes":
+		[
+			{"exist": 1,"node": 0,"type": 0},
+			{"exist": 1,"node": 1,"type": 0},
+			{"exist": 1,"node": 2,"type": 2}
+		],
+		"connection_genes":
+		[
+			{"exist": 1,"innovation": 0,"in": 0,"out": 2,"weight": 0.5478,"enable": 1},
+			{"exist": 1,"innovation": 1,"in": 1,"out": 2,"weight": -0.9976,"enable": 1}
+		]
+	}
+}
+{
+	"Genetic_Encoding":
+	{
+		"nodes":
+		[
+			{"exist": 1,"node": 0,"type": 0},
+			{"exist": 1,"node": 1,"type": 0},
+			{"exist": 1,"node": 2,"type": 2}
+		],
+		"connection_genes":
+		[
+			{"exist": 1,"innovation": 0,"in": 0,"out": 2,"weight": 0.2452,"enable": 1},
+			{"exist": 1,"innovation": 1,"in": 1,"out": 2,"weight": 0.7172,"enable": 1}
+		]
+	}
+}
+{
+	"Genetic_Encoding":
+	{
+		"nodes":
+		[
+			{"exist": 1,"node": 0,"type": 0},
+			{"exist": 1,"node": 1,"type": 0},
+			{"exist": 1,"node": 2,"type": 2}
+		],
+		"connection_genes":
+		[
+			{"exist": 1,"innovation": 0,"in": 0,"out": 2,"weight": 0.6188,"enable": 1},
+			{"exist": 1,"innovation": 1,"in": 1,"out": 2,"weight": 0.5078,"enable": 1}
+		]
+	}
+}
+{
+	"Genetic_Encoding":
+	{
+		"nodes":
+		[
+			{"exist": 1,"node": 0,"type": 0},
+			{"exist": 1,"node": 1,"type": 0},
+			{"exist": 1,"node": 2,"type": 2}
+		],
+		"connection_genes":
+		[
+			{"exist": 1,"innovation": 0,"in": 0,"out": 2,"weight": -0.841,"enable": 1},
+			{"exist": 1,"innovation": 1,"in": 1,"out": 2,"weight": -0.886,"enable": 1}
+		]
+	}
+}
+{
+	"Genetic_Encoding":
+	{
+		"nodes":
+		[
+			{"exist": 1,"node": 0,"type": 0},
+			{"exist": 1,"node": 1,"type": 0},
+			{"exist": 1,"node": 2,"type": 2}
+		],
+		"connection_genes":
+		[
+			{"exist": 1,"innovation": 0,"in": 0,"out": 2,"weight": -0.7132,"enable": 1},
+			{"exist": 1,"innovation": 1,"in": 1,"out": 2,"weight": -0.9244,"enable": 1}
+		]
+	}
+}
+{
+	"Genetic_Encoding":
+	{
+		"nodes":
+		[
+			{"exist": 1,"node": 0,"type": 0},
+			{"exist": 1,"node": 1,"type": 0},
+			{"exist": 1,"node": 2,"type": 2}
+		],
+		"connection_genes":
+		[
+			{"exist": 1,"innovation": 0,"in": 0,"out": 2,"weight": 0.4934,"enable": 1},
+			{"exist": 1,"innovation": 1,"in": 1,"out": 2,"weight": 0.3202,"enable": 1}
+		]
+	}
+}
+{
+	"Genetic_Encoding":
+	{
+		"nodes":
+		[
+			{"exist": 1,"node": 0,"type": 0},
+			{"exist": 1,"node": 1,"type": 0},
+			{"exist": 1,"node": 2,"type": 2}
+		],
+		"connection_genes":
+		[
+			{"exist": 1,"innovation": 0,"in": 0,"out": 2,"weight": -0.9806,"enable": 1},
+			{"exist": 1,"innovation": 1,"in": 1,"out": 2,"weight": -0.4196,"enable": 1}
+		]
+	}
+}
+{
+	"Genetic_Encoding":
+	{
+		"nodes":
+		[
+			{"exist": 1,"node": 0,"type": 0},
+			{"exist": 1,"node": 1,"type": 0},
+			{"exist": 1,"node": 2,"type": 2}
+		],
+		"connection_genes":
+		[
+			{"exist": 1,"innovation": 0,"in": 0,"out": 2,"weight": -0.3366,"enable": 1},
+			{"exist": 1,"innovation": 1,"in": 1,"out": 2,"weight": -0.9016,"enable": 1}
+		]
+	}
+}
+{
+	"Genetic_Encoding":
+	{
+		"nodes":
+		[
+			{"exist": 1,"node": 0,"type": 0},
+			{"exist": 1,"node": 1,"type": 0},
+			{"exist": 1,"node": 2,"type": 2}
+		],
+		"connection_genes":
+		[
+			{"exist": 1,"innovation": 0,"in": 0,"out": 2,"weight": 0.3304,"enable": 1},
+			{"exist": 1,"innovation": 1,"in": 1,"out": 2,"weight": -0.8488,"enable": 1}
+		]
+	}
+}
+{
+	"Genetic_Encoding":
+	{
+		"nodes":
+		[
+			{"exist": 1,"node": 0,"type": 0},
+			{"exist": 1,"node": 1,"type": 0},
+			{"exist": 1,"node": 2,"type": 2}
+		],
+		"connection_genes":
+		[
+			{"exist": 1,"innovation": 0,"in": 0,"out": 2,"weight": 0.4602,"enable": 1},
+			{"exist": 1,"innovation": 1,"in": 1,"out": 2,"weight": -0.944,"enable": 1}
+		]
+	}
+}
+{
+	"Genetic_Encoding":
+	{
+		"nodes":
+		[
+			{"exist": 1,"node": 0,"type": 0},
+			{"exist": 1,"node": 1,"type": 0},
+			{"exist": 1,"node": 2,"type": 2}
+		],
+		"connection_genes":
+		[
+			{"exist": 1,"innovation": 0,"in": 0,"out": 2,"weight": -0.1428,"enable": 1},
+			{"exist": 1,"innovation": 1,"in": 1,"out": 2,"weight": 0.8882,"enable": 1}
+		]
+	}
+}
+{
+	"Genetic_Encoding":
+	{
+		"nodes":
+		[
+			{"exist": 1,"node": 0,"type": 0},
+			{"exist": 1,"node": 1,"type": 0},
+			{"exist": 1,"node": 2,"type": 2}
+		],
+		"connection_genes":
+		[
+			{"exist": 1,"innovation": 0,"in": 0,"out": 2,"weight": -0.227,"enable": 1},
+			{"exist": 1,"innovation": 1,"in": 1,"out": 2,"weight": 0.9378,"enable": 1}
+		]
+	}
+}
+{
+	"Genetic_Encoding":
+	{
+		"nodes":
+		[
+			{"exist": 1,"node": 0,"type": 0},
+			{"exist": 1,"node": 1,"type": 0},
+			{"exist": 1,"node": 2,"type": 2}
+		],
+		"connection_genes":
+		[
+			{"exist": 1,"innovation": 0,"in": 0,"out": 2,"weight": 0.6888,"enable": 1},
+			{"exist": 1,"innovation": 1,"in": 1,"out": 2,"weight": 0.3238,"enable": 1}
+		]
+	}
+}
+{
+	"Genetic_Encoding":
+	{
+		"nodes":
+		[
+			{"exist": 1,"node": 0,"type": 0},
+			{"exist": 1,"node": 1,"type": 0},
+			{"exist": 1,"node": 2,"type": 2}
+		],
+		"connection_genes":
+		[
+			{"exist": 1,"innovation": 0,"in": 0,"out": 2,"weight": 0.688,"enable": 1},
+			{"exist": 1,"innovation": 1,"in": 1,"out": 2,"weight": -0.0542,"enable": 1}
+		]
+	}
+}
+{
+	"Genetic_Encoding":
+	{
+		"nodes":
+		[
+			{"exist": 1,"node": 0,"type": 0},
+			{"exist": 1,"node": 1,"type": 0},
+			{"exist": 1,"node": 2,"type": 2}
+		],
+		"connection_genes":
+		[
+			{"exist": 1,"innovation": 0,"in": 0,"out": 2,"weight": 0.6062,"enable": 1},
+			{"exist": 1,"innovation": 1,"in": 1,"out": 2,"weight": 0.6234,"enable": 1}
+		]
+	}
+}
+{
+	"Genetic_Encoding":
+	{
+		"nodes":
+		[
+			{"exist": 1,"node": 0,"type": 0},
+			{"exist": 1,"node": 1,"type": 0},
+			{"exist": 1,"node": 2,"type": 2}
+		],
+		"connection_genes":
+		[
+			{"exist": 1,"innovation": 0,"in": 0,"out": 2,"weight": 0.6194,"enable": 1},
+			{"exist": 1,"innovation": 1,"in": 1,"out": 2,"weight": 0.1542,"enable": 1}
+		]
+	}
+}
+{
+	"Genetic_Encoding":
+	{
+		"nodes":
+		[
+			{"exist": 1,"node": 0,"type": 0},
+			{"exist": 1,"node": 1,"type": 0},
+			{"exist": 1,"node": 2,"type": 2}
+		],
+		"connection_genes":
+		[
+			{"exist": 1,"innovation": 0,"in": 0,"out": 2,"weight": -0.1038,"enable": 1},
+			{"exist": 1,"innovation": 1,"in": 1,"out": 2,"weight": -0.865,"enable": 1}
+		]
+	}
+}
+{
+	"Genetic_Encoding":
+	{
+		"nodes":
+		[
+			{"exist": 1,"node": 0,"type": 0},
+			{"exist": 1,"node": 1,"type": 0},
+			{"exist": 1,"node": 2,"type": 2}
+		],
+		"connection_genes":
+		[
+			{"exist": 1,"innovation": 0,"in": 0,"out": 2,"weight": -0.8582,"enable": 1},
+			{"exist": 1,"innovation": 1,"in": 1,"out": 2,"weight": 0.7854,"enable": 1}
+		]
+	}
+}
+{
+	"Genetic_Encoding":
+	{
+		"nodes":
+		[
+			{"exist": 1,"node": 0,"type": 0},
+			{"exist": 1,"node": 1,"type": 0},
+			{"exist": 1,"node": 2,"type": 2}
+		],
+		"connection_genes":
+		[
+			{"exist": 1,"innovation": 0,"in": 0,"out": 2,"weight": -0.0866,"enable": 1},
+			{"exist": 1,"innovation": 1,"in": 1,"out": 2,"weight": 0.5712,"enable": 1}
+		]
+	}
+}
+{
+	"Genetic_Encoding":
+	{
+		"nodes":
+		[
+			{"exist": 1,"node": 0,"type": 0},
+			{"exist": 1,"node": 1,"type": 0},
+			{"exist": 1,"node": 2,"type": 2}
+		],
+		"connection_genes":
+		[
+			{"exist": 1,"innovation": 0,"in": 0,"out": 2,"weight": 0.8994,"enable": 1},
+			{"exist": 1,"innovation": 1,"in": 1,"out": 2,"weight": -0.5294,"enable": 1}
+		]
+	}
+}
+{
+	"Genetic_Encoding":
+	{
+		"nodes":
+		[
+			{"exist": 1,"node": 0,"type": 0},
+			{"exist": 1,"node": 1,"type": 0},
+			{"exist": 1,"node": 2,"type": 2}
+		],
+		"connection_genes":
+		[
+			{"exist": 1,"innovation": 0,"in": 0,"out": 2,"weight": -0.0828,"enable": 1},
+			{"exist": 1,"innovation": 1,"in": 1,"out": 2,"weight": 0.393,"enable": 1}
+		]
+	}
+}
+{
+	"Genetic_Encoding":
+	{
+		"nodes":
+		[
+			{"exist": 1,"node": 0,"type": 0},
+			{"exist": 1,"node": 1,"type": 0},
+			{"exist": 1,"node": 2,"type": 2}
+		],
+		"connection_genes":
+		[
+			{"exist": 1,"innovation": 0,"in": 0,"out": 2,"weight": 0.0612,"enable": 1},
+			{"exist": 1,"innovation": 1,"in": 1,"out": 2,"weight": -0.0634,"enable": 1}
+		]
+	}
+}
+{
+	"Genetic_Encoding":
+	{
+		"nodes":
+		[
+			{"exist": 1,"node": 0,"type": 0},
+			{"exist": 1,"node": 1,"type": 0},
+			{"exist": 1,"node": 2,"type": 2}
+		],
+		"connection_genes":
+		[
+			{"exist": 1,"innovation": 0,"in": 0,"out": 2,"weight": 0.2438,"enable": 1},
+			{"exist": 1,"innovation": 1,"in": 1,"out": 2,"weight": 0.7248,"enable": 1}
+		]
+	}
+}
+{
+	"Genetic_Encoding":
+	{
+		"nodes":
+		[
+			{"exist": 1,"node": 0,"type": 0},
+			{"exist": 1,"node": 1,"type": 0},
+			{"exist": 1,"node": 2,"type": 2}
+		],
+		"connection_genes":
+		[
+			{"exist": 1,"innovation": 0,"in": 0,"out": 2,"weight": -0.6944,"enable": 1},
+			{"exist": 1,"innovation": 1,"in": 1,"out": 2,"weight": -0.4258,"enable": 1}
+		]
+	}
+}
+{
+	"Genetic_Encoding":
+	{
+		"nodes":
+		[
+			{"exist": 1,"node": 0,"type": 0},
+			{"exist": 1,"node": 1,"type": 0},
+			{"exist": 1,"node": 2,"type": 2}
+		],
+		"connection_genes":
+		[
+			{"exist": 1,"innovation": 0,"in": 0,"out": 2,"weight": 0.1464,"enable": 1},
+			{"exist": 1,"innovation": 1,"in": 1,"out": 2,"weight": 0.7658,"enable": 1}
+		]
+	}
+}
+{
+	"Genetic_Encoding":
+	{
+		"nodes":
+		[
+			{"exist": 1,"node": 0,"type": 0},
+			{"exist": 1,"node": 1,"type": 0},
+			{"exist": 1,"node": 2,"type": 2}
+		],
+		"connection_genes":
+		[
+			{"exist": 1,"innovation": 0,"in": 0,"out": 2,"weight": 0.9006,"enable": 1},
+			{"exist": 1,"innovation": 1,"in": 1,"out": 2,"weight": -0.9962,"enable": 1}
+		]
+	}
+}
+{
+	"Genetic_Encoding":
+	{
+		"nodes":
+		[
+			{"exist": 1,"node": 0,"type": 0},
+			{"exist": 1,"node": 1,"type": 0},
+			{"exist": 1,"node": 2,"type": 2}
+		],
+		"connection_genes":
+		[
+			{"exist": 1,"innovation": 0,"in": 0,"out": 2,"weight": 0.654,"enable": 1},
+			{"exist": 1,"innovation": 1,"in": 1,"out": 2,"weight": -0.3264,"enable": 1}
+		]
+	}
+}
+{
+	"Genetic_Encoding":
+	{
+		"nodes":
+		[
+			{"exist": 1,"node": 0,"type": 0},
+			{"exist": 1,"node": 1,"type": 0},
+			{"exist": 1,"node": 2,"type": 2}
+		],
+		"connection_genes":
+		[
+			{"exist": 1,"innovation": 0,"in": 0,"out": 2,"weight": 0.9416,"enable": 1},
+			{"exist": 1,"innovation": 1,"in": 1,"out": 2,"weight": 0.343,"enable": 1}
+		]
+	}
+}
+{
+	"Genetic_Encoding":
+	{
+		"nodes":
+		[
+			{"exist": 1,"node": 0,"type": 0},
+			{"exist": 1,"node": 1,"type": 0},
+			{"exist": 1,"node": 2,"type": 2}
+		],
+		"connection_genes":
+		[
+			{"exist": 1,"innovation": 0,"in": 0,"out": 2,"weight": 0.268,"enable": 1},
+			{"exist": 1,"innovation": 1,"in": 1,"out": 2,"weight": 0.6298,"enable": 1}
+		]
+	}
+}
+{
+	"Genetic_Encoding":
+	{
+		"nodes":
+		[
+			{"exist": 1,"node": 0,"type": 0},
+			{"exist": 1,"node": 1,"type": 0},
+			{"exist": 1,"node": 2,"type": 2}
+		],
+		"connection_genes":
+		[
+			{"exist": 1,"innovation": 0,"in": 0,"out": 2,"weight": 0.5592,"enable": 1},
+			{"exist": 1,"innovation": 1,"in": 1,"out": 2,"weight": -0.8554,"enable": 1}
+		]
+	}
+}
+{
+	"Genetic_Encoding":
+	{
+		"nodes":
+		[
+			{"exist": 1,"node": 0,"type": 0},
+			{"exist": 1,"node": 1,"type": 0},
+			{"exist": 1,"node": 2,"type": 2}
+		],
+		"connection_genes":
+		[
+			{"exist": 1,"innovation": 0,"in": 0,"out": 2,"weight": -0.4764,"enable": 1},
+			{"exist": 1,"innovation": 1,"in": 1,"out": 2,"weight": -0.551,"enable": 1}
+		]
+	}
+}
+{
+	"Genetic_Encoding":
+	{
+		"nodes":
+		[
+			{"exist": 1,"node": 0,"type": 0},
+			{"exist": 1,"node": 1,"type": 0},
+			{"exist": 1,"node": 2,"type": 2}
+		],
+		"connection_genes":
+		[
+			{"exist": 1,"innovation": 0,"in": 0,"out": 2,"weight": -0.4308,"enable": 1},
+			{"exist": 1,"innovation": 1,"in": 1,"out": 2,"weight": -0.3098,"enable": 1}
+		]
+	}
+}
+{
+	"Genetic_Encoding":
+	{
+		"nodes":
+		[
+			{"exist": 1,"node": 0,"type": 0},
+			{"exist": 1,"node": 1,"type": 0},
+			{"exist": 1,"node": 2,"type": 2}
+		],
+		"connection_genes":
+		[
+			{"exist": 1,"innovation": 0,"in": 0,"out": 2,"weight": -0.4158,"enable": 1},
+			{"exist": 1,"innovation": 1,"in": 1,"out": 2,"weight": -0.289,"enable": 1}
+		]
+	}
+}
+{
+	"Genetic_Encoding":
+	{
+		"nodes":
+		[
+			{"exist": 1,"node": 0,"type": 0},
+			{"exist": 1,"node": 1,"type": 0},
+			{"exist": 1,"node": 2,"type": 2}
+		],
+		"connection_genes":
+		[
+			{"exist": 1,"innovation": 0,"in": 0,"out": 2,"weight": -0.5242,"enable": 1},
+			{"exist": 1,"innovation": 1,"in": 1,"out": 2,"weight": 0.4976,"enable": 1}
+		]
+	}
+}
+{
+	"Genetic_Encoding":
+	{
+		"nodes":
+		[
+			{"exist": 1,"node": 0,"type": 0},
+			{"exist": 1,"node": 1,"type": 0},
+			{"exist": 1,"node": 2,"type": 2}
+		],
+		"connection_genes":
+		[
+			{"exist": 1,"innovation": 0,"in": 0,"out": 2,"weight": 0.5528,"enable": 1},
+			{"exist": 1,"innovation": 1,"in": 1,"out": 2,"weight": 0.6456,"enable": 1}
+		]
+	}
+}
+{
+	"Genetic_Encoding":
+	{
+		"nodes":
+		[
+			{"exist": 1,"node": 0,"type": 0},
+			{"exist": 1,"node": 1,"type": 0},
+			{"exist": 1,"node": 2,"type": 2}
+		],
+		"connection_genes":
+		[
+			{"exist": 1,"innovation": 0,"in": 0,"out": 2,"weight": 0.9682,"enable": 1},
+			{"exist": 1,"innovation": 1,"in": 1,"out": 2,"weight": -0.53,"enable": 1}
+		]
+	}
+}
+{
+	"Genetic_Encoding":
+	{
+		"nodes":
+		[
+			{"exist": 1,"node": 0,"type": 0},
+			{"exist": 1,"node": 1,"type": 0},
+			{"exist": 1,"node": 2,"type": 2}
+		],
+		"connection_genes":
+		[
+			{"exist": 1,"innovation": 0,"in": 0,"out": 2,"weight": 0.0386,"enable": 1},
+			{"exist": 1,"innovation": 1,"in": 1,"out": 2,"weight": -0.7,"enable": 1}
+		]
+	}
+}
+{
+	"Genetic_Encoding":
+	{
+		"nodes":
+		[
+			{"exist": 1,"node": 0,"type": 0},
+			{"exist": 1,"node": 1,"type": 0},
+			{"exist": 1,"node": 2,"type": 2}
+		],
+		"connection_genes":
+		[
+			{"exist": 1,"innovation": 0,"in": 0,"out": 2,"weight": 0.4068,"enable": 1},
+			{"exist": 1,"innovation": 1,"in": 1,"out": 2,"weight": 0.5528,"enable": 1}
+		]
+	}
+}
+{
+	"Genetic_Encoding":
+	{
+		"nodes":
+		[
+			{"exist": 1,"node": 0,"type": 0},
+			{"exist": 1,"node": 1,"type": 0},
+			{"exist": 1,"node": 2,"type": 2}
+		],
+		"connection_genes":
+		[
+			{"exist": 1,"innovation": 0,"in": 0,"out": 2,"weight": -0.9752,"enable": 1},
+			{"exist": 1,"innovation": 1,"in": 1,"out": 2,"weight": -0.0172,"enable": 1}
+		]
+	}
+}
+{
+	"Genetic_Encoding":
+	{
+		"nodes":
+		[
+			{"exist": 1,"node": 0,"type": 0},
+			{"exist": 1,"node": 1,"type": 0},
+			{"exist": 1,"node": 2,"type": 2}
+		],
+		"connection_genes":
+		[
+			{"exist": 1,"innovation": 0,"in": 0,"out": 2,"weight": 0.3974,"enable": 1},
+			{"exist": 1,"innovation": 1,"in": 1,"out": 2,"weight": 0.1712,"enable": 1}
+		]
+	}
+}
+{
+	"Genetic_Encoding":
+	{
+		"nodes":
+		[
+			{"exist": 1,"node": 0,"type": 0},
+			{"exist": 1,"node": 1,"type": 0},
+			{"exist": 1,"node": 2,"type": 2}
+		],
+		"connection_genes":
+		[
+			{"exist": 1,"innovation": 0,"in": 0,"out": 2,"weight": -0.2514,"enable": 1},
+			{"exist": 1,"innovation": 1,"in": 1,"out": 2,"weight": 0.2982,"enable": 1}
+		]
+	}
+}
+{
+	"Genetic_Encoding":
+	{
+		"nodes":
+		[
+			{"exist": 1,"node": 0,"type": 0},
+			{"exist": 1,"node": 1,"type": 0},
+			{"exist": 1,"node": 2,"type": 2}
+		],
+		"connection_genes":
+		[
+			{"exist": 1,"innovation": 0,"in": 0,"out": 2,"weight": -0.5546,"enable": 1},
+			{"exist": 1,"innovation": 1,"in": 1,"out": 2,"weight": 0.673,"enable": 1}
+		]
+	}
+}
+{
+	"Genetic_Encoding":
+	{
+		"nodes":
+		[
+			{"exist": 1,"node": 0,"type": 0},
+			{"exist": 1,"node": 1,"type": 0},
+			{"exist": 1,"node": 2,"type": 2}
+		],
+		"connection_genes":
+		[
+			{"exist": 1,"innovation": 0,"in": 0,"out": 2,"weight": 0.9718,"enable": 1},
+			{"exist": 1,"innovation": 1,"in": 1,"out": 2,"weight": -0.6128,"enable": 1}
+		]
+	}
+}
+{
+	"Genetic_Encoding":
+	{
+		"nodes":
+		[
+			{"exist": 1,"node": 0,"type": 0},
+			{"exist": 1,"node": 1,"type": 0},
+			{"exist": 1,"node": 2,"type": 2}
+		],
+		"connection_genes":
+		[
+			{"exist": 1,"innovation": 0,"in": 0,"out": 2,"weight": -0.7136,"enable": 1},
+			{"exist": 1,"innovation": 1,"in": 1,"out": 2,"weight": -0.4898,"enable": 1}
+		]
+	}
+}
+{
+	"Genetic_Encoding":
+	{
+		"nodes":
+		[
+			{"exist": 1,"node": 0,"type": 0},
+			{"exist": 1,"node": 1,"type": 0},
+			{"exist": 1,"node": 2,"type": 2}
+		],
+		"connection_genes":
+		[
+			{"exist": 1,"innovation": 0,"in": 0,"out": 2,"weight": 0.2874,"enable": 1},
+			{"exist": 1,"innovation": 1,"in": 1,"out": 2,"weight": 0.8456,"enable": 1}
+		]
+	}
+}
+{
+	"Genetic_Encoding":
+	{
+		"nodes":
+		[
+			{"exist": 1,"node": 0,"type": 0},
+			{"exist": 1,"node": 1,"type": 0},
+			{"exist": 1,"node": 2,"type": 2}
+		],
+		"connection_genes":
+		[
+			{"exist": 1,"innovation": 0,"in": 0,"out": 2,"weight": -0.345,"enable": 1},
+			{"exist": 1,"innovation": 1,"in": 1,"out": 2,"weight": 0.0814,"enable": 1}
+		]
+	}
+}
+{
+	"Genetic_Encoding":
+	{
+		"nodes":
+		[
+			{"exist": 1,"node": 0,"type": 0},
+			{"exist": 1,"node": 1,"type": 0},
+			{"exist": 1,"node": 2,"type": 2}
+		],
+		"connection_genes":
+		[
+			{"exist": 1,"innovation": 0,"in": 0,"out": 2,"weight": -0.7052,"enable": 1},
+			{"exist": 1,"innovation": 1,"in": 1,"out": 2,"weight": 0.2242,"enable": 1}
+		]
+	}
+}
+{
+	"Genetic_Encoding":
+	{
+		"nodes":
+		[
+			{"exist": 1,"node": 0,"type": 0},
+			{"exist": 1,"node": 1,"type": 0},
+			{"exist": 1,"node": 2,"type": 2}
+		],
+		"connection_genes":
+		[
+			{"exist": 1,"innovation": 0,"in": 0,"out": 2,"weight": 0.7716,"enable": 1},
+			{"exist": 1,"innovation": 1,"in": 1,"out": 2,"weight": -0.121,"enable": 1}
+		]
+	}
+}
+{
+	"Genetic_Encoding":
+	{
+		"nodes":
+		[
+			{"exist": 1,"node": 0,"type": 0},
+			{"exist": 1,"node": 1,"type": 0},
+			{"exist": 1,"node": 2,"type": 2}
+		],
+		"connection_genes":
+		[
+			{"exist": 1,"innovation": 0,"in": 0,"out": 2,"weight": 0.2058,"enable": 1},
+			{"exist": 1,"innovation": 1,"in": 1,"out": 2,"weight": -0.7526,"enable": 1}
+		]
+	}
+}
+{
+	"Genetic_Encoding":
+	{
+		"nodes":
+		[
+			{"exist": 1,"node": 0,"type": 0},
+			{"exist": 1,"node": 1,"type": 0},
+			{"exist": 1,"node": 2,"type": 2}
+		],
+		"connection_genes":
+		[
+			{"exist": 1,"innovation": 0,"in": 0,"out": 2,"weight": 0.647,"enable": 1},
+			{"exist": 1,"innovation": 1,"in": 1,"out": 2,"weight": -0.2414,"enable": 1}
+		]
+	}
+}
+{
+	"Genetic_Encoding":
+	{
+		"nodes":
+		[
+			{"exist": 1,"node": 0,"type": 0},
+			{"exist": 1,"node": 1,"type": 0},
+			{"exist": 1,"node": 2,"type": 2}
+		],
+		"connection_genes":
+		[
+			{"exist": 1,"innovation": 0,"in": 0,"out": 2,"weight": 0.1636,"enable": 1},
+			{"exist": 1,"innovation": 1,"in": 1,"out": 2,"weight": -0.1144,"enable": 1}
+		]
+	}
+}
+{
+	"Genetic_Encoding":
+	{
+		"nodes":
+		[
+			{"exist": 1,"node": 0,"type": 0},
+			{"exist": 1,"node": 1,"type": 0},
+			{"exist": 1,"node": 2,"type": 2}
+		],
+		"connection_genes":
+		[
+			{"exist": 1,"innovation": 0,"in": 0,"out": 2,"weight": 0.2286,"enable": 1},
+			{"exist": 1,"innovation": 1,"in": 1,"out": 2,"weight": -0.7978,"enable": 1}
+		]
+	}
+}
+{
+	"Genetic_Encoding":
+	{
+		"nodes":
+		[
+			{"exist": 1,"node": 0,"type": 0},
+			{"exist": 1,"node": 1,"type": 0},
+			{"exist": 1,"node": 2,"type": 2}
+		],
+		"connection_genes":
+		[
+			{"exist": 1,"innovation": 0,"in": 0,"out": 2,"weight": 0.1856,"enable": 1},
+			{"exist": 1,"innovation": 1,"in": 1,"out": 2,"weight": 0.9058,"enable": 1}
+		]
+	}
+}
+{
+	"Genetic_Encoding":
+	{
+		"nodes":
+		[
+			{"exist": 1,"node": 0,"type": 0},
+			{"exist": 1,"node": 1,"type": 0},
+			{"exist": 1,"node": 2,"type": 2}
+		],
+		"connection_genes":
+		[
+			{"exist": 1,"innovation": 0,"in": 0,"out": 2,"weight": 0.7552,"enable": 1},
+			{"exist": 1,"innovation": 1,"in": 1,"out": 2,"weight": -0.5192,"enable": 1}
+		]
+	}
+}
+{
+	"Genetic_Encoding":
+	{
+		"nodes":
+		[
+			{"exist": 1,"node": 0,"type": 0},
+			{"exist": 1,"node": 1,"type": 0},
+			{"exist": 1,"node": 2,"type": 2}
+		],
+		"connection_genes":
+		[
+			{"exist": 1,"innovation": 0,"in": 0,"out": 2,"weight": -0.1114,"enable": 1},
+			{"exist": 1,"innovation": 1,"in": 1,"out": 2,"weight": 0.1526,"enable": 1}
+		]
+	}
+}
+{
+	"Genetic_Encoding":
+	{
+		"nodes":
+		[
+			{"exist": 1,"node": 0,"type": 0},
+			{"exist": 1,"node": 1,"type": 0},
+			{"exist": 1,"node": 2,"type": 2}
+		],
+		"connection_genes":
+		[
+			{"exist": 1,"innovation": 0,"in": 0,"out": 2,"weight": -0.0774,"enable": 1},
+			{"exist": 1,"innovation": 1,"in": 1,"out": 2,"weight": -0.0924,"enable": 1}
+		]
+	}
+}
+{
+	"Genetic_Encoding":
+	{
+		"nodes":
+		[
+			{"exist": 1,"node": 0,"type": 0},
+			{"exist": 1,"node": 1,"type": 0},
+			{"exist": 1,"node": 2,"type": 2}
+		],
+		"connection_genes":
+		[
+			{"exist": 1,"innovation": 0,"in": 0,"out": 2,"weight": 0.7212,"enable": 1},
+			{"exist": 1,"innovation": 1,"in": 1,"out": 2,"weight": 0.368,"enable": 1}
+		]
+	}
+}
+{
+	"Genetic_Encoding":
+	{
+		"nodes":
+		[
+			{"exist": 1,"node": 0,"type": 0},
+			{"exist": 1,"node": 1,"type": 0},
+			{"exist": 1,"node": 2,"type": 2}
+		],
+		"connection_genes":
+		[
+			{"exist": 1,"innovation": 0,"in": 0,"out": 2,"weight": -0.4192,"enable": 1},
+			{"exist": 1,"innovation": 1,"in": 1,"out": 2,"weight": -0.0364,"enable": 1}
+		]
+	}
+}
+{
+	"Genetic_Encoding":
+	{
+		"nodes":
+		[
+			{"exist": 1,"node": 0,"type": 0},
+			{"exist": 1,"node": 1,"type": 0},
+			{"exist": 1,"node": 2,"type": 2}
+		],
+		"connection_genes":
+		[
+			{"exist": 1,"innovation": 0,"in": 0,"out": 2,"weight": 0.0256,"enable": 1},
+			{"exist": 1,"innovation": 1,"in": 1,"out": 2,"weight": -0.8624,"enable": 1}
+		]
+	}
+}
+{
+	"Genetic_Encoding":
+	{
+		"nodes":
+		[
+			{"exist": 1,"node": 0,"type": 0},
+			{"exist": 1,"node": 1,"type": 0},
+			{"exist": 1,"node": 2,"type": 2}
+		],
+		"connection_genes":
+		[
+			{"exist": 1,"innovation": 0,"in": 0,"out": 2,"weight": 0.4738,"enable": 1},
+			{"exist": 1,"innovation": 1,"in": 1,"out": 2,"weight": 0.5834,"enable": 1}
+		]
+	}
+}
+{
+	"Genetic_Encoding":
+	{
+		"nodes":
+		[
+			{"exist": 1,"node": 0,"type": 0},
+			{"exist": 1,"node": 1,"type": 0},
+			{"exist": 1,"node": 2,"type": 2}
+		],
+		"connection_genes":
+		[
+			{"exist": 1,"innovation": 0,"in": 0,"out": 2,"weight": 0.9834,"enable": 1},
+			{"exist": 1,"innovation": 1,"in": 1,"out": 2,"weight": 0.3992,"enable": 1}
+		]
+	}
+}
+{
+	"Genetic_Encoding":
+	{
+		"nodes":
+		[
+			{"exist": 1,"node": 0,"type": 0},
+			{"exist": 1,"node": 1,"type": 0},
+			{"exist": 1,"node": 2,"type": 2}
+		],
+		"connection_genes":
+		[
+			{"exist": 1,"innovation": 0,"in": 0,"out": 2,"weight": -0.3352,"enable": 1},
+			{"exist": 1,"innovation": 1,"in": 1,"out": 2,"weight": 0.5486,"enable": 1}
+		]
+	}
+}
+{
+	"Genetic_Encoding":
+	{
+		"nodes":
+		[
+			{"exist": 1,"node": 0,"type": 0},
+			{"exist": 1,"node": 1,"type": 0},
+			{"exist": 1,"node": 2,"type": 2}
+		],
+		"connection_genes":
+		[
+			{"exist": 1,"innovation": 0,"in": 0,"out": 2,"weight": 0.894,"enable": 1},
+			{"exist": 1,"innovation": 1,"in": 1,"out": 2,"weight": -0.5634,"enable": 1}
+		]
+	}
+}
+{
+	"Genetic_Encoding":
+	{
+		"nodes":
+		[
+			{"exist": 1,"node": 0,"type": 0},
+			{"exist": 1,"node": 1,"type": 0},
+			{"exist": 1,"node": 2,"type": 2}
+		],
+		"connection_genes":
+		[
+			{"exist": 1,"innovation": 0,"in": 0,"out": 2,"weight": 0.698,"enable": 1},
+			{"exist": 1,"innovation": 1,"in": 1,"out": 2,"weight": 0.0998,"enable": 1}
+		]
+	}
+}
+{
+	"Genetic_Encoding":
+	{
+		"nodes":
+		[
+			{"exist": 1,"node": 0,"type": 0},
+			{"exist": 1,"node": 1,"type": 0},
+			{"exist": 1,"node": 2,"type": 2}
+		],
+		"connection_genes":
+		[
+			{"exist": 1,"innovation": 0,"in": 0,"out": 2,"weight": 0.9544,"enable": 1},
+			{"exist": 1,"innovation": 1,"in": 1,"out": 2,"weight": 0.345,"enable": 1}
+		]
+	}
+}
+{
+	"Genetic_Encoding":
+	{
+		"nodes":
+		[
+			{"exist": 1,"node": 0,"type": 0},
+			{"exist": 1,"node": 1,"type": 0},
+			{"exist": 1,"node": 2,"type": 2}
+		],
+		"connection_genes":
+		[
+			{"exist": 1,"innovation": 0,"in": 0,"out": 2,"weight": 0.1288,"enable": 1},
+			{"exist": 1,"innovation": 1,"in": 1,"out": 2,"weight": 0.118,"enable": 1}
+		]
+	}
+}
+{
+	"Genetic_Encoding":
+	{
+		"nodes":
+		[
+			{"exist": 1,"node": 0,"type": 0},
+			{"exist": 1,"node": 1,"type": 0},
+			{"exist": 1,"node": 2,"type": 2}
+		],
+		"connection_genes":
+		[
+			{"exist": 1,"innovation": 0,"in": 0,"out": 2,"weight": 0.501,"enable": 1},
+			{"exist": 1,"innovation": 1,"in": 1,"out": 2,"weight": 0.6278,"enable": 1}
+		]
+	}
+}
+{
+	"Genetic_Encoding":
+	{
+		"nodes":
+		[
+			{"exist": 1,"node": 0,"type": 0},
+			{"exist": 1,"node": 1,"type": 0},
+			{"exist": 1,"node": 2,"type": 2}
+		],
+		"connection_genes":
+		[
+			{"exist": 1,"innovation": 0,"in": 0,"out": 2,"weight": -0.4092,"enable": 1},
+			{"exist": 1,"innovation": 1,"in": 1,"out": 2,"weight": 0.9572,"enable": 1}
+		]
+	}
+}
+{
+	"Genetic_Encoding":
+	{
+		"nodes":
+		[
+			{"exist": 1,"node": 0,"type": 0},
+			{"exist": 1,"node": 1,"type": 0},
+			{"exist": 1,"node": 2,"type": 2}
+		],
+		"connection_genes":
+		[
+			{"exist": 1,"innovation": 0,"in": 0,"out": 2,"weight": 0.5338,"enable": 1},
+			{"exist": 1,"innovation": 1,"in": 1,"out": 2,"weight": 0.6164,"enable": 1}
+		]
+	}
+}
+{
+	"Genetic_Encoding":
+	{
+		"nodes":
+		[
+			{"exist": 1,"node": 0,"type": 0},
+			{"exist": 1,"node": 1,"type": 0},
+			{"exist": 1,"node": 2,"type": 2}
+		],
+		"connection_genes":
+		[
+			{"exist": 1,"innovation": 0,"in": 0,"out": 2,"weight": 0.7084,"enable": 1},
+			{"exist": 1,"innovation": 1,"in": 1,"out": 2,"weight": 0.6928,"enable": 1}
+		]
+	}
+}
+{
+	"Genetic_Encoding":
+	{
+		"nodes":
+		[
+			{"exist": 1,"node": 0,"type": 0},
+			{"exist": 1,"node": 1,"type": 0},
+			{"exist": 1,"node": 2,"type": 2}
+		],
+		"connection_genes":
+		[
+			{"exist": 1,"innovation": 0,"in": 0,"out": 2,"weight": -0.9606,"enable": 1},
+			{"exist": 1,"innovation": 1,"in": 1,"out": 2,"weight": 0.9014,"enable": 1}
+		]
+	}
+}
+{
+	"Genetic_Encoding":
+	{
+		"nodes":
+		[
+			{"exist": 1,"node": 0,"type": 0},
+			{"exist": 1,"node": 1,"type": 0},
+			{"exist": 1,"node": 2,"type": 2}
+		],
+		"connection_genes":
+		[
+			{"exist": 1,"innovation": 0,"in": 0,"out": 2,"weight": 0.871,"enable": 1},
+			{"exist": 1,"innovation": 1,"in": 1,"out": 2,"weight": 0.7608,"enable": 1}
+		]
+	}
+}
+{
+	"Genetic_Encoding":
+	{
+		"nodes":
+		[
+			{"exist": 1,"node": 0,"type": 0},
+			{"exist": 1,"node": 1,"type": 0},
+			{"exist": 1,"node": 2,"type": 2}
+		],
+		"connection_genes":
+		[
+			{"exist": 1,"innovation": 0,"in": 0,"out": 2,"weight": 0.2696,"enable": 1},
+			{"exist": 1,"innovation": 1,"in": 1,"out": 2,"weight": 0.7222,"enable": 1}
+		]
+	}
+}
+{
+	"Genetic_Encoding":
+	{
+		"nodes":
+		[
+			{"exist": 1,"node": 0,"type": 0},
+			{"exist": 1,"node": 1,"type": 0},
+			{"exist": 1,"node": 2,"type": 2}
+		],
+		"connection_genes":
+		[
+			{"exist": 1,"innovation": 0,"in": 0,"out": 2,"weight": -0.2756,"enable": 1},
+			{"exist": 1,"innovation": 1,"in": 1,"out": 2,"weight": 0.5656,"enable": 1}
+		]
+	}
+}
+{
+	"Genetic_Encoding":
+	{
+		"nodes":
+		[
+			{"exist": 1,"node": 0,"type": 0},
+			{"exist": 1,"node": 1,"type": 0},
+			{"exist": 1,"node": 2,"type": 2}
+		],
+		"connection_genes":
+		[
+			{"exist": 1,"innovation": 0,"in": 0,"out": 2,"weight": 0.8598,"enable": 1},
+			{"exist": 1,"innovation": 1,"in": 1,"out": 2,"weight": 0.4686,"enable": 1}
+		]
+	}
+}
+{
+	"Genetic_Encoding":
+	{
+		"nodes":
+		[
+			{"exist": 1,"node": 0,"type": 0},
+			{"exist": 1,"node": 1,"type": 0},
+			{"exist": 1,"node": 2,"type": 2}
+		],
+		"connection_genes":
+		[
+			{"exist": 1,"innovation": 0,"in": 0,"out": 2,"weight": 0.1492,"enable": 1},
+			{"exist": 1,"innovation": 1,"in": 1,"out": 2,"weight": 0.1136,"enable": 1}
+		]
+	}
+}
+{
+	"Genetic_Encoding":
+	{
+		"nodes":
+		[
+			{"exist": 1,"node": 0,"type": 0},
+			{"exist": 1,"node": 1,"type": 0},
+			{"exist": 1,"node": 2,"type": 2}
+		],
+		"connection_genes":
+		[
+			{"exist": 1,"innovation": 0,"in": 0,"out": 2,"weight": -0.132,"enable": 1},
+			{"exist": 1,"innovation": 1,"in": 1,"out": 2,"weight": 0.0844,"enable": 1}
+		]
+	}
+}
+{
+	"Genetic_Encoding":
+	{
+		"nodes":
+		[
+			{"exist": 1,"node": 0,"type": 0},
+			{"exist": 1,"node": 1,"type": 0},
+			{"exist": 1,"node": 2,"type": 2}
+		],
+		"connection_genes":
+		[
+			{"exist": 1,"innovation": 0,"in": 0,"out": 2,"weight": -0.3378,"enable": 1},
+			{"exist": 1,"innovation": 1,"in": 1,"out": 2,"weight": -0.238,"enable": 1}
+		]
+	}
+}
+{
+	"Genetic_Encoding":
+	{
+		"nodes":
+		[
+			{"exist": 1,"node": 0,"type": 0},
+			{"exist": 1,"node": 1,"type": 0},
+			{"exist": 1,"node": 2,"type": 2}
+		],
+		"connection_genes":
+		[
+			{"exist": 1,"innovation": 0,"in": 0,"out": 2,"weight": 0.521,"enable": 1},
+			{"exist": 1,"innovation": 1,"in": 1,"out": 2,"weight": -0.6398,"enable": 1}
+		]
+	}
+}
+{
+	"Genetic_Encoding":
+	{
+		"nodes":
+		[
+			{"exist": 1,"node": 0,"type": 0},
+			{"exist": 1,"node": 1,"type": 0},
+			{"exist": 1,"node": 2,"type": 2}
+		],
+		"connection_genes":
+		[
+			{"exist": 1,"innovation": 0,"in": 0,"out": 2,"weight": 0.1322,"enable": 1},
+			{"exist": 1,"innovation": 1,"in": 1,"out": 2,"weight": -0.254,"enable": 1}
+		]
+	}
+}
+{
+	"Genetic_Encoding":
+	{
+		"nodes":
+		[
+			{"exist": 1,"node": 0,"type": 0},
+			{"exist": 1,"node": 1,"type": 0},
+			{"exist": 1,"node": 2,"type": 2}
+		],
+		"connection_genes":
+		[
+			{"exist": 1,"innovation": 0,"in": 0,"out": 2,"weight": -0.0244,"enable": 1},
+			{"exist": 1,"innovation": 1,"in": 1,"out": 2,"weight": -0.739,"enable": 1}
+		]
+	}
+}
+{
+	"Genetic_Encoding":
+	{
+		"nodes":
+		[
+			{"exist": 1,"node": 0,"type": 0},
+			{"exist": 1,"node": 1,"type": 0},
+			{"exist": 1,"node": 2,"type": 2}
+		],
+		"connection_genes":
+		[
+			{"exist": 1,"innovation": 0,"in": 0,"out": 2,"weight": 0.864,"enable": 1},
+			{"exist": 1,"innovation": 1,"in": 1,"out": 2,"weight": 0.7472,"enable": 1}
+		]
+	}
+}
+{
+	"Genetic_Encoding":
+	{
+		"nodes":
+		[
+			{"exist": 1,"node": 0,"type": 0},
+			{"exist": 1,"node": 1,"type": 0},
+			{"exist": 1,"node": 2,"type": 2}
+		],
+		"connection_genes":
+		[
+			{"exist": 1,"innovation": 0,"in": 0,"out": 2,"weight": 0.8888,"enable": 1},
+			{"exist": 1,"innovation": 1,"in": 1,"out": 2,"weight": 0.7252,"enable": 1}
+		]
+	}
+}
+{
+	"Genetic_Encoding":
+	{
+		"nodes":
+		[
+			{"exist": 1,"node": 0,"type": 0},
+			{"exist": 1,"node": 1,"type": 0},
+			{"exist": 1,"node": 2,"type": 2}
+		],
+		"connection_genes":
+		[
+			{"exist": 1,"innovation": 0,"in": 0,"out": 2,"weight": 0.7044,"enable": 1},
+			{"exist": 1,"innovation": 1,"in": 1,"out": 2,"weight": -0.307,"enable": 1}
+		]
+	}
+}
+{
+	"Genetic_Encoding":
+	{
+		"nodes":
+		[
+			{"exist": 1,"node": 0,"type": 0},
+			{"exist": 1,"node": 1,"type": 0},
+			{"exist": 1,"node": 2,"type": 2}
+		],
+		"connection_genes":
+		[
+			{"exist": 1,"innovation": 0,"in": 0,"out": 2,"weight": 0.3416,"enable": 1},
+			{"exist": 1,"innovation": 1,"in": 1,"out": 2,"weight": -0.3168,"enable": 1}
+		]
+	}
+}
+{
+	"Genetic_Encoding":
+	{
+		"nodes":
+		[
+			{"exist": 1,"node": 0,"type": 0},
+			{"exist": 1,"node": 1,"type": 0},
+			{"exist": 1,"node": 2,"type": 2}
+		],
+		"connection_genes":
+		[
+			{"exist": 1,"innovation": 0,"in": 0,"out": 2,"weight": 0.6564,"enable": 1},
+			{"exist": 1,"innovation": 1,"in": 1,"out": 2,"weight": -0.3484,"enable": 1}
+		]
+	}
+}
+{
+	"Genetic_Encoding":
+	{
+		"nodes":
+		[
+			{"exist": 1,"node": 0,"type": 0},
+			{"exist": 1,"node": 1,"type": 0},
+			{"exist": 1,"node": 2,"type": 2}
+		],
+		"connection_genes":
+		[
+			{"exist": 1,"innovation": 0,"in": 0,"out": 2,"weight": -0.4152,"enable": 1},
+			{"exist": 1,"innovation": 1,"in": 1,"out": 2,"weight": 0.5274,"enable": 1}
+		]
+	}
+}
+{
+	"Genetic_Encoding":
+	{
+		"nodes":
+		[
+			{"exist": 1,"node": 0,"type": 0},
+			{"exist": 1,"node": 1,"type": 0},
+			{"exist": 1,"node": 2,"type": 2}
+		],
+		"connection_genes":
+		[
+			{"exist": 1,"innovation": 0,"in": 0,"out": 2,"weight": -0.5876,"enable": 1},
+			{"exist": 1,"innovation": 1,"in": 1,"out": 2,"weight": 0.1248,"enable": 1}
+		]
+	}
+}
+{
+	"Genetic_Encoding":
+	{
+		"nodes":
+		[
+			{"exist": 1,"node": 0,"type": 0},
+			{"exist": 1,"node": 1,"type": 0},
+			{"exist": 1,"node": 2,"type": 2}
+		],
+		"connection_genes":
+		[
+			{"exist": 1,"innovation": 0,"in": 0,"out": 2,"weight": -0.48,"enable": 1},
+			{"exist": 1,"innovation": 1,"in": 1,"out": 2,"weight": -0.5928,"enable": 1}
+		]
+	}
+}
+{
+	"Genetic_Encoding":
+	{
+		"nodes":
+		[
+			{"exist": 1,"node": 0,"type": 0},
+			{"exist": 1,"node": 1,"type": 0},
+			{"exist": 1,"node": 2,"type": 2}
+		],
+		"connection_genes":
+		[
+			{"exist": 1,"innovation": 0,"in": 0,"out": 2,"weight": -0.3096,"enable": 1},
+			{"exist": 1,"innovation": 1,"in": 1,"out": 2,"weight": -0.6202,"enable": 1}
+		]
+	}
+}
+{
+	"Genetic_Encoding":
+	{
+		"nodes":
+		[
+			{"exist": 1,"node": 0,"type": 0},
+			{"exist": 1,"node": 1,"type": 0},
+			{"exist": 1,"node": 2,"type": 2}
+		],
+		"connection_genes":
+		[
+			{"exist": 1,"innovation": 0,"in": 0,"out": 2,"weight": 0.8758,"enable": 1},
+			{"exist": 1,"innovation": 1,"in": 1,"out": 2,"weight": 0.11,"enable": 1}
+		]
+	}
+}
+{
+	"Genetic_Encoding":
+	{
+		"nodes":
+		[
+			{"exist": 1,"node": 0,"type": 0},
+			{"exist": 1,"node": 1,"type": 0},
+			{"exist": 1,"node": 2,"type": 2}
+		],
+		"connection_genes":
+		[
+			{"exist": 1,"innovation": 0,"in": 0,"out": 2,"weight": 0.4936,"enable": 1},
+			{"exist": 1,"innovation": 1,"in": 1,"out": 2,"weight": -0.9858,"enable": 1}
+		]
+	}
+}
+{
+	"Genetic_Encoding":
+	{
+		"nodes":
+		[
+			{"exist": 1,"node": 0,"type": 0},
+			{"exist": 1,"node": 1,"type": 0},
+			{"exist": 1,"node": 2,"type": 2}
+		],
+		"connection_genes":
+		[
+			{"exist": 1,"innovation": 0,"in": 0,"out": 2,"weight": -0.8054,"enable": 1},
+			{"exist": 1,"innovation": 1,"in": 1,"out": 2,"weight": 0.4262,"enable": 1}
+		]
+	}
+}
+{
+	"Genetic_Encoding":
+	{
+		"nodes":
+		[
+			{"exist": 1,"node": 0,"type": 0},
+			{"exist": 1,"node": 1,"type": 0},
+			{"exist": 1,"node": 2,"type": 2}
+		],
+		"connection_genes":
+		[
+			{"exist": 1,"innovation": 0,"in": 0,"out": 2,"weight": -0.2238,"enable": 1},
+			{"exist": 1,"innovation": 1,"in": 1,"out": 2,"weight": -0.014,"enable": 1}
+		]
+	}
+}
+{
+	"Genetic_Encoding":
+	{
+		"nodes":
+		[
+			{"exist": 1,"node": 0,"type": 0},
+			{"exist": 1,"node": 1,"type": 0},
+			{"exist": 1,"node": 2,"type": 2}
+		],
+		"connection_genes":
+		[
+			{"exist": 1,"innovation": 0,"in": 0,"out": 2,"weight": 0.7866,"enable": 1},
+			{"exist": 1,"innovation": 1,"in": 1,"out": 2,"weight": 0.1788,"enable": 1}
+		]
+	}
+}
+{
+	"Genetic_Encoding":
+	{
+		"nodes":
+		[
+			{"exist": 1,"node": 0,"type": 0},
+			{"exist": 1,"node": 1,"type": 0},
+			{"exist": 1,"node": 2,"type": 2}
+		],
+		"connection_genes":
+		[
+			{"exist": 1,"innovation": 0,"in": 0,"out": 2,"weight": 0.732,"enable": 1},
+			{"exist": 1,"innovation": 1,"in": 1,"out": 2,"weight": -0.9674,"enable": 1}
+		]
+	}
+}
+{
+	"Genetic_Encoding":
+	{
+		"nodes":
+		[
+			{"exist": 1,"node": 0,"type": 0},
+			{"exist": 1,"node": 1,"type": 0},
+			{"exist": 1,"node": 2,"type": 2}
+		],
+		"connection_genes":
+		[
+			{"exist": 1,"innovation": 0,"in": 0,"out": 2,"weight": 0.4398,"enable": 1},
+			{"exist": 1,"innovation": 1,"in": 1,"out": 2,"weight": 0.5962,"enable": 1}
+		]
+	}
+}
+{
+	"Genetic_Encoding":
+	{
+		"nodes":
+		[
+			{"exist": 1,"node": 0,"type": 0},
+			{"exist": 1,"node": 1,"type": 0},
+			{"exist": 1,"node": 2,"type": 2}
+		],
+		"connection_genes":
+		[
+			{"exist": 1,"innovation": 0,"in": 0,"out": 2,"weight": 0.7798,"enable": 1},
+			{"exist": 1,"innovation": 1,"in": 1,"out": 2,"weight": -0.4008,"enable": 1}
+		]
+	}
+}
+{
+	"Genetic_Encoding":
+	{
+		"nodes":
+		[
+			{"exist": 1,"node": 0,"type": 0},
+			{"exist": 1,"node": 1,"type": 0},
+			{"exist": 1,"node": 2,"type": 2}
+		],
+		"connection_genes":
+		[
+			{"exist": 1,"innovation": 0,"in": 0,"out": 2,"weight": -0.4082,"enable": 1},
+			{"exist": 1,"innovation": 1,"in": 1,"out": 2,"weight": -0.2454,"enable": 1}
+		]
+	}
+}
+{
+	"Genetic_Encoding":
+	{
+		"nodes":
+		[
+			{"exist": 1,"node": 0,"type": 0},
+			{"exist": 1,"node": 1,"type": 0},
+			{"exist": 1,"node": 2,"type": 2}
+		],
+		"connection_genes":
+		[
+			{"exist": 1,"innovation": 0,"in": 0,"out": 2,"weight": -0.4374,"enable": 1},
+			{"exist": 1,"innovation": 1,"in": 1,"out": 2,"weight": 0.9336,"enable": 1}
+		]
+	}
+}
+{
+	"Genetic_Encoding":
+	{
+		"nodes":
+		[
+			{"exist": 1,"node": 0,"type": 0},
+			{"exist": 1,"node": 1,"type": 0},
+			{"exist": 1,"node": 2,"type": 2}
+		],
+		"connection_genes":
+		[
+			{"exist": 1,"innovation": 0,"in": 0,"out": 2,"weight": 0.438,"enable": 1},
+			{"exist": 1,"innovation": 1,"in": 1,"out": 2,"weight": -0.781,"enable": 1}
+		]
+	}
+}
+{
+	"Genetic_Encoding":
+	{
+		"nodes":
+		[
+			{"exist": 1,"node": 0,"type": 0},
+			{"exist": 1,"node": 1,"type": 0},
+			{"exist": 1,"node": 2,"type": 2}
+		],
+		"connection_genes":
+		[
+			{"exist": 1,"innovation": 0,"in": 0,"out": 2,"weight": -0.4148,"enable": 1},
+			{"exist": 1,"innovation": 1,"in": 1,"out": 2,"weight": 0.2932,"enable": 1}
+		]
+	}
+}
+{
+	"Genetic_Encoding":
+	{
+		"nodes":
+		[
+			{"exist": 1,"node": 0,"type": 0},
+			{"exist": 1,"node": 1,"type": 0},
+			{"exist": 1,"node": 2,"type": 2}
+		],
+		"connection_genes":
+		[
+			{"exist": 1,"innovation": 0,"in": 0,"out": 2,"weight": 0.0168,"enable": 1},
+			{"exist": 1,"innovation": 1,"in": 1,"out": 2,"weight": -0.732,"enable": 1}
+		]
+	}
+}
