@@ -275,4 +275,9 @@ void Genetic_Encoding::load(char path[]){
 	}while (pch != NULL);
 }
 
+
+vector <double> Genetic_Encoding::eval(std::vector<double> inputs){
+	return inputs; // to implementate
+}
+
 #endif

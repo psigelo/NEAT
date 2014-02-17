@@ -2,14 +2,18 @@
 #define NEAT_HPP
 
 #include "genetic_encoding.hpp"
+#include "fitness.hpp"
 #include <cmath>
 
 namespace ANN_USM{
 
 	class Niche{
 		public:
-			int id;
+			bool exist;
 			int years;
+			double	total_fitness;
+			int niche_champion_position;
+			int amount_of_offspring;
 			vector<int> organism_position;
 
 	};
@@ -26,6 +30,7 @@ namespace ANN_USM{
 
 			vector <Niche> current_niches;
 			vector <Niche> prev_niches;
+
 			int last_niche_id;
 
 			Genetic_Encoding * best_organism;
@@ -46,10 +51,15 @@ namespace ANN_USM{
 			int obtain_historical_node(int initial_in, int initial_out);
 			int obtain_innovation(int in, int out);
 
-			int compatibility(Genetic_Encoding orgm1, Genetic_Encoding orgm2); // Distance between two ANNs
+			double compatibility(Genetic_Encoding orgm1, Genetic_Encoding orgm2); // Distance between two ANNs
 			Genetic_Encoding crossover(Genetic_Encoding orgm1, Genetic_Encoding orgm2);
 
 			void save(char path[]);
+			void print_niches();
+			void epoch();
+
+			Genetic_Encoding champion;
+			double fitness_champion;
 	};
 }
 

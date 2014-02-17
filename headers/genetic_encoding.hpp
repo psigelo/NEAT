@@ -53,6 +53,9 @@ namespace ANN_USM{
 			string JSON();
 			void save(char path[]); // save to a file
 			void load(char path[]); // Load an genetic_encoding from a file.
+
+			vector <double> eval(vector <double> inputs); // To implementate
+
 		//private:
 			vector <connection_gene> Lconnection_genes; //List of connections genes
 			vector <node_gene> Lnode_genes;
