@@ -16,7 +16,7 @@ int main(int argc, char** argv){
 	Population poblacion;
 	poblacion.init_population(argv[1]);
 	poblacion.save(path);
-	poblacion.print_niches();
+	//poblacion.print_niches();
 	cout << "\n";
 	return 0;
 
