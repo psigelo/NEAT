@@ -15,8 +15,10 @@ int main(int argc, char** argv){
 
 	Population poblacion;
 	poblacion.init_population(argv[1]);
+	poblacion.epoch();
 	poblacion.save(path);
 	//poblacion.print_niches();
+	//cout << poblacion.organisms[poblacion.current_niches[(int)poblacion.current_niches.size()-1].organism_position[0]] << endl;
 	cout << "\n";
 	return 0;
 

@@ -4,6 +4,7 @@
 #include "genetic_encoding.hpp"
 #include "fitness.hpp"
 #include <cmath>
+#include <unistd.h>
 
 namespace ANN_USM{
 

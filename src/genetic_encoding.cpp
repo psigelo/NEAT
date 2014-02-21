@@ -55,6 +55,8 @@ void Genetic_Encoding::add_connection(int innovation, int in, int out, double we
 			Lconnection_genes[innovation].c_g(innovation,in,out,weight,true);
 }
 
+
+
 void Genetic_Encoding::add_connection(connection_gene conn){
 	int list_size(Lconnection_genes.size());
 	if(conn.innovation >= list_size)
@@ -78,6 +80,9 @@ void Genetic_Encoding::add_connection(connection_gene conn){
 		else
 			Lconnection_genes[conn.innovation].c_g(conn.innovation,conn.in,conn.out,conn.weight,conn.enable);
 }
+
+
+
 
 
 void Genetic_Encoding::add_node(int node, gene_type type){
