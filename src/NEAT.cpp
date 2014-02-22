@@ -7,7 +7,7 @@
 /*
 * 	USER DEFINITIONS
 */
-#define POPULATION_MAX 1000
+#define POPULATION_MAX 100
 #define DISTANCE_CONST_1 1.0
 #define DISTANCE_CONST_2 0.4
 #define DISTANCE_CONST_3 1.0
@@ -155,17 +155,17 @@ Genetic_Encoding Population::mutation_node(Genetic_Encoding organism){
 			break;
 		}
 		connection_to_mutate = round(rand()%number_of_connections);
-		if(count>30){cerr << "In function Mutation_node:: in 30 attempts not found an mutation option";break;}
+		if(count>50){cerr << "In function Mutation_node:: in 30 attempts not found an mutation option";break;}
 	}
 	organism.add_node(node,HIDDEN);
 	
 
 	// add connections
 	organism.Lconnection_genes[connection_to_mutate].enable=0; // disabling old connection.
-	//cerr << "3\n";
+	
 	innov1 = obtain_innovation(organism.Lconnection_genes[connection_to_mutate].in, node);
 	innov2 = obtain_innovation(node, organism.Lconnection_genes[connection_to_mutate].out);
-	cerr << "4\n";	
+		
 	organism.add_connection(innov1, organism.Lconnection_genes[connection_to_mutate].in, node, 1.0);
 	organism.add_connection(innov2, node, organism.Lconnection_genes[connection_to_mutate].out, organism.Lconnection_genes[connection_to_mutate].weight);
 
@@ -238,6 +238,30 @@ int Population::obtain_historical_node(int in, int out){
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 int Population::obtain_innovation(int in, int out){
 	while((int)historical_innovation.size()-1 <= in)
 	{
@@ -254,6 +278,25 @@ int Population::obtain_innovation(int in, int out){
 	}
 	return historical_innovation[in][out];
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -366,6 +409,27 @@ Genetic_Encoding Population::mutation_create_new_node(Genetic_Encoding organism)
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 Genetic_Encoding Population::mutation_connection(Genetic_Encoding organism){
 	int count(0);
 	int node_in;
@@ -394,14 +458,49 @@ Genetic_Encoding Population::mutation_connection(Genetic_Encoding organism){
 		}
 		count++;
 		if(count>50){
-			cerr << "ERROR:: in 50 attempts not found an mutation option \n";
-			cerr << node_in << "\t" << node_out << "\t" << innovation << "\t" << organism.Lnode_genes[node_out].exist <<  endl;
+			//cerr << "In function mutation_connection:: in 50 attempts not found an mutation option \n";
+			//cerr << node_in << "\t" << node_out << "\t" << innovation << "\t" << organism.Lnode_genes[node_out].exist <<  endl;
 			break;
 		}
 	}	
 	
 	return organism;
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -457,12 +556,53 @@ ostream & operator<<(ostream & o, ANN_USM::Population & pop) {
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 void Population::save(char path[]){
 	ofstream file;
 	file.open (path);
 	file << *this;
 	file.close();
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -679,62 +819,100 @@ Genetic_Encoding Population::crossover(Genetic_Encoding orgm1, Genetic_Encoding 
 
 
 
-//Esta funcion se tiene que mejorar, además se tiene que agregar la opción de utulizar la distancia respecto a los mejores de las generaciones antereiores.
-void Population::spatiation(){ // Hay que optimizar esta función
-	prev_niches = current_niches;
-	Niche aux_niche;
 
-	current_niches.clear();
+
+
+
+
+void Population::spatiation(){
+	vector<Niche>().swap(prev_niches);
+	prev_niches = current_niches;
+	vector<Niche>().swap(current_niches);
+
+	Niche aux_niche;
 	aux_niche.exist=false;
 	for(int i=0; i < (int)prev_niches.size(); i++){
 		current_niches.push_back(aux_niche);
 	}
+	//cout << "Prev_niches.size(): " << (int)prev_niches.size() << endl;
 
-	// ABSOLUTAMENTE POCO EFICIENTE ESTO !!!!!!
+
 	bool have_niche;
 	int amount_of_new_niches(0);
-	for (int j = 0; j < POPULATION_MAX; ++j)
-	{
-		have_niche=false;
-		for (int i = 0; i < (int)prev_niches.size() + amount_of_new_niches; ++i)
-		{ 
-			if (i < (int)prev_niches.size())
-			{
-				if(prev_niches[i].exist){				
-					if ( compatibility(organisms[j],prev_organisms[prev_niches[i].niche_champion_position ]) <  DISTANCE_THRESHOLD)
-					{
-						have_niche=true;
-						if (current_niches[i].exist)
-						{
-							current_niches[i].organism_position.push_back(j);
-						}
-						else{
-							current_niches[i].exist=true;
-							current_niches[i].organism_position.push_back(j);
-						}
-						break;
-					}
-				}
-			}
-			else{
-				if ( compatibility(organisms[j],organisms[current_niches[i].niche_champion_position]) <  DISTANCE_THRESHOLD ){
+	for(int j=0; j < (int)organisms.size(); j++){
+		have_niche = false;
 
+		for (int i = 0; i < (int)prev_niches.size(); ++i)
+		{
+			if(prev_niches[i].exist){
+				if(compatibility(organisms[j], prev_organisms[prev_niches[i].niche_champion_position]) < DISTANCE_THRESHOLD ){
+					have_niche = true;
+					current_niches[i].exist=true;
 					current_niches[i].organism_position.push_back(j);
-					have_niche=true;
+					current_niches[i].niche_champion_position=j; // this is temporal until in function epoch the real champion is decided respect its fitness
 					break;
 				}
 			}
 		}
-		if(!have_niche){
-			aux_niche.organism_position.clear();
-			aux_niche.exist=true;
-			aux_niche.niche_champion_position=(int)prev_niches.size() + amount_of_new_niches;
-			aux_niche.organism_position.push_back((int)prev_niches.size() + amount_of_new_niches);
-			amount_of_new_niches++;
-			current_niches.push_back(aux_niche);
+
+		if (!have_niche)
+		{
+			for (int i = 0; i < amount_of_new_niches; ++i)
+			{
+				if( compatibility( organisms[j], organisms[current_niches[i + (int)prev_niches.size()].niche_champion_position] ) < DISTANCE_THRESHOLD ){
+					have_niche = true;
+					current_niches[i + (int)prev_niches.size()].exist=true;
+					current_niches[i + (int)prev_niches.size()].organism_position.push_back(j);
+					current_niches[i + (int)prev_niches.size()].niche_champion_position=j; // this is temporal until in function epoch the real champion is decided respect its fitness
+					break;
+				}
+			}
 		}
+
+		if(!have_niche){
+			Niche aux2_niche;
+			aux2_niche.exist=true;
+			aux2_niche.niche_champion_position=j;
+			aux2_niche.organism_position.push_back(j);
+			current_niches.push_back(aux2_niche);
+			amount_of_new_niches++;
+		}
+
+	
 	}
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -794,7 +972,7 @@ void Population::init_population(char path[]){
 	last_node = (int)_organism.Lnode_genes.size()-1;
 	
 	for (int i = 0; i < POPULATION_MAX; ++i){
-		organisms.push_back(  mutation_node(mutation_node(put_randoms_weight(_organism))) ); 
+		organisms.push_back(  mutation_node(put_randoms_weight(_organism)) ); 
 	}
 	lenght = POPULATION_MAX;
 
@@ -874,6 +1052,42 @@ void Population::print_niches(){
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 void Population::epoch(){
 
 	double fitness_temp;
@@ -890,6 +1104,7 @@ void Population::epoch(){
 	double total_shared_fitness_population(0.0);
 	
 	// Falta eliminar a los más malos de cada generación
+	
 	for (int i = 0; i < (int)current_niches.size(); ++i)
 	{
 		if(current_niches[i].exist){
@@ -913,11 +1128,10 @@ void Population::epoch(){
 		}
 	}
 	
-
-
+	
+	vector < Genetic_Encoding >().swap(prev_organisms);
 	prev_organisms = organisms;
-
-	organisms.clear();
+	vector < Genetic_Encoding >().swap(organisms);
 
 
 
@@ -1005,10 +1219,7 @@ void Population::epoch(){
 			}
 		}
 	}
-	
-
-	
-
+	spatiation();
 }
 
 
