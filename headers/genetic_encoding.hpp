@@ -24,6 +24,8 @@ namespace ANN_USM{
 			void c_g(int innovation, int in, int out, double weight, bool enable); // fill a conection gene
 			void c_g(bool exist);
 
+			
+
 			int innovation;
 			int in;
 			int out;
@@ -37,6 +39,8 @@ namespace ANN_USM{
 			void n_g(int node, gene_type type); // fill a node gene
 			void n_g(bool exist);
 		
+			int row;
+
 			bool exist;
 			int node;
 			gene_type type;
@@ -46,6 +50,7 @@ namespace ANN_USM{
 		public:
 			int niche;
 			void add_node(int node, gene_type type);
+			void add_node(int node, int row, gene_type type);
 			void add_node(node_gene node);
 			void add_connection(int innovation, int in, int out, double weight);
 			void add_connection(connection_gene orgm);

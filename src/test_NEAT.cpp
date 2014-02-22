@@ -22,33 +22,19 @@ int main(int argc, char** argv){
 	
 	poblacion.init_population(argv[1]);
 	
-	/*
-	poblacion.print_niches();
-	poblacion.epoch();
-	poblacion.print_niches();
-	poblacion.epoch();
-	poblacion.print_niches();
-	poblacion.epoch();
-	poblacion.print_niches();
-	poblacion.epoch();
-	poblacion.print_niches();
-	poblacion.epoch();
-	poblacion.print_niches();
-	poblacion.epoch();
-	poblacion.print_niches();
 	
-	*/
-	for (int i = 0; i < 100; ++i)
-	{
-		poblacion.epoch();
 
+	for (int i = 0; i < (int)poblacion.row_orderer_list.size(); ++i)
+	{
+		cerr << "\t\t" <<  poblacion.row_orderer_list[i];
 	}
-	//poblacion.print_niches();
-	//char path[]="./files/test_population";
-	//poblacion.save(path);
-	//poblacion.print_niches();
-	//cout << poblacion.organisms[poblacion.current_niches[(int)poblacion.current_niches.size()-1].organism_position[0]] << endl;
+	cerr << endl;
+
+
+	
+	char path[]="./files/test_population";
+	poblacion.save(path);
+
 	cout << "\n";
 	return 0;
-
 }

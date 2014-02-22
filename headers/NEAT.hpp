@@ -38,6 +38,9 @@ namespace ANN_USM{
 
 			vector < vector<int> > historical_nodes;
 			vector< vector<int> > historical_innovation;
+			vector <int> historical_row;
+
+			vector <int> row_orderer_list;
 
 			Genetic_Encoding mutation_node(Genetic_Encoding organism);
 			Genetic_Encoding mutation_create_new_node(Genetic_Encoding organism);
@@ -48,9 +51,11 @@ namespace ANN_USM{
 
 			int last_innovation;
 			int last_node;
+			int last_row;
 
 			int obtain_historical_node(int initial_in, int initial_out);
 			int obtain_innovation(int in, int out);
+			int obtain_row(int node, int node_initial_in, int node_initial_out);
 
 			double compatibility(Genetic_Encoding orgm1, Genetic_Encoding orgm2); // Distance between two ANNs
 			Genetic_Encoding crossover(Genetic_Encoding orgm1, Genetic_Encoding orgm2);

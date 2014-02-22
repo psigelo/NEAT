@@ -108,6 +108,29 @@ void Genetic_Encoding::add_node(int node, gene_type type){
 			Lnode_genes[node].n_g(node, type);
 }
 
+void Genetic_Encoding::add_node(int node, int row , gene_type type){
+	int list_size(Lnode_genes.size());
+	if(node >= list_size)
+	{
+		node_gene missing_node_gene;
+		node_gene new_node;
+
+		missing_node_gene.n_g(false);
+		new_node.n_g(node, type);
+		new_node.row=row;
+		for (int i = 0; i < node - list_size; ++i)
+		{
+			Lnode_genes.push_back(missing_node_gene);
+		}
+		Lnode_genes.push_back(new_node);
+	}
+	else
+		if(Lnode_genes[node].exist)
+			cerr << "ERROR::In function add_node , you wanted to add a node gene with a node number that already exists" << endl;	
+		else
+			Lnode_genes[node].n_g(node, type);
+}
+
 void Genetic_Encoding::add_node(node_gene node){
 	int list_size(Lnode_genes.size());
 	if(node.node >= list_size)
@@ -148,7 +171,7 @@ string Genetic_Encoding::JSON(){
 	for (int i = 0; i < node_size; ++i)
 	{
 		if(Lnode_genes[i].exist)
-			o << "\t\t\t{\"exist\": " << Lnode_genes[i].exist  << ",\"node\": " <<Lnode_genes[i].node << ",\"type\": " << Lnode_genes[i].type;
+			o << "\t\t\t{\"exist\": " << Lnode_genes[i].exist  << ",\"node\": " <<Lnode_genes[i].node << ",\"type\": " << Lnode_genes[i].type << ", \"row\": " << Lnode_genes[i].row;
 		else
 			o << "\t\t\t{\"exist\": " << Lnode_genes[i].exist ;
 		
@@ -212,7 +235,7 @@ void Genetic_Encoding::load(char path[]){
 	int enable;
 	int contador(0);
 	bool connection(false);
-
+	int row;
 	char * pch;
 	char delimiters[] = " \n\":\t{},[";
 	pch = strtok (buffer,delimiters);
@@ -260,7 +283,11 @@ void Genetic_Encoding::load(char path[]){
 						pch = strtok (NULL, delimiters);
 						pch = strtok (NULL, delimiters);
 						type = atoi(pch);
+						pch = strtok (NULL, delimiters);
+						pch = strtok (NULL, delimiters);
+						row = atoi(pch);
 						Nnew_node.n_g(node, (gene_type) type);
+						Nnew_node.row=row;
 						Lnode_genes.push_back(Nnew_node);
 					}
 					else{

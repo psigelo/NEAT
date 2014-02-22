@@ -3,10 +3,10 @@
 	{
 		"nodes":
 		[
-			{"exist": 1,"node": 0,"type": 0},
-			{"exist": 1,"node": 1,"type": 0},
-			{"exist": 1,"node": 2,"type": 0},
-			{"exist": 1,"node": 3,"type": 2}
+			{"exist": 1,"node": 0,"type": 0, "row": 0},
+			{"exist": 1,"node": 1,"type": 0, "row": 0},
+			{"exist": 1,"node": 2,"type": 0, "row": 0},
+			{"exist": 1,"node": 3,"type": 2, "row": 1}
 
 		],
 		"connection_genes":
