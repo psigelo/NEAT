@@ -171,7 +171,7 @@ void Population::init_population(char path[]){
 	
 
 	for (int i = 0; i < POPULATION_MAX; ++i){
-		organisms.push_back( (mutation_node(put_randoms_weight(_organism)) ); 
+		organisms.push_back( mutation_node(put_randoms_weight(_organism)) ); 
 	}
 	lenght = POPULATION_MAX;
 
