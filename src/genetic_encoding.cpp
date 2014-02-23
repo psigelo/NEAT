@@ -7,86 +7,145 @@
 
 using namespace ANN_USM;
 
-void connection_gene::c_g(int innovation, int in, int out, double weight, bool enable){
-	this->innovation=innovation;
+/**********************************************************************************************************************
+	Connection
+***********************************************************************************************************************/
+
+void connection_gene::c_g(int innovation, int in, int out, double weight, bool enable)
+{
+	this->innovation = innovation;
 	this->in=in;
 	this->out=out;
 	this->weight=weight;
 	this->enable=enable;
 	this->exist=true;
 }
-void connection_gene::c_g(bool exist){
+
+void connection_gene::c_g(bool exist)
+{
 	this->exist=exist;
 }
 
-void node_gene::n_g(int node, gene_type type){
+/**********************************************************************************************************************
+	Node
+***********************************************************************************************************************/
+
+node_gene::node_gene()
+{
+	this->incoming_connections = 0;
+	this->accumulative_result = 0;
+	this->counter = 0;
+	this->final_result = 0;
+}
+
+void node_gene::n_g(int node, gene_type type, string function)
+{
+	this->node = node;
+	this->type = type;
+	this->exist = true;
+	this->function = new Function(function);
+}
+
+void node_gene::n_g(int node, gene_type type)
+{
 	this->node = node;
 	this->type = type;
 	this->exist = true;
 }
 
-void node_gene::n_g(bool exist){
+void node_gene::n_g(bool exist)
+{
 	this->exist = exist;
 }
 
+void node_gene::increase_incoming_connection()
+{
+	this->incoming_connections++;
+}
 
+void node_gene::eval(double value)
+{
+	this->accumulative_result += value;
+	this->counter++;
+	
+	if(this->is_ready())
+	{
+		this->final_result = this->function->eval(this->accumulative_result);
+		this->accumulative_result = 0;
+	}
+}
 
-void Genetic_Encoding::add_connection(int innovation, int in, int out, double weight){
-	int list_size(Lconnection_genes.size());
+bool node_gene::is_ready()
+{
+	return this->incoming_connections == this->counter;
+}
+
+/**********************************************************************************************************************
+	CPPN
+***********************************************************************************************************************/
+
+void Genetic_Encoding::add_connection(int innovation, int in, int out, double weight)
+{
+	int list_size = Lconnection_genes.size();
+
 	if(innovation >= list_size)
 	{
 		connection_gene missing_connection_gene;
 		connection_gene new_connection;
 
 		missing_connection_gene.c_g(false); // conection that not exist in this genoma
-		new_connection.c_g(innovation,in,out,weight,true);
+		new_connection.c_g(innovation, in, out, weight, true);
 
 		for (int i = 0; i < innovation-list_size; ++i)
-		{
 			Lconnection_genes.push_back(missing_connection_gene);
-		}
+
 		Lconnection_genes.push_back(new_connection);
 	}
 
-	else 
+	else
+	{ 
 		if(Lconnection_genes[innovation].exist)
 			cerr << "ERROR::In function add_connection, you wanted to add a connection gene with an innovation that already exists" << endl;	
 		else
 			Lconnection_genes[innovation].c_g(innovation,in,out,weight,true);
+	}
+
+	this->Lnode_genes.at(out).increase_incoming_connection();
 }
 
-
-
-void Genetic_Encoding::add_connection(connection_gene conn){
+void Genetic_Encoding::add_connection(connection_gene conn)
+{
 	int list_size(Lconnection_genes.size());
+
 	if(conn.innovation >= list_size)
 	{
 		connection_gene missing_connection_gene;
 		connection_gene new_connection;
 
 		missing_connection_gene.c_g(false); // conection that not exist in this genoma
-		new_connection.c_g(conn.innovation,conn.in,conn.out,conn.weight, conn.enable);
+		new_connection.c_g(conn.innovation, conn.in, conn.out, conn.weight, conn.enable);
 
 		for (int i = 0; i < conn.innovation-list_size; ++i)
-		{
 			Lconnection_genes.push_back(missing_connection_gene);
-		}
+	
 		Lconnection_genes.push_back(new_connection);
 	}
 
 	else 
+	{
 		if(Lconnection_genes[conn.innovation].exist)
 			cerr << "ERROR::In function add_connection, you wanted to add a connection gene with an innovation that already exists" << endl;	
 		else
 			Lconnection_genes[conn.innovation].c_g(conn.innovation,conn.in,conn.out,conn.weight,conn.enable);
+	}
+
+	this->Lnode_genes.at(conn.out).increase_incoming_connection();
 }
 
-
-
-
-
-void Genetic_Encoding::add_node(int node, int row , gene_type type){
+void Genetic_Encoding::add_node(int node, int row , gene_type type)
+{
 	int list_size(Lnode_genes.size());
+
 	if(node >= list_size)
 	{
 		node_gene missing_node_gene;
@@ -94,24 +153,77 @@ void Genetic_Encoding::add_node(int node, int row , gene_type type){
 
 		missing_node_gene.n_g(false);
 		new_node.n_g(node, type);
-		new_node.row=row;
+		new_node.row = row;
+
 		for (int i = 0; i < node - list_size; ++i)
-		{
 			Lnode_genes.push_back(missing_node_gene);
-		}
+		
 		Lnode_genes.push_back(new_node);
 	}
 	else
+	{
 		if(Lnode_genes[node].exist)
 			cerr << "ERROR::In function add_node , you wanted to add a node gene with a node number that already exists" << endl;	
-		else{
+		else
+		{
 			Lnode_genes[node].n_g(node, type);
-			Lnode_genes[node].row = row;
+			Lnode_genes[node].row = row;		
 		}
+	}
 }
 
-void Genetic_Encoding::add_node(node_gene node){
+void Genetic_Encoding::add_node(int node, int row , gene_type type, int function)
+{
 	int list_size(Lnode_genes.size());
+
+	string function_str;
+	switch(function)
+	{
+		case 0: function_str = "SIN"; 		break;
+		case 1: function_str = "COS"; 		break;
+		case 2: function_str = "IDENTITY"; 	break;
+		case 3: function_str = "GAUSSIAN"; 	break;
+		case 4: function_str = "ABS"; 		break;
+		case 5: function_str = "SIGMOID"; 	break;
+
+		default: function_str = "IDENTITY"; break;
+	}
+
+	if(node >= list_size)
+	{
+		node_gene missing_node_gene;
+		node_gene new_node;
+
+		missing_node_gene.n_g(false);
+		new_node.n_g(node, type, function_str);
+		new_node.row = row;
+
+		for (int i = 0; i < node - list_size; ++i)
+			Lnode_genes.push_back(missing_node_gene);
+		
+		if(type == INPUT) new_node.increase_incoming_connection();
+
+		Lnode_genes.push_back(new_node);
+	}
+	else
+	{
+		if(Lnode_genes[node].exist)
+			cerr << "ERROR::In function add_node , you wanted to add a node gene with a node number that already exists" << endl;	
+		else
+		{
+			Lnode_genes[node].n_g(node, type, function_str);
+			Lnode_genes[node.node].row = node.row;
+		}
+	}
+
+	if(type == INPUT) this->input_nodes.push_back(node);
+	else if(type == OUTPUT) this->output_nodes.push_back(node);
+}
+
+void Genetic_Encoding::add_node(node_gene node)
+{
+	int list_size(Lnode_genes.size());
+
 	if(node.node >= list_size)
 	{
 		node_gene missing_node_gene;
@@ -121,29 +233,31 @@ void Genetic_Encoding::add_node(node_gene node){
 		new_node.n_g(node.node, node.type);
 
 		for (int i = 0; i < node.node - list_size; ++i)
-		{
 			Lnode_genes.push_back(missing_node_gene);
-		}
-		new_node.row = node.row;
+		
 		Lnode_genes.push_back(new_node);
 	}
 	else
+	{
 		if(Lnode_genes[node.node].exist)
 			cerr << "ERROR::In function add_node , you wanted to add a node gene with a node number that already exists" << endl;	
-		else{
+		else
 			Lnode_genes[node.node].n_g(node.node, node.type);
-			Lnode_genes[node.node].row = node.row;
-		}
+	}
 }
 
-ostream & operator<<(ostream & o, Genetic_Encoding & encoding) { 
+
+
+ostream & operator<<(ostream & o, Genetic_Encoding & encoding) 
+{
 	o << encoding.JSON();	
 	return o;
 }
 
 
 
-string Genetic_Encoding::JSON(){
+string Genetic_Encoding::JSON()
+{
 	stringstream o;
 	o << "{\n\t\"Genetic_Encoding\":\n\t{\n\t\t\"nodes\":\n\t\t[\n";
 
@@ -184,14 +298,16 @@ string Genetic_Encoding::JSON(){
 }
 
 
-void Genetic_Encoding::save(char path[]){
+void Genetic_Encoding::save(char path[])
+{
 	ofstream file;
 	file.open (path);
 	file << JSON();
 	file.close();
 }
 
-void Genetic_Encoding::load(char path[]){
+void Genetic_Encoding::load(char path[])
+{
 
 	node_gene Nnew_node;
 	connection_gene Cnew_node;
@@ -289,9 +405,61 @@ void Genetic_Encoding::load(char path[]){
 	}while (pch != NULL);
 }
 
+vector<connection_gene> Genetic_Encoding::get_outgoing_connections(int node)
+{
+	vector<connection_gene> outgoing_connections;
 
-vector <double> Genetic_Encoding::eval(std::vector<double> inputs){
-	return inputs; // to implementate
+	for (int i = 0; i < (int)this->Lconnection_genes.size(); i++)
+	{
+		if(	this->Lconnection_genes.at(i).exist && \
+			this->Lconnection_genes.at(i).enable && \
+			this->Lconnection_genes.at(i).in == node)
+			outgoing_connections.push_back(this->Lconnection_genes.at(i));
+	}
+	
+	return outgoing_connections;
+}
+
+void Genetic_Encoding::spread_final_result(int node, double value)
+{
+	// Evaluates the node
+	this->Lnode_genes.at(node).eval(value);
+
+	if(this->Lnode_genes.at(node).is_ready())
+	{
+		this->Lnode_genes.at(node).counter = 0;
+
+		value = this->Lnode_genes.at(node).final_result;
+
+		vector<connection_gene> outgoing_connections = this->get_outgoing_connections(node);
+
+		for (int i = 0; i < (int)outgoing_connections.size(); i++)
+		{
+			this->spread_final_result(outgoing_connections.at(i).out, value * outgoing_connections.at(i).weight);
+		}
+	}
+}
+
+vector <double> Genetic_Encoding::eval(vector<double> inputs)
+{
+	vector<double> outputs;
+
+	if(inputs.size() != this->input_nodes.size())
+	{
+		cerr << "error in function 'Genome::eval'. Number of input values differ from number of input nodes." << endl;
+	}
+	else
+	{
+		// Spread the initial values through the network
+		for (int i = 0; i < (int)this->input_nodes.size(); i++)
+			this->spread_final_result(this->input_nodes.at(i), inputs.at(i));
+
+		// Recollect all the final results from the output nodes
+		for (int i = 0; i < (int)this->output_nodes.size(); i++)
+			outputs.push_back(this->Lnode_genes.at(this->output_nodes.at(i)).final_result);	
+	}
+
+	return outputs;
 }
 
 #endif
