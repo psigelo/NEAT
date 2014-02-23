@@ -1238,16 +1238,16 @@ void Population::epoch(){
 						
 					}
 					else{
-						while(true){
-							random_niche_father = rand()%current_niches.size();
-							if(current_niches[random_niche_father].exist && (int)current_niches[random_niche_father].organism_position.size() > 1)break;
-						}
+						
+						random_niche_father = i;
+							
 						random_father = current_niches[random_niche_father].organism_position[rand()%current_niches[random_niche_father].organism_position.size()];
 						organism_father = prev_organisms[random_father];
 						
 						while(true){
 							random_mother = rand()%current_niches[random_niche_father].organism_position.size();
 							if(random_mother != random_father)break;
+							if(current_niches[random_niche_father].organism_position.size()==1)break;
 						}
 						
 						organism_mother = prev_organisms[random_mother];
@@ -1290,159 +1290,6 @@ void Population::epoch(){
 	spatiation();
 }
 
-
-/*
-void Population::epoch(){
-
-	double fitness_temp;
-	double fitness_max(0.0);
-	int mutation_amount; 
-	int random_organism;
-	int random_father;
-	int random_mother; // for mating
-	int random_niche_father;
-	int random_niche_mother;
-	Genetic_Encoding organism_temp;
-	Genetic_Encoding organism_father;
-	Genetic_Encoding organism_mother;// for mating
-	double total_shared_fitness_population(0.0);
-
-
-	vector <Niche> real_niches;
-	for (int i = 0; i < (int)current_niches.size(); ++i)
-	{
-		if(current_niches[i].exist){
-			real_niches.push_back(current_niches[i]);
-		}
-	}
-
-
-	// Falta eliminar a los más malos de cada generación
-	for (int i = 0; i < (int)current_niches.size(); ++i)
-	{
-		if(current_niches[i].exist){
-			current_niches[i].total_fitness=0;
-			for (int j = 0; j < (int)current_niches[i].organism_position.size(); ++j)
-			{
-				fitness_temp=fitness(organisms[current_niches[i].organism_position[j]]);
-				if(j==0 || fitness_temp > fitness_max)
-				{
-					fitness_max=fitness_temp;
-					current_niches[i].niche_champion_position = j;
-				}
-				current_niches[i].total_fitness+=fitness_temp;
-
-				if(fitness_temp > fitness_champion){ // Champion over all generations.
-					champion = organisms[current_niches[i].organism_position[j]];
-					fitness_champion=fitness_temp;
-				}
-			}
-			total_shared_fitness_population+= current_niches[i].total_fitness/current_niches[i].organism_position.size();
-		}
-	}
-	vector < Genetic_Encoding >().swap(prev_organisms);
-	prev_organisms = organisms;
-	vector < Genetic_Encoding >().swap(organisms);
-
-
-
-	// CAMBIARLO Y USAR REAL_NICHES.
-	for (int i = 0; i < (int)real_niches.size(); ++i)
-	{
-		
-		current_niches[i].amount_of_offspring=round( POPULATION_MAX*(real_niches[i].total_fitness/real_niches[i].organism_position.size())/total_shared_fitness_population   + 1.0);
-		for (int j = 0; j < real_niches[i].amount_of_offspring; ++j)
-		{
-			if(j==0){ // all niche champions pass throgh generations.
-				organisms.push_back(prev_organisms[real_niches[i].niche_champion_position]);
-			}
-			if(rand()%100 < PERCENTAGE_OFFSPRING_WITHOUT_CROSSOVER){
-				random_organism = rand()%real_niches[i].organism_position.size();
-				organism_temp = prev_organisms[random_organism];
-				mutation_amount = rand()%(int)round(prev_organisms[random_organism].Lconnection_genes.size()*PERCENT_MUTATION_CONNECTION) + 1; 
-				for(int k = 0; k < mutation_amount; k++)
-					organism_temp = mutation_change_weight(organism_temp);
-			}
-			else{
-				if( (rand()%1000)/1000.0 < PROBABILITY_INTERSPACIES_MATING){
-					while(true){							
-						random_niche_father = i;
-						random_niche_mother = rand()%real_niches.size();
-						if(random_niche_mother != random_niche_father)break;
-						if(real_niches.size() == 1 ){
-							cerr << "Warning:: In function Epoch:: Exist only one niche\n";
-							break;
-						}
-					}
-
-
-					
-					
-					random_father = real_niches[random_niche_father].organism_position[rand()%real_niches[random_niche_father].organism_position.size()];
-					organism_father = prev_organisms[random_father];
-					
-
-					random_mother = real_niches[random_niche_mother].organism_position[rand()%real_niches[random_niche_mother].organism_position.size()];
-					organism_mother = prev_organisms[random_mother];
-					
-					organism_temp = crossover(organism_father, organism_mother);
-					
-				}
-				else{
-					while(true){
-						random_niche_father = rand()%current_niches.size();
-						if(current_niches[random_niche_father].exist && (int)current_niches[random_niche_father].organism_position.size() > 1)break;
-					}
-					random_father = current_niches[random_niche_father].organism_position[rand()%current_niches[random_niche_father].organism_position.size()];
-					organism_father = prev_organisms[random_father];
-					
-					while(true){
-						random_mother = rand()%current_niches[random_niche_father].organism_position.size();
-						if(random_mother != random_father)break;
-					}
-					
-					organism_mother = prev_organisms[random_mother];
-					random_mother = current_niches[random_mother].organism_position[random_mother];
-					organism_temp = crossover(organism_father, organism_mother);
-				}
-
-			}
-			
-
-
-
-
-
-			if(rand()%100 < LARGE_POPULATION_DISCRIMINATOR ){ // enter if is a small niche
-				if((rand()%1000)/1000.0 < SMALLER_POPULATIONS_PROBABILITY_ADDING_NEW_NODE){
-					organism_temp = mutation_node(organism_temp);
-				}
-				if((rand()%1000)/1000.0 < SMALLER_POPULATIONS_PROBABILITY_ADDING_NEW_CONNECTION) {
-					organism_temp = mutation_connection(organism_temp);
-				}
-			}
-			else{// enter if is a large niche
-				if((rand()%1000)/1000.0 < LARGER_POPULATIONS_PROBABILITY_ADDING_NEW_NODE){
-					organism_temp = mutation_node(organism_temp);
-				}
-				if((rand()%1000)/1000.0 < LARGER_POPULATIONS_PROBABILITY_ADDING_NEW_CONNECTION) {
-					organism_temp = mutation_connection(organism_temp);
-				}
-			}
-			
-
-
-
-			organisms.push_back(organism_temp);
-
-		}
-		
-	}
-	spatiation();
-}
-
-
-*/
 
 
 

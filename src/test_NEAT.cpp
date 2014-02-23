@@ -26,6 +26,8 @@ int main(int argc, char** argv){
 	{
 		poblacion.epoch();
 	}
+
+	cerr << "LLEGO" << endl;
 	
 	/*
 	for (int i = 0; i < (int)poblacion.row_orderer_list.size(); ++i)
@@ -39,7 +41,7 @@ int main(int argc, char** argv){
 	
 	
 	*/
-	char path[]="./files/test_population";
+	char path[]="./files/test_population2";
 	poblacion.save(path);
 
 	cout << "\n";
