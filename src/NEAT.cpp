@@ -1172,7 +1172,17 @@ void Population::epoch(){
 	Genetic_Encoding organism_father;
 	Genetic_Encoding organism_mother;// for mating
 	double total_shared_fitness_population(0.0);
-	
+
+
+	vector <Niche> real_niches;
+	for (int i = 0; i < (int)current_niches.size(); ++i)
+	{
+		if(current_niches[i].exist){
+			real_niches.push_back(current_niches[i]);
+		}
+	}
+
+
 	// Falta eliminar a los más malos de cada generación
 	for (int i = 0; i < (int)current_niches.size(); ++i)
 	{
@@ -1196,14 +1206,13 @@ void Population::epoch(){
 			total_shared_fitness_population+= current_niches[i].total_fitness/current_niches[i].organism_position.size();
 		}
 	}
-	
 	vector < Genetic_Encoding >().swap(prev_organisms);
 	prev_organisms = organisms;
 	vector < Genetic_Encoding >().swap(organisms);
 
 
 
-	// Generate the offspring, then mutate them.
+	// CAMBIARLO Y USAR REAL_NICHES.
 	for (int i = 0; i < (int)current_niches.size(); ++i)
 	{
 		if(current_niches[i].exist){
@@ -1213,7 +1222,6 @@ void Population::epoch(){
 				if(j==0){ // all niche champions pass throgh generations.
 					organisms.push_back(prev_organisms[current_niches[i].niche_champion_position]);
 				}
-				
 				if(rand()%100 < PERCENTAGE_OFFSPRING_WITHOUT_CROSSOVER){
 					random_organism = rand()%current_niches[i].organism_position.size();
 					organism_temp = prev_organisms[random_organism];
@@ -1223,20 +1231,24 @@ void Population::epoch(){
 				}
 				else{
 					if( (rand()%1000)/1000.0 < PROBABILITY_INTERSPACIES_MATING){
-						while(true){
-							random_niche_father = rand()%current_niches.size();
-							if(current_niches[random_niche_father].exist && (int)current_niches[random_niche_father].organism_position.size() > 1)break;
+						while(true){							
+							random_niche_father = rand()%real_niches.size();
+							random_niche_mother = rand()%real_niches.size();
+							if(random_niche_mother != random_niche_father)break;
+							if(real_niches.size() == 1 ){
+								cerr << "Warning:: In function Epoch:: Exist only one niche\n";
+								break;
+							}
 						}
-						while(true){
-							random_niche_mother = rand()%current_niches.size();
-							if(current_niches[random_niche_mother].exist && random_niche_mother != random_niche_father)break;
-						}
+
+
 						
-						random_father = current_niches[random_niche_father].organism_position[rand()%current_niches[random_niche_father].organism_position.size()];
+						
+						random_father = real_niches[random_niche_father].organism_position[rand()%real_niches[random_niche_father].organism_position.size()];
 						organism_father = prev_organisms[random_father];
 						
 
-						random_mother = current_niches[random_niche_mother].organism_position[rand()%current_niches[random_niche_mother].organism_position.size()];
+						random_mother = real_niches[random_niche_mother].organism_position[rand()%real_niches[random_niche_mother].organism_position.size()];
 						organism_mother = prev_organisms[random_mother];
 						
 						organism_temp = crossover(organism_father, organism_mother);
@@ -1262,7 +1274,6 @@ void Population::epoch(){
 
 				}
 				
-
 
 
 
