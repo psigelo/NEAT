@@ -22,8 +22,11 @@ int main(int argc, char** argv){
 	
 	poblacion.init_population(argv[1]);
 	
+	for (int i = 0; i < GENERATIONS; ++i)
+	{
+		poblacion.epoch();
+	}
 	
-
 	for (int i = 0; i < (int)poblacion.row_orderer_list.size(); ++i)
 	{
 		cerr << "\t\t" <<  poblacion.row_orderer_list[i];

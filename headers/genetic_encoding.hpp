@@ -49,7 +49,6 @@ namespace ANN_USM{
 	class Genetic_Encoding{
 		public:
 			int niche;
-			void add_node(int node, gene_type type);
 			void add_node(int node, int row, gene_type type);
 			void add_node(node_gene node);
 			void add_connection(int innovation, int in, int out, double weight);

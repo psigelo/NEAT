@@ -85,29 +85,6 @@ void Genetic_Encoding::add_connection(connection_gene conn){
 
 
 
-void Genetic_Encoding::add_node(int node, gene_type type){
-	int list_size(Lnode_genes.size());
-	if(node >= list_size)
-	{
-		node_gene missing_node_gene;
-		node_gene new_node;
-
-		missing_node_gene.n_g(false);
-		new_node.n_g(node, type);
-
-		for (int i = 0; i < node - list_size; ++i)
-		{
-			Lnode_genes.push_back(missing_node_gene);
-		}
-		Lnode_genes.push_back(new_node);
-	}
-	else
-		if(Lnode_genes[node].exist)
-			cerr << "ERROR::In function add_node , you wanted to add a node gene with a node number that already exists" << endl;	
-		else
-			Lnode_genes[node].n_g(node, type);
-}
-
 void Genetic_Encoding::add_node(int node, int row , gene_type type){
 	int list_size(Lnode_genes.size());
 	if(node >= list_size)
@@ -127,8 +104,10 @@ void Genetic_Encoding::add_node(int node, int row , gene_type type){
 	else
 		if(Lnode_genes[node].exist)
 			cerr << "ERROR::In function add_node , you wanted to add a node gene with a node number that already exists" << endl;	
-		else
+		else{
 			Lnode_genes[node].n_g(node, type);
+			Lnode_genes[node].row = row;
+		}
 }
 
 void Genetic_Encoding::add_node(node_gene node){
@@ -145,13 +124,16 @@ void Genetic_Encoding::add_node(node_gene node){
 		{
 			Lnode_genes.push_back(missing_node_gene);
 		}
+		new_node.row = node.row;
 		Lnode_genes.push_back(new_node);
 	}
 	else
 		if(Lnode_genes[node.node].exist)
 			cerr << "ERROR::In function add_node , you wanted to add a node gene with a node number that already exists" << endl;	
-		else
+		else{
 			Lnode_genes[node.node].n_g(node.node, node.type);
+			Lnode_genes[node.node].row = node.row;
+		}
 }
 
 ostream & operator<<(ostream & o, Genetic_Encoding & encoding) { 
