@@ -5,6 +5,7 @@
 #include "fitness.hpp"
 #include <cmath>
 #include <unistd.h>
+#include "user_definitions.hpp"
 
 namespace ANN_USM{
 
@@ -66,6 +67,9 @@ namespace ANN_USM{
 
 			Genetic_Encoding champion;
 			double fitness_champion;
+
+
+
 	};
 }
 

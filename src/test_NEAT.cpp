@@ -21,12 +21,12 @@ int main(int argc, char** argv){
 	Population poblacion;
 	
 	poblacion.init_population(argv[1]);
-	
+	/*
 	for (int i = 0; i < GENERATIONS; ++i)
 	{
 		poblacion.epoch();
 	}
-
+	*/
 	/*
 	for (int i = 0; i < (int)poblacion.row_orderer_list.size(); ++i)
 	{
@@ -36,10 +36,12 @@ int main(int argc, char** argv){
 
 
 	
+	
+	
+	*/
 	char path[]="./files/test_population";
 	poblacion.save(path);
-	*/
-	
+
 	cout << "\n";
 	return 0;
 }

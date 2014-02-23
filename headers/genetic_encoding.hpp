@@ -9,6 +9,8 @@
 #include <sstream>
 #include <fstream>
 #include <strings.h>
+#include "user_definitions.hpp"
+
 
 using namespace std;
 
@@ -63,6 +65,7 @@ namespace ANN_USM{
 		//private:
 			vector <connection_gene> Lconnection_genes; //List of connections genes
 			vector <node_gene> Lnode_genes;
+			vector <int> row_orderer_list;
 	};
 
 	
