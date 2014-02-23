@@ -214,6 +214,7 @@ void Population::init_population(char path[]){
 
 Genetic_Encoding Population::mutation_node(Genetic_Encoding organism){
 
+
 	int number_of_connections = organism.Lconnection_genes.size();
 	int connection_to_mutate;
 	int innov1;
@@ -242,7 +243,7 @@ Genetic_Encoding Population::mutation_node(Genetic_Encoding organism){
 		if(count++ > 50){cerr << "In function Mutation_node:: in 50 attempts not found an mutation option";break;}
 	}while(true);
 
-	row = obtain_row(node, organism.Lnode_genes[organism.Lconnection_genes[connection_to_mutate].in].row, organism.Lnode_genes[organism.Lconnection_genes[connection_to_mutate].out].row);
+	row = obtain_row(node, organism.Lnode_genes[organism.Lconnection_genes[connection_to_mutate].in].row, organism.Lnode_genes[ organism.Lconnection_genes[connection_to_mutate].out ].row );
 	organism.add_node(node, row ,HIDDEN);
 	
 
@@ -286,10 +287,11 @@ int Population::obtain_row(int node, int row_node_initial_in, int row_node_initi
 	}
 	
 	if(row_position_in == -1 || row_position_out == -1 ){
-		cerr << row_node_initial_in << "\t" << row_position_in << "\t" << row_node_initial_out << "\t" << row_position_out << "\t" << "Error:: Function obtain_row :: Row_node_in or row_node_out does not exist .\n"; exit(1);
+		cerr << row_node_initial_in << "\t" << row_position_in << "\t" << row_node_initial_out << "\t" << row_position_out << "\t" << row_orderer_list.size() << "\n" << "Error:: Function obtain_row :: Row_node_in or row_node_out does not exist .\n"; exit(1);
 	}
 
 	if( row_position_in > row_position_out){
+		cerr << row_node_initial_in << "\t" << row_position_in << "\t" << row_node_initial_out << "\t" << row_position_out << "\t" << row_orderer_list.size() << "\n"; 
 		cerr << "Error:: Function obtain_row :: ------------------------.\n"; exit(1);
 	}
 
@@ -544,8 +546,9 @@ Genetic_Encoding Population::mutation_connection(Genetic_Encoding organism){
 			if( (organism.Lnode_genes[node_out].exist  && organism.Lnode_genes[node_in].exist) && ( row_position_in <  row_position_out) ) break;
 			if (counter > 50)
 			{
-				cerr << "In function mutation_connection:: counter is greater than 50 \n";
-				break;
+				
+				//cerr << "In function mutation_connection:: counter is greater than 50 \n";
+				return organism;
 			}
 			counter++;
 		}
@@ -562,7 +565,7 @@ Genetic_Encoding Population::mutation_connection(Genetic_Encoding organism){
 		}
 		
 		if(count>50){
-			cerr << "In function mutation_connection:: in 50 attempts not found an mutation option \n";
+			//cerr << "In function mutation_connection:: in 50 attempts not found an mutation option \n";
 			break;
 		}
 
@@ -1260,6 +1263,11 @@ void Population::epoch(){
 				}
 				
 
+
+
+
+
+
 				if(rand()%100 < LARGE_POPULATION_DISCRIMINATOR ){ // enter if is a small niche
 					if((rand()%1000)/1000.0 < SMALLER_POPULATIONS_PROBABILITY_ADDING_NEW_NODE){
 						organism_temp = mutation_node(organism_temp);
@@ -1268,11 +1276,6 @@ void Population::epoch(){
 						organism_temp = mutation_connection(organism_temp);
 					}
 				}
-
-
-
-				
-
 				else{// enter if is a large niche
 					if((rand()%1000)/1000.0 < LARGER_POPULATIONS_PROBABILITY_ADDING_NEW_NODE){
 						organism_temp = mutation_node(organism_temp);

@@ -6,7 +6,7 @@ using namespace ANN_USM;
 
 #include <ctime>
 enum user_definitions{
-	GENERATIONS = 10
+	GENERATIONS = 100
 };
 
 
@@ -26,7 +26,7 @@ int main(int argc, char** argv){
 	{
 		poblacion.epoch();
 	}
-	
+	/*
 	for (int i = 0; i < (int)poblacion.row_orderer_list.size(); ++i)
 	{
 		cerr << "\t\t" <<  poblacion.row_orderer_list[i];
@@ -37,7 +37,7 @@ int main(int argc, char** argv){
 	
 	char path[]="./files/test_population";
 	poblacion.save(path);
-
+*/
 	cout << "\n";
 	return 0;
 }
