@@ -1,4 +1,5 @@
-
+#ifndef UDER_DEF_HPP
+#define UDER_DEF_HPP
 /*
 * 	USER DEFINITIONS
 */
@@ -20,3 +21,10 @@
 #define PROBABILITY_CONNECTION_WEIGHT_MUTATING 80
 #define LARGE_POPULATION_DISCRIMINATOR (POPULATION_MAX/10.0)
 #define GENERATIONS 100
+
+#include <cmath>
+
+double sigmoide(double x);
+
+
+#endif

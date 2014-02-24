@@ -62,14 +62,17 @@ namespace ANN_USM{
 
 			vector <double> eval(vector <double> inputs); // To implementate
 
+			vector <int> row_orderer_list;
 		//private:
 			vector <connection_gene> Lconnection_genes; //List of connections genes
 			vector <node_gene> Lnode_genes;
-			vector <int> row_orderer_list;
+			
 	};
 
 	
 }
 
 ostream & operator<<(ostream & o, ANN_USM::Genetic_Encoding & encoding);
+
+
 #endif

@@ -228,7 +228,7 @@ Genetic_Encoding Population::mutation_node(Genetic_Encoding organism){
 
 	row = obtain_row(node, organism.Lnode_genes[organism.Lconnection_genes[connection_to_mutate].in].row, organism.Lnode_genes[ organism.Lconnection_genes[connection_to_mutate].out ].row );
 	organism.add_node(node, row ,HIDDEN);
-	
+	organism.row_orderer_list = row_orderer_list;
 
 	// add connections
 	organism.Lconnection_genes[connection_to_mutate].enable=0; // disabling old connection.
@@ -301,7 +301,6 @@ int Population::obtain_row(int node, int row_node_initial_in, int row_node_initi
 		}
 		else{
 			historical_row[node] = row_orderer_list[row_position_in + 1];
-
 			return historical_row[node];
 		}
 	}	
@@ -606,7 +605,7 @@ Genetic_Encoding Population::mutation_connection(Genetic_Encoding organism){
 
 
 ostream & operator<<(ostream & o, ANN_USM::Population & pop) { 
-	for (int i = 0; i < pop.lenght; ++i){
+	for (int i = 0; i < (int)pop.organisms.size(); ++i){
 		o << pop.organisms[i];
 		o << "\n";
 	}
@@ -916,12 +915,23 @@ void Population::spatiation(){
 	prev_niches = current_niches;
 	vector<Niche>().swap(current_niches);
 
+	
+	//cout << "Prev_niches.size(): " << (int)prev_niches.size() << endl;
+
+	vector <Niche> real_niches;
+	for (int i = 0; i < (int)prev_niches.size(); ++i)
+	{
+		if (prev_niches[i].exist)
+		{
+			real_niches.push_back(prev_niches[i]);
+		}
+	}
+
 	Niche aux_niche;
 	aux_niche.exist=false;
-	for(int i=0; i < (int)prev_niches.size(); i++){
+	for(int i=0; i < (int)real_niches.size(); i++){
 		current_niches.push_back(aux_niche);
 	}
-	//cout << "Prev_niches.size(): " << (int)prev_niches.size() << endl;
 
 
 	bool have_niche;
@@ -929,28 +939,28 @@ void Population::spatiation(){
 	for(int j=0; j < (int)organisms.size(); j++){
 		have_niche = false;
 
-		for (int i = 0; i < (int)prev_niches.size(); ++i)
+		for (int i = 0; i < (int)real_niches.size(); ++i)
 		{
-			if(prev_niches[i].exist){
-				if(compatibility(organisms[j], prev_organisms[prev_niches[i].niche_champion_position]) < DISTANCE_THRESHOLD ){
-					have_niche = true;
-					current_niches[i].exist=true;
-					current_niches[i].organism_position.push_back(j);
-					current_niches[i].niche_champion_position=j; // this is temporal until in function epoch the real champion is decided respect its fitness
-					break;
-				}
+			
+			if(compatibility(organisms[j], prev_organisms[real_niches[i].niche_champion_position]) < DISTANCE_THRESHOLD ){
+				have_niche = true;
+				current_niches[i].exist=true;
+				current_niches[i].organism_position.push_back(j);
+				current_niches[i].niche_champion_position=j; // this is temporal until in function epoch the real champion is decided respect its fitness
+				break;
 			}
+			
 		}
 
 		if (!have_niche)
 		{
 			for (int i = 0; i < amount_of_new_niches; ++i)
 			{
-				if( compatibility( organisms[j], organisms[current_niches[i + (int)prev_niches.size()].niche_champion_position] ) < DISTANCE_THRESHOLD ){
+				if( compatibility( organisms[j], organisms[current_niches[i + (int)real_niches.size()].niche_champion_position] ) < DISTANCE_THRESHOLD ){
 					have_niche = true;
-					current_niches[i + (int)prev_niches.size()].exist=true;
-					current_niches[i + (int)prev_niches.size()].organism_position.push_back(j);
-					current_niches[i + (int)prev_niches.size()].niche_champion_position=j; // this is temporal until in function epoch the real champion is decided respect its fitness
+					current_niches[i + (int)real_niches.size()].exist=true;
+					current_niches[i + (int)real_niches.size()].organism_position.push_back(j);
+					current_niches[i + (int)real_niches.size()].niche_champion_position=j; // this is temporal until in function epoch the real champion is decided respect its fitness
 					break;
 				}
 			}
@@ -1199,7 +1209,7 @@ void Population::epoch(){
 	for (int i = 0; i < (int)current_niches.size(); ++i)
 	{
 		if(current_niches[i].exist){
-			current_niches[i].amount_of_offspring=round( POPULATION_MAX*(current_niches[i].total_fitness/current_niches[i].organism_position.size())/total_shared_fitness_population   + 1.0);
+			current_niches[i].amount_of_offspring= round( POPULATION_MAX*(current_niches[i].total_fitness/current_niches[i].organism_position.size())/total_shared_fitness_population   + 1.0);
 			for (int j = 0; j < current_niches[i].amount_of_offspring; ++j)
 			{
 				if(j==0){ // all niche champions pass throgh generations.

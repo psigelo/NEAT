@@ -23,6 +23,7 @@ int main(int argc, char** argv){
 		poblacion.epoch();
 	char path[]="./files/last_run_population_result";
 	poblacion.save(path);
+	poblacion.print_niches();
 	cout << "\n";
 
 	return 0;

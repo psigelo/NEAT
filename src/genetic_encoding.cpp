@@ -291,7 +291,23 @@ void Genetic_Encoding::load(char path[]){
 
 
 vector <double> Genetic_Encoding::eval(std::vector<double> inputs){
-	return inputs; // to implementate
+/*	
+	int amount_inputs_nodes(0);
+	int amount_output_nodes(0);
+	int amount_hiden_nodes (0);
+
+	for(int i=0; i < Lnode_genes ; i++){
+		if(){
+			Lnode_genes[i].type == INPUT;
+
+		}
+	}
+
+	if((size)inputs.size() > )
+*/
+
+
+	return inputs;
 }
 
 #endif
