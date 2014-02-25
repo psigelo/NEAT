@@ -21,8 +21,8 @@ int main(int argc, char** argv){
 	poblacion.init_population(argv[1]);
 	for (int i = 0; i < GENERATIONS; ++i)
 		poblacion.epoch();
-	char path[]="./files/last_run_population_result";
-	poblacion.save(path);
+	//char path[]="./files/last_run_population_result";
+	//poblacion.save(path);
 	poblacion.print_niches();
 	cout << "\n";
 

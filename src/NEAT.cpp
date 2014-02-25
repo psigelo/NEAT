@@ -1188,13 +1188,14 @@ void Population::epoch(){
 				{
 					fitness_max=fitness_temp;
 					current_niches[i].niche_champion_position = j;
+					if(fitness_temp > fitness_champion){ // Champion over all generations.
+						champion = organisms[current_niches[i].organism_position[j]];
+						fitness_champion=fitness_temp;
+					}
 				}
 				current_niches[i].total_fitness+=fitness_temp;
 
-				if(fitness_temp > fitness_champion){ // Champion over all generations.
-					champion = organisms[current_niches[i].organism_position[j]];
-					fitness_champion=fitness_temp;
-				}
+				
 			}
 			total_shared_fitness_population+= current_niches[i].total_fitness/current_niches[i].organism_position.size();
 		}
