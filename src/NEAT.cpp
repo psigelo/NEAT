@@ -919,6 +919,7 @@ void Population::spatiation(){
 	//cout << "Prev_niches.size(): " << (int)prev_niches.size() << endl;
 
 	vector <Niche> real_niches;
+	vector <Niche> current_niches_temp;
 	for (int i = 0; i < (int)prev_niches.size(); ++i)
 	{
 		if (prev_niches[i].exist)
@@ -930,7 +931,7 @@ void Population::spatiation(){
 	Niche aux_niche;
 	aux_niche.exist=false;
 	for(int i=0; i < (int)real_niches.size(); i++){
-		current_niches.push_back(aux_niche);
+		current_niches_temp.push_back(aux_niche);
 	}
 
 
@@ -944,9 +945,9 @@ void Population::spatiation(){
 			
 			if(compatibility(organisms[j], prev_organisms[real_niches[i].niche_champion_position]) < DISTANCE_THRESHOLD ){
 				have_niche = true;
-				current_niches[i].exist=true;
-				current_niches[i].organism_position.push_back(j);
-				current_niches[i].niche_champion_position=j; // this is temporal until in function epoch the real champion is decided respect its fitness
+				current_niches_temp[i].exist=true;
+				current_niches_temp[i].organism_position.push_back(j);
+				current_niches_temp[i].niche_champion_position=j; // this is temporal until in function epoch the real champion is decided respect its fitness
 				break;
 			}
 			
@@ -956,11 +957,11 @@ void Population::spatiation(){
 		{
 			for (int i = 0; i < amount_of_new_niches; ++i)
 			{
-				if( compatibility( organisms[j], organisms[current_niches[i + (int)real_niches.size()].niche_champion_position] ) < DISTANCE_THRESHOLD ){
+				if( compatibility( organisms[j], organisms[current_niches_temp[i + (int)real_niches.size()].niche_champion_position] ) < DISTANCE_THRESHOLD ){
 					have_niche = true;
-					current_niches[i + (int)real_niches.size()].exist=true;
-					current_niches[i + (int)real_niches.size()].organism_position.push_back(j);
-					current_niches[i + (int)real_niches.size()].niche_champion_position=j; // this is temporal until in function epoch the real champion is decided respect its fitness
+					current_niches_temp[i + (int)real_niches.size()].exist=true;
+					current_niches_temp[i + (int)real_niches.size()].organism_position.push_back(j);
+					current_niches_temp[i + (int)real_niches.size()].niche_champion_position=j; // this is temporal until in function epoch the real champion is decided respect its fitness
 					break;
 				}
 			}
@@ -971,12 +972,17 @@ void Population::spatiation(){
 			aux2_niche.exist=true;
 			aux2_niche.niche_champion_position=j;
 			aux2_niche.organism_position.push_back(j);
-			current_niches.push_back(aux2_niche);
+			current_niches_temp.push_back(aux2_niche);
 			amount_of_new_niches++;
 		}
-
-	
 	}
+
+
+	for (int i = 0; i < (int)current_niches_temp.size(); ++i)
+	{
+		if( current_niches_temp[i].exist ) current_niches.push_back(current_niches_temp[i]);
+	}
+
 }
 
 
