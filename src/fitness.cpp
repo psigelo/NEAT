@@ -6,8 +6,8 @@
 
 
 double fitness(Genetic_Encoding organism){
-	//return rand()%1000;
-	return 0.1;
+	return rand()%1000;
+	//return 0.1;
 }
 
 #endif
