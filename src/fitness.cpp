@@ -45,7 +45,7 @@ double fitness(Genetic_Encoding organism){
 	error_sum += output.at(0);
 	input.clear();
 
-	cout << "fitnes: " << pow(4 - error_sum, 2) << "\terror_sum:\t" << error_sum << endl;
+	
 
 	// Fitness
 	return pow(4 - error_sum, 2);
