@@ -46,6 +46,8 @@ namespace ANN_USM{
 			bool exist;
 			int node;
 			gene_type type;
+
+			double node_output_value;
 	};
 
 	class Genetic_Encoding{
@@ -67,7 +69,7 @@ namespace ANN_USM{
 		//private:
 			vector <connection_gene> Lconnection_genes; //List of connections genes
 			vector <node_gene> Lnode_genes;
-			
+			double Fsigmoide(double x);
 	};
 
 	

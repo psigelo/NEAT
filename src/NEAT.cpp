@@ -851,7 +851,7 @@ Genetic_Encoding Population::crossover(Genetic_Encoding orgm1, Genetic_Encoding 
 		}
 		i++;
 	}
-
+	orgm_resutl.row_orderer_list=row_orderer_list;
 	return orgm_resutl;
 }
 
@@ -1187,7 +1187,11 @@ void Population::epoch(){
 
 			if(j == 0 || temp_max_current_fitness < organisms[current_niches[i].organism_position[j]].fitness){
 				temp_max_current_fitness = organisms[current_niches[i].organism_position[j]].fitness;
-				current_niches[i].niche_champion_position=current_niches[i].organism_position[0];
+				current_niches[i].niche_champion_position=current_niches[i].organism_position[j];
+				if(temp_max_current_fitness > fitness_champion){
+					fitness_champion = temp_max_current_fitness;
+					champion = organisms[current_niches[i].organism_position[j]];
+				}
 			}
 		}
 	}

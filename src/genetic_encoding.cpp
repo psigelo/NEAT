@@ -290,24 +290,90 @@ void Genetic_Encoding::load(char path[]){
 }
 
 
+
 vector <double> Genetic_Encoding::eval(std::vector<double> inputs){
-/*	
+	
 	int amount_inputs_nodes(0);
-	int amount_output_nodes(0);
+	int amount_outputs_nodes(0);
 	int amount_hiden_nodes (0);
 
-	for(int i=0; i < Lnode_genes ; i++){
-		if(){
-			Lnode_genes[i].type == INPUT;
+
+
+	vector < vector < int> > nodes_row;
+	vector < int > empty_vector;
+	for (int i = 0; i < (int)row_orderer_list.size(); ++i)
+		nodes_row.push_back(empty_vector);
+
+
+	vector <int> outputs_positions;
+	for(int i=0; i < (int)Lnode_genes.size() ; i++){
+
+		if(Lnode_genes[i].exist){
+
+			if(Lnode_genes[i].type == INPUT){
+				amount_inputs_nodes++;
+			}
+			else if(Lnode_genes[i].type == OUTPUT){
+				amount_outputs_nodes++;
+				outputs_positions.push_back(i);
+			}
+			else{
+				amount_hiden_nodes++;
+			}
+
+			nodes_row[Lnode_genes[i].row].push_back(i);
 
 		}
 	}
+	if( amount_inputs_nodes != (int)inputs.size()){
+		cerr << "ERROR:: In function Genetic_Encoding::eval, the amount of inputs is not correct!.";
+		exit(1);
+	}
 
-	if((size)inputs.size() > )
-*/
+
+	double entradas_temp(0.0);
+
+	vector < vector <int> > inputs_to_node;
+	for (int i = 0; i < (int)Lnode_genes.size(); ++i)
+		inputs_to_node.push_back(empty_vector);
 
 
-	return inputs;
+	for (int i = 0; i < (int)Lconnection_genes.size(); ++i)
+	{
+		if(Lconnection_genes[i].exist && Lconnection_genes[i].enable) inputs_to_node[Lconnection_genes[i].out].push_back(i);
+	}
+
+	//inputs
+	for (int i = 0; i < (int)inputs.size(); ++i)
+	{
+		Lnode_genes[i].node_output_value = inputs[i];
+	}
+
+	for (int i = 1; i < (int)row_orderer_list.size(); ++i)
+	{
+		
+		for (int j = 0; j < (int)nodes_row[i].size(); ++j)
+			{
+				entradas_temp = 0;
+				for (int k = 0; k < (int)inputs_to_node[nodes_row[i][j]].size(); ++k)
+				{
+					entradas_temp += Lnode_genes[  Lconnection_genes[  inputs_to_node[ nodes_row[i][j] ][k]  ].in  ].node_output_value * Lconnection_genes[   inputs_to_node[ nodes_row[i][j] ][k]   ].weight;
+				}
+				Lnode_genes[nodes_row[i][j]].node_output_value = Fsigmoide(entradas_temp);
+			}	
+	}
+
+	vector <double> outputs;
+	for (int i = 0; i < (int)outputs_positions.size(); ++i)
+	{
+		outputs.push_back(Lnode_genes[outputs_positions[i]].node_output_value);
+	}
+
+	return outputs;
 }
 
+
+double Genetic_Encoding::Fsigmoide(double x){
+	return (1/(1+exp(SIGMOID_CONSTANT*x)));
+}
 #endif

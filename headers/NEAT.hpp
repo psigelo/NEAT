@@ -67,7 +67,7 @@ namespace ANN_USM{
 
 			Genetic_Encoding champion;
 			double fitness_champion;
-
+			
 
 
 	};

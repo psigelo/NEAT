@@ -22,8 +22,10 @@
 /* Lnodes.size() comparation */
 #define LARGE_POPULATION_DISCRIMINATOR 10
 #define GENERATIONS 100
-
+#define SIGMOID_CONSTANT -5
 #include <cmath>
+
+
 
 double sigmoide(double x);
 
