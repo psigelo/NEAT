@@ -21,7 +21,7 @@ double fitness(Genetic_Encoding organism){
 	input.push_back(0);
 	input.push_back(0);
 	output = organism.eval(input);
-	error_sum += output.at(0);
+	error_sum += abs(output.at(0));
 	input.clear();
 
 	// XOR(0,1) -> 1
@@ -42,12 +42,13 @@ double fitness(Genetic_Encoding organism){
 	input.push_back(1);
 	input.push_back(1);
 	output = organism.eval(input);
-	error_sum += output.at(0);
+	error_sum += abs(output.at(0));
 	input.clear();
 
 	
 
 	// Fitness
+	//cerr << pow(4 - error_sum, 2) << endl;
 	return pow(4 - error_sum, 2);
 }
 

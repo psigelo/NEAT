@@ -48,6 +48,7 @@ namespace ANN_USM{
 			gene_type type;
 
 			double node_output_value;
+			string str;
 	};
 
 	class Genetic_Encoding{
@@ -70,6 +71,7 @@ namespace ANN_USM{
 			vector <connection_gene> Lconnection_genes; //List of connections genes
 			vector <node_gene> Lnode_genes;
 			double Fsigmoide(double x);
+			string ANN_function();
 	};
 
 	

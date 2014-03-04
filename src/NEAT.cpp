@@ -1154,7 +1154,7 @@ void Population::print_niches(){
 
 
 
-
+//VOLVER A HACER
 
 void Population::epoch(){
 
@@ -1183,7 +1183,7 @@ void Population::epoch(){
 		current_niches[i].total_fitness=0;
 		for (int j = 0; j < (int)current_niches[i].organism_position.size(); ++j)
 		{
-			current_niches[i].total_fitness += organisms[current_niches[i].organism_position[j]].fitness;
+			current_niches[i].total_fitness += organisms[current_niches[i].organism_position[j]].fitness/current_niches[i].organism_position.size();
 
 			if(j == 0 || temp_max_current_fitness < organisms[current_niches[i].organism_position[j]].fitness){
 				temp_max_current_fitness = organisms[current_niches[i].organism_position[j]].fitness;
@@ -1198,7 +1198,7 @@ void Population::epoch(){
 
 	for (int i = 0; i < (int)current_niches.size(); ++i)
 	{
-		total_shared_fitness_population += current_niches[i].total_fitness/(int)current_niches[i].organism_position.size();
+		total_shared_fitness_population += current_niches[i].total_fitness;
 	}
 
 
@@ -1210,10 +1210,12 @@ void Population::epoch(){
 	//int corrector = ((int)prev_organisms.size() > POPULATION_MAX ) ? (int)prev_organisms.size(): POPULATION_MAX;
 	for (int i = 0; i < (int)current_niches.size(); ++i)
 	{
-		current_niches[i].amount_of_offspring = round(POPULATION_MAX*((current_niches[i].total_fitness/current_niches[i].organism_position.size())/total_shared_fitness_population));
+		current_niches[i].amount_of_offspring = round(POPULATION_MAX*(current_niches[i].total_fitness/total_shared_fitness_population));
 		sum += current_niches[i].amount_of_offspring;
+		cerr << current_niches.size() << "\t" << current_niches[i].amount_of_offspring << "\t" << current_niches[i].organism_position.size() << "\t" << current_niches[i].total_fitness << "\t" << total_shared_fitness_population << endl; 
 	}
 
+	cerr << sum << endl;
 
 	for (int i = 0; i < (int)current_niches.size(); ++i)
 	{

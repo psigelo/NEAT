@@ -352,14 +352,14 @@ vector <double> Genetic_Encoding::eval(std::vector<double> inputs){
 	for (int i = 1; i < (int)row_orderer_list.size(); ++i)
 	{
 		
-		for (int j = 0; j < (int)nodes_row[i].size(); ++j)
+		for (int j = 0; j < (int)nodes_row[row_orderer_list[i]].size(); ++j)
 			{
 				entradas_temp = 0;
-				for (int k = 0; k < (int)inputs_to_node[nodes_row[i][j]].size(); ++k)
+				for (int k = 0; k < (int)inputs_to_node[nodes_row[row_orderer_list[i]][j]].size(); ++k)
 				{
-					entradas_temp += Lnode_genes[  Lconnection_genes[  inputs_to_node[ nodes_row[i][j] ][k]  ].in  ].node_output_value * Lconnection_genes[   inputs_to_node[ nodes_row[i][j] ][k]   ].weight;
+					entradas_temp += Lnode_genes[  Lconnection_genes[  inputs_to_node[ nodes_row[row_orderer_list[i]][j] ][k]  ].in  ].node_output_value * Lconnection_genes[   inputs_to_node[ nodes_row[row_orderer_list[i]][j] ][k]   ].weight;
 				}
-				Lnode_genes[nodes_row[i][j]].node_output_value = Fsigmoide(entradas_temp);
+				Lnode_genes[nodes_row[row_orderer_list[i]][j]].node_output_value = Fsigmoide(entradas_temp);
 			}	
 	}
 
@@ -370,6 +370,105 @@ vector <double> Genetic_Encoding::eval(std::vector<double> inputs){
 	}
 
 	return outputs;
+}
+  
+
+
+string Genetic_Encoding::ANN_function(){
+	
+	
+	int amount_inputs_nodes(0);
+	int amount_outputs_nodes(0);
+	int amount_hiden_nodes (0);
+
+
+
+	vector < vector < int> > nodes_row;
+	vector < int > empty_vector;
+	for (int i = 0; i < (int)row_orderer_list.size(); ++i)
+		nodes_row.push_back(empty_vector);
+
+
+	vector <int> outputs_positions;
+	for(int i=0; i < (int)Lnode_genes.size() ; i++){
+
+		if(Lnode_genes[i].exist){
+
+			if(Lnode_genes[i].type == INPUT){
+				amount_inputs_nodes++;
+			}
+			else if(Lnode_genes[i].type == OUTPUT){
+				amount_outputs_nodes++;
+				outputs_positions.push_back(i);
+			}
+			else{
+				amount_hiden_nodes++;
+			}
+
+			nodes_row[Lnode_genes[i].row].push_back(i);
+
+		}
+	}
+	
+
+
+
+	vector < vector <int> > inputs_to_node;
+	for (int i = 0; i < (int)Lnode_genes.size(); ++i)
+		inputs_to_node.push_back(empty_vector);
+
+
+	for (int i = 0; i < (int)Lconnection_genes.size(); ++i)
+	{
+		if(Lconnection_genes[i].exist && Lconnection_genes[i].enable) inputs_to_node[Lconnection_genes[i].out].push_back(i);
+	}
+
+
+	stringstream ss;
+
+	//inputs 
+	for (int i = 0; i < amount_inputs_nodes; ++i)
+	{
+		ss << "X" << i;
+		Lnode_genes[i].str  = ss.str();
+		ss.str("");
+	}
+
+	for (int i = 1; i < (int)row_orderer_list.size(); ++i)
+	{
+		
+		for (int j = 0; j < (int)nodes_row[row_orderer_list[i]].size(); ++j)
+			{
+				for (int k = 0; k < (int)inputs_to_node[nodes_row[row_orderer_list[i]][j]].size(); ++k)
+				{
+					if(k==0){
+						ss << "sgmd";
+						if(true){// Para representar que con esto se puede cambiar para mathematica o para otro lenguaje
+							ss << "[";
+						}
+					}
+					else{
+						ss << "+";
+					}
+					ss << Lnode_genes[  Lconnection_genes[  inputs_to_node[ nodes_row[row_orderer_list[i]][j] ][k]  ].in  ].str << "*" << Lconnection_genes[   inputs_to_node[ nodes_row[row_orderer_list[i]][j] ][k]   ].weight;
+				}
+				if(true){ // Para representar que con esto se puede cambiar para mathematica o para otro lenguaje
+					ss << "]";
+				}
+				//cerr << ss.str() << endl;
+				Lnode_genes[nodes_row[row_orderer_list[i]][j]].str = ss.str();
+				ss.str("");
+			}	
+	}
+
+	stringstream outputs;
+	for (int i = 0; i < (int)outputs_positions.size(); ++i)
+	{
+		outputs << Lnode_genes[outputs_positions[i]].str << endl;
+	}
+	
+	return outputs.str();
+
 }
 
 
