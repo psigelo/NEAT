@@ -14,6 +14,7 @@ namespace ANN_USM{
 			bool exist;
 			int years;
 			double	total_fitness;
+			double total_shared_fitness;
 			int niche_champion_position;
 			int amount_of_offspring;
 			vector<int> organism_position;
@@ -48,7 +49,7 @@ namespace ANN_USM{
 			Genetic_Encoding mutation_connection(Genetic_Encoding organism);
 			Genetic_Encoding mutation_change_weight(Genetic_Encoding organism);
 			Genetic_Encoding put_randoms_weight(Genetic_Encoding organism);
-
+			Genetic_Encoding epoch_reproduce(Genetic_Encoding organism);
 
 			int last_innovation;
 			int last_node;

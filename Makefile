@@ -5,7 +5,7 @@ CFLAGS = -g -Wall -I./headers -I./objects -I./src
 
 
 NEAT: run_NEAT.cpp NEAT.o  genetic_encoding.o fitness.o user_definitions.o
-	@$(CC) $(CFLAGS) ./src/run_NEAT.cpp ./objects/NEAT.o ./objects/genetic_encoding.o ./objects/fitness.o ./objects/user_definitions.o -o ./executables/NEAT 
+	$(CC) $(CFLAGS) ./src/run_NEAT.cpp ./objects/NEAT.o ./objects/genetic_encoding.o ./objects/fitness.o ./objects/user_definitions.o -o ./executables/NEAT 
 
 NEAT.o: NEAT.cpp
 	@$(CC) $(CFLAGS) -c ./src/NEAT.cpp  -o ./objects/NEAT.o

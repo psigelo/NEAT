@@ -22,8 +22,13 @@ int main(int argc, char** argv){
 	poblacion.init_population(argv[1]);
 	for (int i = 0; i < GENERATIONS; ++i)
 		poblacion.epoch();
-	cout << "Fitness champion: " << poblacion.fitness_champion << endl;
+	cout << "Fitness champion: " << poblacion.fitness_champion << "\n\n"<< endl;
 	cout << poblacion.champion.ANN_function() << endl;
 	cout << poblacion.champion << endl;
+	//cout << poblacion.champion.row_orderer_list.size() << endl;
+	for (unsigned int i = 0; i < poblacion.champion.row_orderer_list.size(); ++i)
+	{
+		cerr << poblacion.champion.row_orderer_list[i] << endl;
+	}
 	return 0;
 }

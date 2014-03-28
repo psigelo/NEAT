@@ -301,6 +301,8 @@ vector <double> Genetic_Encoding::eval(std::vector<double> inputs){
 
 	vector < vector < int> > nodes_row;
 	vector < int > empty_vector;
+
+
 	for (int i = 0; i < (int)row_orderer_list.size(); ++i)
 		nodes_row.push_back(empty_vector);
 
@@ -320,16 +322,13 @@ vector <double> Genetic_Encoding::eval(std::vector<double> inputs){
 			else{
 				amount_hiden_nodes++;
 			}
-
 			nodes_row[Lnode_genes[i].row].push_back(i);
-
 		}
 	}
-	if( amount_inputs_nodes != (int)inputs.size()){
+ 	if( amount_inputs_nodes != (int)inputs.size()){
 		cerr << "ERROR:: In function Genetic_Encoding::eval, the amount of inputs is not correct!.";
 		exit(1);
 	}
-
 
 	double entradas_temp(0.0);
 
@@ -342,13 +341,11 @@ vector <double> Genetic_Encoding::eval(std::vector<double> inputs){
 	{
 		if(Lconnection_genes[i].exist && Lconnection_genes[i].enable) inputs_to_node[Lconnection_genes[i].out].push_back(i);
 	}
-
 	//inputs
 	for (int i = 0; i < (int)inputs.size(); ++i)
 	{
 		Lnode_genes[i].node_output_value = inputs[i];
 	}
-
 	for (int i = 1; i < (int)row_orderer_list.size(); ++i)
 	{
 		
@@ -362,13 +359,11 @@ vector <double> Genetic_Encoding::eval(std::vector<double> inputs){
 				Lnode_genes[nodes_row[row_orderer_list[i]][j]].node_output_value = Fsigmoide(entradas_temp);
 			}	
 	}
-
 	vector <double> outputs;
 	for (int i = 0; i < (int)outputs_positions.size(); ++i)
 	{
 		outputs.push_back(Lnode_genes[outputs_positions[i]].node_output_value);
 	}
-
 	return outputs;
 }
   
@@ -442,18 +437,18 @@ string Genetic_Encoding::ANN_function(){
 				for (int k = 0; k < (int)inputs_to_node[nodes_row[row_orderer_list[i]][j]].size(); ++k)
 				{
 					if(k==0){
-						ss << "sgmd";
+						ss << " sgmd";
 						if(true){// Para representar que con esto se puede cambiar para mathematica o para otro lenguaje
-							ss << "[";
+							ss << "[ ";
 						}
 					}
 					else{
-						ss << "+";
+						ss << " + ";
 					}
-					ss << Lnode_genes[  Lconnection_genes[  inputs_to_node[ nodes_row[row_orderer_list[i]][j] ][k]  ].in  ].str << "*" << Lconnection_genes[   inputs_to_node[ nodes_row[row_orderer_list[i]][j] ][k]   ].weight;
+					ss << Lnode_genes[  Lconnection_genes[  inputs_to_node[ nodes_row[row_orderer_list[i]][j] ][k]  ].in  ].str << " * " << Lconnection_genes[   inputs_to_node[ nodes_row[row_orderer_list[i]][j] ][k]   ].weight;
 				}
 				if(true){ // Para representar que con esto se puede cambiar para mathematica o para otro lenguaje
-					ss << "]";
+					ss << " ]";
 				}
 				//cerr << ss.str() << endl;
 				Lnode_genes[nodes_row[row_orderer_list[i]][j]].str = ss.str();
@@ -473,6 +468,6 @@ string Genetic_Encoding::ANN_function(){
 
 
 double Genetic_Encoding::Fsigmoide(double x){
-	return (1/(1+exp(SIGMOID_CONSTANT*x)));
+	return 2*(1/(1+exp(SIGMOID_CONSTANT*x)))-1;
 }
 #endif

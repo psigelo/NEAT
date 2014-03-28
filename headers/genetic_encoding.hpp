@@ -54,6 +54,7 @@ namespace ANN_USM{
 	class Genetic_Encoding{
 		public:
 			double fitness;
+			double shared_fitness;
 			int niche;
 			void add_node(int node, int row, gene_type type);
 			void add_node(node_gene node);
