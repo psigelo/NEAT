@@ -2,8 +2,7 @@
 #define GENETIC_ENCODING_CPP
 
 #include "genetic_encoding.hpp"
-#include <stdio.h>
-#include <cstring>
+
 
 using namespace ANN_USM;
 
@@ -469,5 +468,9 @@ string Genetic_Encoding::ANN_function(){
 
 double Genetic_Encoding::Fsigmoide(double x){
 	return 2*(1/(1+exp(SIGMOID_CONSTANT*x)))-1;
+}
+
+void Genetic_Encoding::set_sigmoid_constant(double x){
+	SIGMOID_CONSTANT = x;
 }
 #endif

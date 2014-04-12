@@ -136,6 +136,7 @@ void Population::init_population(char path[]){
 	Genetic_Encoding _organism;
 	_organism.load(path);
 	_organism.niche=0;
+	_organism.SIGMOID_CONSTANT = SIGMOID_CONSTANT;
 
 	for (int i = 0; i < (int)_organism.Lnode_genes.size(); ++i)
 	{
@@ -873,7 +874,8 @@ Genetic_Encoding Population::crossover(Genetic_Encoding orgm1, Genetic_Encoding 
 		}
 		i++;
 	}
-	orgm_resutl.row_orderer_list=row_orderer_list;
+	orgm_resutl.row_orderer_list = row_orderer_list;
+	orgm_resutl.SIGMOID_CONSTANT = orgm1.SIGMOID_CONSTANT;
 	return orgm_resutl;
 }
 
@@ -1592,7 +1594,7 @@ void Population::epoch(){
 		for(int i=0; i < (int)prev_organisms.size(); i++){
 			probability_acum += random_organism[i];
 			if(random <= probability_acum){
-				organisms.push_back( epoch_reproduce(prev_organisms[i]) );
+				organisms.push_back( epoch_reproduce(prev_organisms[i] , i) );
 				break;
 			}
 		}
@@ -1604,7 +1606,7 @@ void Population::epoch(){
 
 
 
-Genetic_Encoding Population::epoch_reproduce(Genetic_Encoding organism){
+Genetic_Encoding Population::epoch_reproduce(Genetic_Encoding organism, int poblation_place){
 	int random_mother; // for mating
 	int random_niche_mother;
 	Genetic_Encoding organism_father;
@@ -1629,19 +1631,17 @@ Genetic_Encoding Population::epoch_reproduce(Genetic_Encoding organism){
 
 			random_mother = current_niches[random_niche_mother].organism_position[rand()%current_niches[random_niche_mother].organism_position.size()];
 			organism_mother = prev_organisms[random_mother];
-			
 			organism = crossover(organism, organism_mother);
 		}
 		else{
 			
 			while(true){
 				random_mother = rand()%current_niches[organism.niche].organism_position.size();
-				if(random_mother != organism.niche)break;
+				if(current_niches[organism.niche].organism_position[random_mother] != poblation_place )break;
 				if(current_niches[organism.niche].organism_position.size()==1)break;
 			}
 			
-			organism_mother = prev_organisms[random_mother];
-			random_mother = current_niches[random_mother].organism_position[random_mother];
+			organism_mother = prev_organisms[current_niches[organism.niche].organism_position[random_mother]];
 			organism = crossover(organism, organism_mother);
 		}
 
@@ -1667,6 +1667,85 @@ Genetic_Encoding Population::epoch_reproduce(Genetic_Encoding organism){
 
 	return organism;
 }
+
+void Population::load_user_definitions(char address[]){
+	ifstream file (address);
+	file.seekg (0, file.end);
+    int length = file.tellg();
+    file.seekg (0, file.beg);
+	char buffer[length]; // In JSON format
+	file.read (buffer,length);
+	file.close();
+	char * pch;
+
+	char delimiters[] = " \n\":\t{},[";
+	pch = strtok (buffer,delimiters);
+	pch = strtok (NULL,delimiters);
+	POPULATION_MAX =  atoi(pch);
+	pch = strtok (NULL,delimiters);
+	pch = strtok (NULL,delimiters);
+	DISTANCE_CONST_1 = atof(pch);
+	pch = strtok (NULL,delimiters);
+	pch = strtok (NULL,delimiters);
+	DISTANCE_CONST_2 = atof(pch);
+	pch = strtok (NULL,delimiters);
+	pch = strtok (NULL,delimiters);
+	DISTANCE_CONST_3 = atof(pch);
+	pch = strtok (NULL,delimiters);
+	pch = strtok (NULL,delimiters);
+	DISTANCE_CONST_4 = atof(pch);
+	pch = strtok (NULL,delimiters);
+	pch = strtok (NULL,delimiters);
+	DISTANCE_THRESHOLD = atof(pch);
+	pch = strtok (NULL,delimiters);
+	pch = strtok (NULL,delimiters);
+	PERCENT_MUTATION_CONNECTION = atof(pch);
+	pch = strtok (NULL,delimiters);
+	pch = strtok (NULL,delimiters);
+	PERCENTAGE_OFFSPRING_WITHOUT_CROSSOVER = atof(pch);
+	pch = strtok (NULL,delimiters);
+	pch = strtok (NULL,delimiters);
+	PROBABILITY_INTERSPACIES_MATING = atof(pch);
+	pch = strtok (NULL,delimiters);
+	pch = strtok (NULL,delimiters);
+	SMALLER_POPULATIONS_PROBABILITY_ADDING_NEW_NODE = atof(pch);
+	pch = strtok (NULL,delimiters);
+	pch = strtok (NULL,delimiters);
+	SMALLER_POPULATIONS_PROBABILITY_ADDING_NEW_CONNECTION = atof(pch);
+	pch = strtok (NULL,delimiters);
+	pch = strtok (NULL,delimiters);
+	LARGER_POPULATIONS_PROBABILITY_ADDING_NEW_NODE = atof(pch);
+	pch = strtok (NULL,delimiters);
+	pch = strtok (NULL,delimiters);
+	LARGER_POPULATIONS_PROBABILITY_ADDING_NEW_CONNECTION = atof(pch);
+	pch = strtok (NULL,delimiters);
+	pch = strtok (NULL,delimiters);
+	PROB_ENABLE_AN_DISABLE_CONNECTION = atof(pch);
+	/* Lnodes.size() comparation */
+	pch = strtok (NULL,delimiters);
+	pch = strtok (NULL,delimiters);
+	LARGE_POPULATION_DISCRIMINATOR = atof(pch);
+	pch = strtok (NULL,delimiters);
+	pch = strtok (NULL,delimiters);
+	GENERATIONS = atoi(pch);
+	pch = strtok (NULL,delimiters);
+	pch = strtok (NULL,delimiters);
+	SIGMOID_CONSTANT = atof(pch);
+
+
+	//cerr << "POPULATION_MAX" << POPULATION_MAX << endl;
+	//cerr << "PERCENT_MUTATION_CONNECTION: " << PERCENT_MUTATION_CONNECTION << endl;
+	//cerr << "PROBABILITY_INTERSPACIES_MATING: " << PROBABILITY_INTERSPACIES_MATING << endl;
+	//cerr << "SMALLER_POPULATIONS_PROBABILITY_ADDING_NEW_NODE: " <<SMALLER_POPULATIONS_PROBABILITY_ADDING_NEW_NODE << endl;
+	//cerr << "SMALLER_POPULATIONS_PROBABILITY_ADDING_NEW_CONNECTION: " << SMALLER_POPULATIONS_PROBABILITY_ADDING_NEW_CONNECTION<< endl;
+	//cerr << "LARGER_POPULATIONS_PROBABILITY_ADDING_NEW_NODE: " <<LARGER_POPULATIONS_PROBABILITY_ADDING_NEW_NODE << endl;
+	//cerr << "LARGER_POPULATIONS_PROBABILITY_ADDING_NEW_CONNECTION: " <<LARGER_POPULATIONS_PROBABILITY_ADDING_NEW_CONNECTION << endl;
+	//cerr << "PROB_ENABLE_AN_DISABLE_CONNECTION: " << PROB_ENABLE_AN_DISABLE_CONNECTION << endl;
+	//cerr << "GENERATIONS" << GENERATIONS << endl;
+	//cerr << "SIGMOID_CONSTANT" << SIGMOID_CONSTANT << endl;
+
+}
+
 
 
 #endif

@@ -5,7 +5,7 @@
 #include "fitness.hpp"
 #include <cmath>
 #include <unistd.h>
-#include "user_definitions.hpp"
+
 
 namespace ANN_USM{
 
@@ -23,6 +23,27 @@ namespace ANN_USM{
 
 	class Population{
 		public:
+			//User definitions
+			int POPULATION_MAX;
+			double DISTANCE_CONST_1;
+			double DISTANCE_CONST_2;
+			double DISTANCE_CONST_3;
+			double DISTANCE_CONST_4;
+			double DISTANCE_THRESHOLD;
+			double PERCENT_MUTATION_CONNECTION;
+			double PERCENTAGE_OFFSPRING_WITHOUT_CROSSOVER;
+			double PROBABILITY_INTERSPACIES_MATING;
+			double SMALLER_POPULATIONS_PROBABILITY_ADDING_NEW_NODE;
+			double SMALLER_POPULATIONS_PROBABILITY_ADDING_NEW_CONNECTION;
+			double LARGER_POPULATIONS_PROBABILITY_ADDING_NEW_NODE;
+			double LARGER_POPULATIONS_PROBABILITY_ADDING_NEW_CONNECTION;
+			double PROB_ENABLE_AN_DISABLE_CONNECTION;
+			/* Lnodes.size() comparation */
+			double LARGE_POPULATION_DISCRIMINATOR;
+			int GENERATIONS;
+			double SIGMOID_CONSTANT;
+			//-------------------------
+
 			int lenght;
 			vector<Genetic_Encoding> organisms;
 			vector<Genetic_Encoding> prev_organisms;
@@ -49,7 +70,7 @@ namespace ANN_USM{
 			Genetic_Encoding mutation_connection(Genetic_Encoding organism);
 			Genetic_Encoding mutation_change_weight(Genetic_Encoding organism);
 			Genetic_Encoding put_randoms_weight(Genetic_Encoding organism);
-			Genetic_Encoding epoch_reproduce(Genetic_Encoding organism);
+			Genetic_Encoding epoch_reproduce(Genetic_Encoding organism, int poblation_place);
 
 			int last_innovation;
 			int last_node;
@@ -65,6 +86,7 @@ namespace ANN_USM{
 			void save(char path[]);
 			void print_niches();
 			void epoch();
+			void load_user_definitions(char address[]);
 
 			Genetic_Encoding champion;
 			double fitness_champion;

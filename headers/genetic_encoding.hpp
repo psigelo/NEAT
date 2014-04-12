@@ -9,8 +9,9 @@
 #include <sstream>
 #include <fstream>
 #include <strings.h>
-#include "user_definitions.hpp"
-
+#include <stdio.h>
+#include <cstring>
+#include <cmath>
 
 using namespace std;
 
@@ -53,6 +54,7 @@ namespace ANN_USM{
 
 	class Genetic_Encoding{
 		public:
+			double SIGMOID_CONSTANT;
 			double fitness;
 			double shared_fitness;
 			int niche;
@@ -61,6 +63,7 @@ namespace ANN_USM{
 			void add_connection(int innovation, int in, int out, double weight);
 			void add_connection(connection_gene orgm);
 			void change_weight(int innovation, double weight);
+			void set_sigmoid_constant(double x);
 			string JSON();
 			void save(char path[]); // save to a file
 			void load(char path[]); // Load an genetic_encoding from a file.
