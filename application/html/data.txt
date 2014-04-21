@@ -1,3 +1,0 @@
-#ifndef UDER_DEF_HPP
-#define UDER_DEF_HPP
-#define #endif 

@@ -1,1 +1,3 @@
 *.o
+application/
+*.class
