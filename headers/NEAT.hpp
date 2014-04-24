@@ -78,10 +78,14 @@ namespace ANN_USM{
 				generations of NEAT is important to know that are absolutely relevant.  				
 			*/
 			int 	POPULATION_MAX;
-			double 	DISTANCE_CONST_1;
-			double 	DISTANCE_CONST_2;
-			double 	DISTANCE_CONST_3;
-			double 	DISTANCE_CONST_4;
+
+		
+			double 	ORGANISM_DISTANCE_1;
+			double 	ORGANISM_DISTANCE_2;
+			double 	ORGANISM_DISTANCE_3;
+
+
+			
 			double 	DISTANCE_THRESHOLD;
 			double 	PERCENT_MUTATION_CONNECTION;
 			double 	PERCENTAGE_OFFSPRING_WITHOUT_CROSSOVER;

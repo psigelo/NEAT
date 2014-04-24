@@ -744,7 +744,7 @@ double Population::compatibility(Genetic_Encoding orgm1, Genetic_Encoding orgm2)
 		if( (size_1<size_2) ? orgm2.Lconnection_genes[i].exist : orgm1.Lconnection_genes[i].exist)
 			E+=1;
 
-	distance = DISTANCE_CONST_1*E/DISTANCE_CONST_4 + DISTANCE_CONST_2*D/DISTANCE_CONST_4 + DISTANCE_CONST_3*W;
+	distance = ORGANISM_DISTANCE_1*E/limit_sup + ORGANISM_DISTANCE_2*D/limit_sup + ORGANISM_DISTANCE_3*W;
 	return distance;
 }
 
@@ -1689,16 +1689,13 @@ void Population::load_user_definitions(char address[]){
 	POPULATION_MAX =  atoi(pch);
 	pch = strtok (NULL,delimiters);
 	pch = strtok (NULL,delimiters);
-	DISTANCE_CONST_1 = atof(pch);
+	ORGANISM_DISTANCE_1 = atof(pch);
 	pch = strtok (NULL,delimiters);
 	pch = strtok (NULL,delimiters);
-	DISTANCE_CONST_2 = atof(pch);
+	ORGANISM_DISTANCE_2 = atof(pch);
 	pch = strtok (NULL,delimiters);
 	pch = strtok (NULL,delimiters);
-	DISTANCE_CONST_3 = atof(pch);
-	pch = strtok (NULL,delimiters);
-	pch = strtok (NULL,delimiters);
-	DISTANCE_CONST_4 = atof(pch);
+	ORGANISM_DISTANCE_3 = atof(pch);
 	pch = strtok (NULL,delimiters);
 	pch = strtok (NULL,delimiters);
 	DISTANCE_THRESHOLD = atof(pch);
