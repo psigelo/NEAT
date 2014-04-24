@@ -31,7 +31,12 @@ using namespace ANN_USM;
 
 
 
+/**
 
+<b>put_ramdons_weight:</b> 
+This function is used to initialize 
+
+*/
 Genetic_Encoding Population::put_randoms_weight(Genetic_Encoding organism){
 	for (int i = 0; i < (int)organism.Lconnection_genes.size(); ++i)
 	{
