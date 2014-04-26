@@ -17,8 +17,6 @@ int main(){
 	encoding->add_node(3,HIDDEN);
 	encoding->add_node(1,INPUT);
 	encoding->add_node(2,OUTPUT);
-	
-
 	encoding->add_connection(0,0,2,(rand()%1000)/1000.0);
 	encoding->add_connection(1,1,2,(rand()%1000)/1000.0);
 	encoding->add_connection(4,0,2,(rand()%1000)/1000.0);

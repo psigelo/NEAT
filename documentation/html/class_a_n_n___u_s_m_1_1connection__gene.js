@@ -1,7 +1,7 @@
 var class_a_n_n___u_s_m_1_1connection__gene =
 [
-    [ "c_g", "class_a_n_n___u_s_m_1_1connection__gene.html#a48a26d3795acd28e5448a2f542289729", null ],
-    [ "c_g", "class_a_n_n___u_s_m_1_1connection__gene.html#a81be8b642ac6f58299e79dde31574222", null ],
+    [ "_connection_gene", "class_a_n_n___u_s_m_1_1connection__gene.html#a169c6bdfe5a78d63cc37bab89d72bc69", null ],
+    [ "_connection_gene", "class_a_n_n___u_s_m_1_1connection__gene.html#a35f53b45ec776ed36290a2df69a060c0", null ],
     [ "enable", "class_a_n_n___u_s_m_1_1connection__gene.html#ae875a9ba44fa1c534a6e799d4ca64399", null ],
     [ "exist", "class_a_n_n___u_s_m_1_1connection__gene.html#afe8be67cb9aaffbe9015729fbcfe84f9", null ],
     [ "in", "class_a_n_n___u_s_m_1_1connection__gene.html#a5100dadf9e141335a47230003303f2d2", null ],

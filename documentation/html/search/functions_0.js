@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['epoch',['epoch',['../class_a_n_n___u_s_m_1_1_population.html#afcedc0302e1ce8e399f5ffb914ed216c',1,'ANN_USM::Population']]]
+  ['_5fconnection_5fgene',['_connection_gene',['../class_a_n_n___u_s_m_1_1connection__gene.html#a169c6bdfe5a78d63cc37bab89d72bc69',1,'ANN_USM::connection_gene']]]
 ];

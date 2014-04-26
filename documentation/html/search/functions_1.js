@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['put_5frandoms_5fweight',['put_randoms_weight',['../class_a_n_n___u_s_m_1_1_population.html#a0b858ba5af6628979fd7f136520cdd5b',1,'ANN_USM::Population']]]
+  ['epoch',['epoch',['../class_a_n_n___u_s_m_1_1_population.html#afcedc0302e1ce8e399f5ffb914ed216c',1,'ANN_USM::Population']]]
 ];

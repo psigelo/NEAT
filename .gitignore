@@ -1,3 +1,4 @@
 *.o
 application/
 *.class
+src/prueba*
