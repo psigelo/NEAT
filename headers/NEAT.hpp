@@ -97,7 +97,6 @@ namespace ANN_USM{
 			double 	PROB_ENABLE_AN_DISABLE_CONNECTION;
 			double 	LARGE_POPULATION_DISCRIMINATOR;
 			int 	GENERATIONS;
-			double 	SIGMOID_CONSTANT;
 			//==============================================================================//
 
 			int 						lenght;

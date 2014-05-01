@@ -130,7 +130,6 @@ void Population::init_population(char path[]){
 	Genetic_Encoding _organism;
 	_organism.load(path);
 	_organism.niche=0;
-	_organism.SIGMOID_CONSTANT = SIGMOID_CONSTANT;
 
 	for (int i = 0; i < (int)_organism.Lnode_genes.size(); ++i)
 	{
@@ -869,7 +868,6 @@ Genetic_Encoding Population::crossover(Genetic_Encoding orgm1, Genetic_Encoding 
 		i++;
 	}
 	orgm_resutl.row_orderer_list = row_orderer_list;
-	orgm_resutl.SIGMOID_CONSTANT = orgm1.SIGMOID_CONSTANT;
 	return orgm_resutl;
 }
 
@@ -1351,9 +1349,6 @@ void Population::load_user_definitions(char address[]){
 	pch = strtok (NULL,delimiters);
 	pch = strtok (NULL,delimiters);
 	GENERATIONS = atoi(pch);
-	pch = strtok (NULL,delimiters);
-	pch = strtok (NULL,delimiters);
-	SIGMOID_CONSTANT = atof(pch);
 
 
 	//cerr << "POPULATION_MAX" << POPULATION_MAX << endl;

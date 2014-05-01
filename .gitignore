@@ -2,3 +2,5 @@
 application/
 *.class
 src/prueba*
+bin/
+objects/

@@ -12,6 +12,7 @@
 #include <stdio.h>
 #include <cstring>
 #include <cmath>
+#include "random_function.hpp"
 
 using namespace std;
 
@@ -61,12 +62,15 @@ namespace ANN_USM{
 			* \brief Change or set the values of node id and type of node
 			* \param node: set the hystorical node value.
 			* \param type: 0 if is an input, 1 if is an hiden and 2 if is an output node.
+			* \param row: The row of the node.
+			* \param random_function the random function with its string.
 			*/
-			void _node_genne(
+			void _node_genne( // fill a node gene
 				int node, 
 				gene_type type, 
-				int row
-				); // fill a node gene
+				int row,
+				Return_random_function random_function
+				); 
 			/**
 			* \brief Change the value of the exist variable.
 			* \param exist: if this node is present in the genome.
@@ -79,6 +83,7 @@ namespace ANN_USM{
 			gene_type 	type;
 			double 		node_output_value;
 			string 		str;
+			Return_random_function random_function;
 	};
 
 	class Genetic_Encoding{
@@ -119,19 +124,27 @@ namespace ANN_USM{
 			*/
 			void 				add_connection(connection_gene orgm);
 
-			
+			/**
+			* \brief store the genome in file in json format.
+			* \param path: Is where the file is stored.
+			*/			
 			void 				save(char path[]); // save to a file
+			/**
+			* \brief load  a genome from file and set this organism variables.
+			* \param path: Is where the file is stored.
+			*/
 			void 				load(char path[]); // Load an genetic_encoding from a file.
+			/**
+			* /brief return a string with the entire genome write like JSON format.
+			*/
 			string 				JSON();
+
 			vector <double> 	eval(vector <double> inputs); // To implementate
-			void 				set_sigmoid_constant(double x);
-			double 				Fsigmoide(double x);
 			string 				ANN_function();
 			
 
 			vector <connection_gene> 	Lconnection_genes; //List of connections genes
 			vector <node_gene> 			Lnode_genes;
-			double 						SIGMOID_CONSTANT;
 			double 						fitness;
 			double 						shared_fitness;
 			int 						niche;
