@@ -42,7 +42,7 @@ void node_gene::_node_genne(bool exist){
 
 
 /**
-Procediment: 
+procedure: 
     if the historical value of the node is greater than the greater historical node
 	then is created all nodes that are between both with the variable exist equal
 	to 0 and then is created the node in its historical node position.
@@ -50,7 +50,10 @@ Procediment:
 	in other case the node is present in the genome and only is changed its values.
 */
 void Genetic_Encoding::add_node(int node, int row , gene_type type){
+
+	
 	int list_size(Lnode_genes.size()); //amount of node genes in this genome, present or not present (exist = true or false).
+
 	if(node >= list_size)
 	{
 		node_gene missing_node_gene;
@@ -60,17 +63,30 @@ void Genetic_Encoding::add_node(int node, int row , gene_type type){
 			Lnode_genes.push_back(missing_node_gene);
 		node_gene new_node;
 		rf = get_random_function();
+
 		new_node._node_genne(node, type, row, rf);
 		Lnode_genes.push_back(new_node);
 	}
-	else
-		if(Lnode_genes[node].exist)
+	else{
+		if(Lnode_genes[node].exist){
 			cerr << "ERROR::In function add_node , you wanted to add a node gene with a node number that already exists" << endl;	
+			exit(1);
+		}
 		else{
 			Return_random_function rf;
 			rf = get_random_function();
 			Lnode_genes[node]._node_genne(node, type, row, rf);	
 		}
+	}
+
+	//=============FOR EVAL() FUNCTION==========================//
+	while( row > (int)nodes_at_row.size() -1 ){
+		vector <int> empty;
+		nodes_at_row.push_back(empty);
+	}
+	nodes_at_row.at(row).push_back((int)Lnode_genes.size() -1 );
+	if(type == OUTPUT) outputs_positions.push_back((int)Lnode_genes.size() -1);
+	//==========================================================//
 }
 
 
@@ -81,7 +97,7 @@ void Genetic_Encoding::add_node(int node, int row , gene_type type){
 
 
 /**
-Procediment: 
+procedure: 
     if the historical value of the node is greater than the greater historical node
 	then is created all nodes that are between both with the variable exist equal
 	to 0 and then is created the node in its historical node position.
@@ -89,7 +105,9 @@ Procediment:
 	in other case the node is present in the genome and only is changed its values.
 */
 void Genetic_Encoding::add_node(node_gene node){
+	
 	int list_size(Lnode_genes.size());
+
 	if(node.node >= list_size)
 	{
 		node_gene missing_node_gene;
@@ -101,16 +119,27 @@ void Genetic_Encoding::add_node(node_gene node){
 		Lnode_genes.push_back(new_node);
 	}
 	else
-		if(Lnode_genes[node.node].exist)
+		if(Lnode_genes[node.node].exist){
 			cerr << "ERROR::In function add_node , you wanted to add a node gene with a node number that already exists" << endl;	
+			exit(1);
+		}
 		else
 			Lnode_genes[node.node]._node_genne(node.node, node.type, node.row, node.random_function);
+
+	//=============FOR EVAL() FUNCTION==========================//
+	while( node.row > (int)nodes_at_row.size() -1 ){
+		vector <int> empty;
+		nodes_at_row.push_back(empty);
+	}
+	nodes_at_row.at(node.row).push_back((int)Lnode_genes.size()-1);
+	if(node.type == OUTPUT) outputs_positions.push_back((int)Lnode_genes.size() -1);
+	//==========================================================//
 }
 
 
 
 /**
-Procediment: 
+procedure: 
     if the innovation value of the connection is greater than the greater innovation value 
 	then is created all connection that are between both with the variable exist equal
 	to 0 and then is created the connection in its innovation position.
@@ -128,6 +157,7 @@ void Genetic_Encoding::add_connection(int innovation, int in, int out, double we
 		connection_gene new_connection;
 		new_connection._connection_gene(innovation,in,out,weight,true);
 		Lconnection_genes.push_back(new_connection);
+
 	}
 
 	else 
@@ -139,7 +169,7 @@ void Genetic_Encoding::add_connection(int innovation, int in, int out, double we
 
 
 /**
-Procediment: 
+procedure: 
     if the innovation value of the connection is greater than the greater innovation value 
 	then is created all connection that are between both with the variable exist equal
 	to 0 and then is created the connection in its innovation position.
@@ -197,7 +227,7 @@ string Genetic_Encoding::JSON(){
 	for (int i = 0; i < node_size; ++i)
 	{
 		if(Lnode_genes[i].exist)
-			o << "\t\t\t{\"exist\": " << Lnode_genes[i].exist  << ",\"node\": " <<Lnode_genes[i].node << ",\"type\": " << Lnode_genes[i].type << ", \"row\": " << Lnode_genes[i].row << ", \"function\": " << Lnode_genes[i].random_function.str_name;
+			o << "\t\t\t{\"exist\": " << Lnode_genes[i].exist  << ",\"node\": " <<Lnode_genes[i].node << ",\"type\": " << Lnode_genes[i].type << ", \"row\": " << Lnode_genes[i].row << ", \"function\": \"" << Lnode_genes[i].random_function.str_name << "\"";
 		else
 			o << "\t\t\t{\"exist\": " << Lnode_genes[i].exist ;
 		if(i<node_size-1)
@@ -205,6 +235,7 @@ string Genetic_Encoding::JSON(){
 		else
 			o <<  "}\n";
 	}
+
 	o << "\t\t],\n\t\t\"connection_genes\":\n\t\t[\n";
 	for (int i = 0; i < connection_size; ++i)
 	{
@@ -218,6 +249,7 @@ string Genetic_Encoding::JSON(){
 		else
 			o <<  "}\n";
 	}
+
 	o << "\t\t]\n\t}\n}";
 	return o.str();
 }
@@ -294,11 +326,11 @@ void Genetic_Encoding::load(char path[]){
 			pch = strtok (NULL, delimiters);
 			random_function = obtain_function_fromm_name(pch);
 			Nnew_node._node_genne(node, (gene_type) type, row, random_function);
-			Lnode_genes.push_back(Nnew_node);
+			add_node(Nnew_node);
 		}
 		else{
 			Nnew_node._node_genne(false);
-			Lnode_genes.push_back(Nnew_node);
+			add_node(Nnew_node);
 		}
 	}
 
@@ -325,87 +357,65 @@ void Genetic_Encoding::load(char path[]){
 			pch = strtok (NULL, delimiters);
 			enable = atoi(pch);
 			Cnew_node._connection_gene(innovation, in, out, weight, (bool)enable);
-			Lconnection_genes.push_back(Cnew_node);
+			add_connection(Cnew_node);
 		}
 		else{
 			Cnew_node._connection_gene(false);
-			Lconnection_genes.push_back(Cnew_node);
+			add_connection(Cnew_node);
 		}
 	}
 }
 
 
 
+/**
+* procedure:
 
+*/
 vector <double> Genetic_Encoding::eval(std::vector<double> inputs){
 	
-	int amount_inputs_nodes  (0);
-	int amount_outputs_nodes (0);
-	int amount_hiden_nodes   (0);
 
-
-
-	vector < vector < int> > nodes_row;
-	vector < int > empty_vector;
-
-
-	for (int i = 0; i < (int)row_orderer_list.size(); ++i)
-		nodes_row.push_back(empty_vector);
-
-
-	vector <int> outputs_positions;
-	for(int i=0; i < (int)Lnode_genes.size() ; i++){
-
-		if(Lnode_genes[i].exist){
-
-			if(Lnode_genes[i].type == INPUT){
-				amount_inputs_nodes++;
-			}
-			else if(Lnode_genes[i].type == OUTPUT){
-				amount_outputs_nodes++;
-				outputs_positions.push_back(i);
-			}
-			else{
-				amount_hiden_nodes++;
-			}
-			nodes_row[Lnode_genes[i].row].push_back(i);
-		}
-	}
- 	if( amount_inputs_nodes != (int)inputs.size()){
-		cerr << "ERROR:: In function Genetic_Encoding::eval, the amount of inputs is not correct!.";
-		exit(1);
-	}
+	vector <double> 			outputs;
+	vector < vector <int> > 	inputs_to_node;
+	vector < int > 				empty_vector;
+	
 
 	double entradas_temp(0.0);
 
-	vector < vector <int> > inputs_to_node;
+	//================================================ SE DEBE INTENTAR AGREGAR EN EL CÓDIGO DE ADD_NODE. (NO HACER HASTA ESTAR SEGURO QUE NEAT LO IMPLEMENTE BIEN)
 	for (int i = 0; i < (int)Lnode_genes.size(); ++i)
 		inputs_to_node.push_back(empty_vector);
-
-
 	for (int i = 0; i < (int)Lconnection_genes.size(); ++i)
 	{
 		if(Lconnection_genes[i].exist && Lconnection_genes[i].enable) inputs_to_node[Lconnection_genes[i].out].push_back(i);
 	}
-	//inputs
+	//================================================
+
+
+	// Loading inputs
+
 	for (int i = 0; i < (int)inputs.size(); ++i)
 	{
-		Lnode_genes[i].node_output_value = inputs[i];
+		Lnode_genes[i].node_output_value = (*Lnode_genes[i].random_function.function)(inputs[i]);
 	}
+	
+
 	for (int i = 1; i < (int)row_orderer_list.size(); ++i)
 	{
 		
-		for (int j = 0; j < (int)nodes_row[row_orderer_list[i]].size(); ++j)
+
+
+		for (int j = 0; j < (int)nodes_at_row[row_orderer_list[i]].size(); ++j)
+		{
+			entradas_temp = 0;
+			for (int k = 0; k < (int)inputs_to_node[nodes_at_row[row_orderer_list[i]][j]].size(); ++k)
 			{
-				entradas_temp = 0;
-				for (int k = 0; k < (int)inputs_to_node[nodes_row[row_orderer_list[i]][j]].size(); ++k)
-				{
-					entradas_temp += Lnode_genes[  Lconnection_genes[  inputs_to_node[ nodes_row[row_orderer_list[i]][j] ][k]  ].in  ].node_output_value * Lconnection_genes[   inputs_to_node[ nodes_row[row_orderer_list[i]][j] ][k]   ].weight;
-				}
-				Lnode_genes[nodes_row[row_orderer_list[i]][j]].node_output_value = (*Lnode_genes[nodes_row[row_orderer_list[i]][j]].random_function.function)(entradas_temp);
-			}	
+				entradas_temp += Lnode_genes[  Lconnection_genes[  inputs_to_node[ nodes_at_row[row_orderer_list[i]][j] ][k]  ].in  ].node_output_value * Lconnection_genes[   inputs_to_node[ nodes_at_row[row_orderer_list[i]][j] ][k]   ].weight;
+			}
+			Lnode_genes[nodes_at_row[row_orderer_list[i]][j]].node_output_value = (*Lnode_genes[nodes_at_row[row_orderer_list[i]][j]].random_function.function)(entradas_temp);
+		}	
 	}
-	vector <double> outputs;
+	
 	for (int i = 0; i < (int)outputs_positions.size(); ++i)
 	{
 		outputs.push_back(Lnode_genes[outputs_positions[i]].node_output_value);
@@ -421,37 +431,15 @@ vector <double> Genetic_Encoding::eval(std::vector<double> inputs){
 
 string Genetic_Encoding::ANN_function(){
 	
-	
-	int amount_inputs_nodes(0);
-	int amount_outputs_nodes(0);
-	int amount_hiden_nodes (0);
-
-	vector < vector < int> > nodes_row;
-	vector < int > empty_vector;
-	for (int i = 0; i < (int)row_orderer_list.size(); ++i)
-		nodes_row.push_back(empty_vector);
-
-	vector <int> outputs_positions;
-	for(int i=0; i < (int)Lnode_genes.size() ; i++){
-		if(Lnode_genes[i].exist){
-			if(Lnode_genes[i].type == INPUT){
-				amount_inputs_nodes++;
-			}
-			else if(Lnode_genes[i].type == OUTPUT){
-				amount_outputs_nodes++;
-				outputs_positions.push_back(i);
-			}
-			else{
-				amount_hiden_nodes++;
-			}
-			cerr << nodes_row.size() << "\t" << Lnode_genes[i].row << endl;
-			nodes_row[Lnode_genes[i].row].push_back(i);
-		}
-	}
-	
-
-
 	vector < vector <int> > inputs_to_node;
+	vector < int > 			empty_vector;
+	int 					amount_inputs_nodes(0);
+
+	for(int i=0; i < (int)Lnode_genes.size() ; i++)
+		if(Lnode_genes[i].exist)
+			if(Lnode_genes[i].type == INPUT)
+				amount_inputs_nodes++;
+		
 	for (int i = 0; i < (int)Lnode_genes.size(); ++i)
 		inputs_to_node.push_back(empty_vector);
 
@@ -466,37 +454,36 @@ string Genetic_Encoding::ANN_function(){
 	//inputs 
 	for (int i = 0; i < amount_inputs_nodes; ++i)
 	{
+		ss << Lnode_genes[i].random_function.str_name << "[ ";
 		ss << "X" << i;
+		ss << " ]" ;
 		Lnode_genes[i].str  = ss.str();
 		ss.str("");
 	}
-	cerr << "5" << endl;
+
 	for (int i = 1; i < (int)row_orderer_list.size(); ++i)
 	{
-		
-		for (int j = 0; j < (int)nodes_row[row_orderer_list[i]].size(); ++j)
+		for (int j = 0; j < (int)nodes_at_row[row_orderer_list[i]].size(); ++j)
+		{
+			for (int k = 0; k < (int)inputs_to_node[nodes_at_row[row_orderer_list[i]][j]].size(); ++k)
 			{
-				for (int k = 0; k < (int)inputs_to_node[nodes_row[row_orderer_list[i]][j]].size(); ++k)
-				{
-					if(k==0){
-						//ss << " " << Lnode_genes[  Lconnection_genes[  inputs_to_node[ nodes_row[row_orderer_list[i]][j] ][k]  ].in  ].random_function.str_name;
-						ss << " sgmd";
-						if(true){// Para representar que con esto se puede cambiar para mathematica o para otro lenguaje
-							ss << "[ ";
-						}
+				if(k==0){
+					ss << " " << Lnode_genes[  Lconnection_genes[  inputs_to_node[ nodes_at_row[row_orderer_list[i]][j] ][k]  ].in  ].random_function.str_name;
+					if(true){// Para representar que con esto se puede cambiar para mathematica o para otro lenguaje
+						ss << "[ ";
 					}
-					else{
-						ss << " + ";
-					}
-					ss << Lnode_genes[  Lconnection_genes[  inputs_to_node[ nodes_row[row_orderer_list[i]][j] ][k]  ].in  ].str << " * " << Lconnection_genes[   inputs_to_node[ nodes_row[row_orderer_list[i]][j] ][k]   ].weight;
 				}
-				if(true){ // Para representar que con esto se puede cambiar para mathematica o para otro lenguaje
-					ss << " ]";
+				else{
+					ss << " + ";
 				}
-				//cerr << ss.str() << endl;
-				Lnode_genes[nodes_row[row_orderer_list[i]][j]].str = ss.str();
-				ss.str("");
-			}	
+				ss << Lnode_genes[  Lconnection_genes[  inputs_to_node[ nodes_at_row[row_orderer_list[i]][j] ][k]  ].in  ].str << " * " << Lconnection_genes[   inputs_to_node[ nodes_at_row[row_orderer_list[i]][j] ][k]   ].weight;
+			}
+			if(true){ // Para representar que con esto se puede cambiar para mathematica o para otro lenguaje
+				ss << " ]";
+			}
+			Lnode_genes[nodes_at_row[row_orderer_list[i]][j]].str = ss.str();
+			ss.str("");
+		}	
 	}
 	stringstream outputs;
 	for (int i = 0; i < (int)outputs_positions.size(); ++i)

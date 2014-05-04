@@ -26,6 +26,8 @@ namespace ANN_USM{
 	class connection_gene{
 		public:
 
+
+
 			/**
 			* \brief Change or set the value to the variables to innovation, in, out, weight, enable. 
 			* \param innovation: the innovation of the genne_connection.
@@ -50,7 +52,7 @@ namespace ANN_USM{
 			int 	out;
 			bool	enable;
 			double 	weight;
-			bool 	exist; 
+			bool 	exist;
 	};
 
 
@@ -148,7 +150,9 @@ namespace ANN_USM{
 			double 						fitness;
 			double 						shared_fitness;
 			int 						niche;
-			vector <int> 				row_orderer_list;
+			vector < int > 				row_orderer_list;
+			vector < vector <int> >		nodes_at_row;
+			vector < int > 				outputs_positions; 
 	};	
 }
 ostream & operator<<(ostream & o, ANN_USM::Genetic_Encoding & encoding);
