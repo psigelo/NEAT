@@ -30,7 +30,7 @@ using namespace ANN_USM;
 Genetic_Encoding Population::put_randoms_weight(Genetic_Encoding organism){
 	for (int i = 0; i < (int)organism.Lconnection_genes.size(); ++i)
 		organism.Lconnection_genes[i].weight=2.0*(rand()%10000)/10000.0-1.0;
-	
+
 	return organism;
 }
 
@@ -126,7 +126,7 @@ Genetic_Encoding Population::mutation_change_weight(Genetic_Encoding organism){
 
 
 void Population::init_population(char path[]){
-	
+
 	Genetic_Encoding _organism;
 	_organism.load(path);
 	_organism.niche=0;
@@ -143,13 +143,12 @@ void Population::init_population(char path[]){
 		}
 		else{
 			cerr << "FATAL ERROR:: Your initial genome(Genetic_Encoding) can not have hiden nodes\n";
-			exit(1); 
-		}	
+			exit(1);
+		}
 	}
-	
-	row_orderer_list.push_back(0);
-	row_orderer_list.push_back(1);
-	last_row = 2;
+
+	row_orderer_list = _organism.row_orderer_list;
+	last_row = _organism.row_orderer_list.size();
 
 	_organism.row_orderer_list = row_orderer_list;
 
@@ -158,13 +157,13 @@ void Population::init_population(char path[]){
 
 	last_innovation=0;
 	for (int i = 0; i < (int)_organism.Lconnection_genes.size(); ++i)
-		obtain_innovation(_organism.Lconnection_genes[i].in, _organism.Lconnection_genes[i].out); 
+		obtain_innovation(_organism.Lconnection_genes[i].in, _organism.Lconnection_genes[i].out);
 	last_node = (int)_organism.Lnode_genes.size()-1;
-	
-	
+
+
 
 	for (int i = 0; i < POPULATION_MAX; ++i){
-		organisms.push_back( put_randoms_weight(_organism) ); 
+		organisms.push_back( put_randoms_weight(_organism) );
 	}
 	lenght = POPULATION_MAX;
 
@@ -202,8 +201,8 @@ Genetic_Encoding Population::mutation_node(Genetic_Encoding organism){
 			connection_to_mutate = round(rand()%number_of_connections);
 			if(organism.Lconnection_genes[connection_to_mutate].exist) break;
 		}
-		
-		
+
+
 		node = obtain_historical_node(organism.Lconnection_genes[connection_to_mutate].in, organism.Lconnection_genes[connection_to_mutate].out);
 		if(node < (int)organism.Lnode_genes.size()){
 			if(!organism.Lnode_genes[node].exist){
@@ -225,14 +224,14 @@ Genetic_Encoding Population::mutation_node(Genetic_Encoding organism){
 
 	// add connections
 	organism.Lconnection_genes[connection_to_mutate].enable=0; // disabling old connection.
-	
+
 	innov1 = obtain_innovation(organism.Lconnection_genes[connection_to_mutate].in, node);
 	innov2 = obtain_innovation(node, organism.Lconnection_genes[connection_to_mutate].out);
-	
+
 	organism.add_connection(innov1, organism.Lconnection_genes[connection_to_mutate].in, node, 1.0);
 	organism.add_connection(innov2, node, organism.Lconnection_genes[connection_to_mutate].out, organism.Lconnection_genes[connection_to_mutate].weight);
-	
-	
+
+
 	return organism;
 }
 
@@ -250,8 +249,8 @@ Genetic_Encoding Population::mutation_node(Genetic_Encoding organism){
 
 // Hay que mejorar esto
 int Population::obtain_row(int node, int row_node_initial_in, int row_node_initial_out){
-	
-	
+
+
 	int row_position_in(-1);
 	int row_position_out(-1);
 	bool flag_in(false), flag_out(false);
@@ -261,13 +260,13 @@ int Population::obtain_row(int node, int row_node_initial_in, int row_node_initi
 		if(!flag_out)	if(row_node_initial_out == row_orderer_list[i]){  row_position_out = i; flag_out=true;}
 		if(flag_in && flag_out) break;
 	}
-	
+
 	if(row_position_in == -1 || row_position_out == -1 ){
 		cerr << row_node_initial_in << "\t" << row_position_in << "\t" << row_node_initial_out << "\t" << row_position_out << "\t" << row_orderer_list.size() << "\n" << "Error:: Function obtain_row :: Row_node_in or row_node_out does not exist .\n"; exit(1);
 	}
 
 	if( row_position_in > row_position_out){
-		cerr << row_node_initial_in << "\t" << row_position_in << "\t" << row_node_initial_out << "\t" << row_position_out << "\t" << row_orderer_list.size() << "\n"; 
+		cerr << row_node_initial_in << "\t" << row_position_in << "\t" << row_node_initial_out << "\t" << row_position_out << "\t" << row_orderer_list.size() << "\n";
 		cerr << "Error:: Function obtain_row :: ------------------------.\n"; exit(1);
 	}
 
@@ -279,8 +278,8 @@ int Population::obtain_row(int node, int row_node_initial_in, int row_node_initi
 	if(historical_row[node] >= 0) {
 		return historical_row[node];
 	}
-	
-	
+
+
 	if(row_position_in == row_position_out ){
 		return row_node_initial_in;
 	}
@@ -295,7 +294,7 @@ int Population::obtain_row(int node, int row_node_initial_in, int row_node_initi
 			historical_row[node] = row_orderer_list[row_position_in + 1];
 			return historical_row[node];
 		}
-	}	
+	}
 }
 
 
@@ -498,7 +497,7 @@ Genetic_Encoding Population::mutation_connection(Genetic_Encoding organism){
 	int node_out;
 	int innovation;
 	int number_of_nodes = (int)organism.Lnode_genes.size();
-	
+
 	while(true){
 		counter=0;
 		while(true){
@@ -509,25 +508,25 @@ Genetic_Encoding Population::mutation_connection(Genetic_Encoding organism){
 			int row_position_in(-1);
 			int row_position_out(-1);
 			bool flag_in(false), flag_out(false);
-			
+
 			for (int i = 0; i < (int)row_orderer_list.size(); ++i)
 			{
 				if(organism.Lnode_genes[node_in].row == row_orderer_list[i]){   row_position_in = i; flag_in=true;}
 				if(organism.Lnode_genes[node_out].row == row_orderer_list[i]){ 	row_position_out = i; flag_out=true;}
 				if(flag_in && flag_out)break;
 			}
-	
+
 			if( (organism.Lnode_genes[node_out].exist  && organism.Lnode_genes[node_in].exist) && ( row_position_in <  row_position_out) ) break;
 			if (counter > 50)
 			{
-				
+
 				//cerr << "In function mutation_connection:: counter is greater than 50 \n";
 				return organism;
 			}
 			counter++;
 		}
 
-		
+
 		innovation = obtain_innovation(node_in, node_out);
 		if((int)organism.Lconnection_genes.size() - 1 < innovation){
 			organism.add_connection(innovation,node_in, node_out, 2*(rand()%10000)/10000.0 - 1.0);
@@ -537,7 +536,7 @@ Genetic_Encoding Population::mutation_connection(Genetic_Encoding organism){
 			organism.add_connection(innovation,node_in, node_out, 2*(rand()%10000)/10000.0 - 1.0);
 			break;
 		}
-		
+
 		if(count>50){
 			//cerr << "In function mutation_connection:: in 50 attempts not found an mutation option \n";
 			break;
@@ -545,8 +544,8 @@ Genetic_Encoding Population::mutation_connection(Genetic_Encoding organism){
 
 		count++;
 
-	}	
-	
+	}
+
 	return organism;
 }
 
@@ -596,7 +595,7 @@ Genetic_Encoding Population::mutation_connection(Genetic_Encoding organism){
 
 
 
-ostream & operator<<(ostream & o, ANN_USM::Population & pop) { 
+ostream & operator<<(ostream & o, ANN_USM::Population & pop) {
 	for (int i = 0; i < (int)pop.organisms.size(); ++i){
 		o << pop.organisms[i];
 		o << "\n";
@@ -727,7 +726,7 @@ double Population::compatibility(Genetic_Encoding orgm1, Genetic_Encoding orgm2)
 			W += abs(orgm1.Lconnection_genes[i].weight - orgm2.Lconnection_genes[i].weight);
 		else if(orgm1.Lconnection_genes[i].exist || orgm2.Lconnection_genes[i].exist)
 			D+=1;
-		
+
 	for (int i = limit_inf; i < limit_sup; ++i)
 		if( (size_1<size_2) ? orgm2.Lconnection_genes[i].exist : orgm1.Lconnection_genes[i].exist)
 			E+=1;
@@ -814,7 +813,7 @@ Genetic_Encoding Population::crossover(Genetic_Encoding orgm1, Genetic_Encoding 
 					(rand()%10 >= 5) ? orgm_resutl.add_connection(orgm1.Lconnection_genes[i]) : orgm_resutl.add_connection(orgm2.Lconnection_genes[i]);
 				}
 				else{
-					//(!orgm1.Lconnection_genes[i].enable)? orgm_resutl.add_connection(orgm1.Lconnection_genes[i]) : orgm_resutl.add_connection(orgm2.Lconnection_genes[i]); 
+					//(!orgm1.Lconnection_genes[i].enable)? orgm_resutl.add_connection(orgm1.Lconnection_genes[i]) : orgm_resutl.add_connection(orgm2.Lconnection_genes[i]);
 					if(!orgm1.Lconnection_genes[i].enable){
 						if( ((double)rand())/RAND_MAX < PROB_ENABLE_AN_DISABLE_CONNECTION ){
 							orgm1.Lconnection_genes[i].enable = true;
@@ -838,7 +837,7 @@ Genetic_Encoding Population::crossover(Genetic_Encoding orgm1, Genetic_Encoding 
 			else if ( orgm1.Lconnection_genes[i].exist || orgm2.Lconnection_genes[i].exist)
 				(orgm1.Lconnection_genes[i].exist ) ? orgm_resutl.add_connection(orgm1.Lconnection_genes[i]) : orgm_resutl.add_connection(orgm2.Lconnection_genes[i]);
 		}
-		
+
 		i++;
 	}
 
@@ -932,7 +931,7 @@ void Population::spatiation(){
 	prev_niches = current_niches;
 	vector<Niche>().swap(current_niches);
 
-	
+
 	//cout << "Prev_niches.size(): " << (int)prev_niches.size() << endl;
 
 	vector <Niche> real_niches;
@@ -959,7 +958,7 @@ void Population::spatiation(){
 
 		for (int i = 0; i < (int)real_niches.size(); ++i)
 		{
-			
+
 			if(compatibility(organisms[j], prev_organisms[real_niches[i].niche_champion_position]) < DISTANCE_THRESHOLD ){
 				have_niche = true;
 				current_niches_temp[i].exist=true;
@@ -967,7 +966,7 @@ void Population::spatiation(){
 				current_niches_temp[i].niche_champion_position=j; // this is temporal until in function epoch the real champion is decided respect its fitness
 				break;
 			}
-			
+
 		}
 
 		if (!have_niche)
@@ -1113,7 +1112,7 @@ void Population::print_niches(){
 		if(current_niches[i].exist)
 			cout << "Niche " << i << ":\t\t\t" <<  current_niches[i].organism_position.size() << endl;
 		else
-			cout << "Niche " << i << ":\t\t\t0\n";	
+			cout << "Niche " << i << ":\t\t\t0\n";
 }
 
 
@@ -1200,14 +1199,14 @@ void Population::epoch(){
 
 	// *Se calculan la cantidad de hijos por cada nicho.
 	// *Se trunca la cantidad de hijos
-	// *Se reparten los restantes uno a uno, 
+	// *Se reparten los restantes uno a uno,
 	//	Para repartir primero se calcula la probabilidad que corresponde a cada nicho
 	//	Luego se obtiene un número random, dependiendo del random se elije el nicho
 	//  Obviamente nichos con mayor fitness tienen más probabilidades de tener más hijos.
-	
+
 	for (int i = 0; i < (int)organisms.size(); ++i)
 		random_organism.push_back((double)(organisms[i].shared_fitness)/total_shared_fitness_population);
-	
+
 	vector < Genetic_Encoding >().swap(prev_organisms); // Se limpia prev_organisms
 	prev_organisms = organisms;
 	vector < Genetic_Encoding >().swap(organisms); // Se limpia organisms
@@ -1242,7 +1241,7 @@ Genetic_Encoding Population::epoch_reproduce(Genetic_Encoding organism, int pobl
 	}
 	else{
 		if( ((double)rand())/RAND_MAX < PROBABILITY_INTERSPACIES_MATING){
-			while(true){							
+			while(true){
 				random_niche_mother = rand()%current_niches.size();
 				if(random_niche_mother != organism.niche)break;
 				if(current_niches.size() == 1 ){
@@ -1258,19 +1257,19 @@ Genetic_Encoding Population::epoch_reproduce(Genetic_Encoding organism, int pobl
 			organism = crossover(organism, organism_mother);
 		}
 		else{
-			
+
 			while(true){
 				random_mother = rand()%current_niches[organism.niche].organism_position.size();
 				if(current_niches[organism.niche].organism_position[random_mother] != poblation_place )break;
 				if(current_niches[organism.niche].organism_position.size()==1)break;
 			}
-			
+
 			organism_mother = prev_organisms[current_niches[organism.niche].organism_position[random_mother]];
 			organism = crossover(organism, organism_mother);
 		}
 
 	}
-	
+
 
 	if( (int)organism.Lnode_genes.size() <  LARGE_POPULATION_DISCRIMINATOR ){ // enter if is a small organism
 		if( ((double)rand()/RAND_MAX) < SMALLER_POPULATIONS_PROBABILITY_ADDING_NEW_NODE){

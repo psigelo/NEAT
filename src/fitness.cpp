@@ -20,9 +20,9 @@ double fitness(Genetic_Encoding organism){
 	// XOR(0,0) -> 0
 	input.push_back(0);
 	input.push_back(0);
-	
+
 	output = organism.eval(input);
-	
+
 	error_sum += abs(output.at(0));
 	input.clear();
 
@@ -33,7 +33,7 @@ double fitness(Genetic_Encoding organism){
 	error_sum += abs(1 - output.at(0));
 	input.clear();
 
-	// XOR(1,0) -> 1	
+	// XOR(1,0) -> 1
 	input.push_back(1);
 	input.push_back(0);
 	output = organism.eval(input);
@@ -47,7 +47,7 @@ double fitness(Genetic_Encoding organism){
 	error_sum += abs(output.at(0));
 	input.clear();
 
-	
+
 
 	// Fitness
 	cout << pow(4 - error_sum, 2) << endl;

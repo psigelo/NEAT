@@ -29,7 +29,7 @@ namespace ANN_USM{
 
 
 			/**
-			* \brief Change or set the value to the variables to innovation, in, out, weight, enable. 
+			* \brief Change or set the value to the variables to innovation, in, out, weight, enable.
 			* \param innovation: the innovation of the genne_connection.
 			* \param in: is the input node.
 			* \param out: is the output node.
@@ -38,14 +38,14 @@ namespace ANN_USM{
 			*/
 			void _connection_gene(
 				int innovation,
-				int in, int out, 
-				double weight, 
+				int in, int out,
+				double weight,
 				bool enable
-				); // fill a conection gene		
+				); // fill a conection gene
 			/**
 			* \brief Change the value of the exist variable
 			* \param exist: if this connection is present in the genome.
-			*/	
+			*/
 			void _connection_gene(bool exist);
 			int 	innovation;
 			int 	in;
@@ -68,17 +68,17 @@ namespace ANN_USM{
 			* \param random_function the random function with its string.
 			*/
 			void _node_genne( // fill a node gene
-				int node, 
-				gene_type type, 
+				int node,
+				gene_type type,
 				int row,
 				Return_random_function random_function
-				); 
+				);
 			/**
 			* \brief Change the value of the exist variable.
 			* \param exist: if this node is present in the genome.
 			*/
 			void _node_genne(bool exist);
-		
+
 			int 		row;
 			bool 		exist;
 			int 		node;
@@ -97,8 +97,8 @@ namespace ANN_USM{
 			* \param type: which type of node is; 0 if is an input, 1 if is an hiden and 2 if is an output node.
 			*/
 			void add_node(
-				int node, 
-				int row, 
+				int node,
+				int row,
 				gene_type type
 				);
 			/**
@@ -107,7 +107,7 @@ namespace ANN_USM{
 			*/
 			void add_node(node_gene node);
 			/**
-			* \brief add a connection to the genome. 
+			* \brief add a connection to the genome.
 			* \param innovation: the innovation of the genne_connection.
 			* \param in: is the input node
 			* \param out: is the output node
@@ -115,9 +115,9 @@ namespace ANN_USM{
 			* \param enable: if this connection is present in the genome
 			*/
 			void add_connection(
-				int innovation, 
-				int in, 	
-				int out, 
+				int innovation,
+				int in,
+				int out,
 				double weight
 				);
 			/**
@@ -129,7 +129,7 @@ namespace ANN_USM{
 			/**
 			* \brief store the genome in file in json format.
 			* \param path: Is where the file is stored.
-			*/			
+			*/
 			void 				save(char path[]); // save to a file
 			/**
 			* \brief load  a genome from file and set this organism variables.
@@ -143,7 +143,7 @@ namespace ANN_USM{
 
 			vector <double> 	eval(vector <double> inputs); // To implementate
 			string 				ANN_function();
-			
+
 
 			vector <connection_gene> 	Lconnection_genes; //List of connections genes
 			vector <node_gene> 			Lnode_genes;
@@ -152,8 +152,8 @@ namespace ANN_USM{
 			int 						niche;
 			vector < int > 				row_orderer_list;
 			vector < vector <int> >		nodes_at_row;
-			vector < int > 				outputs_positions; 
-	};	
+			vector < int > 				outputs_positions;
+	};
 }
 ostream & operator<<(ostream & o, ANN_USM::Genetic_Encoding & encoding);
 

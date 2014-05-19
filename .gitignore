@@ -1,6 +1,5 @@
 *.o
 application/
 *.class
-src/prueba*
 bin/
 objects/
