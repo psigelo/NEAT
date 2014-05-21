@@ -440,7 +440,6 @@ vector <double> Genetic_Encoding::eval(std::vector<double> inputs){
 
 string Genetic_Encoding::ANN_function(){
 
-	cerr << "1 tengo razoman" << endl;
 	vector < vector <int> > inputs_to_node;
 	vector < int > 			empty_vector;
 	int 					amount_inputs_nodes(0);

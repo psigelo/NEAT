@@ -44,7 +44,6 @@ var class_a_n_n___u_s_m_1_1_population =
     [ "PROB_ENABLE_AN_DISABLE_CONNECTION", "class_a_n_n___u_s_m_1_1_population.html#af439e6e3adcef5f7f0fc2071c4c2c573", null ],
     [ "PROBABILITY_INTERSPACIES_MATING", "class_a_n_n___u_s_m_1_1_population.html#a2a6e38a99e527f95e6082a6e9b1e8215", null ],
     [ "row_orderer_list", "class_a_n_n___u_s_m_1_1_population.html#ae688b66299b4b8be34d34a797bbc44ab", null ],
-    [ "SIGMOID_CONSTANT", "class_a_n_n___u_s_m_1_1_population.html#a196d2595de3ecfd083d0a999b6d333cd", null ],
     [ "SMALLER_POPULATIONS_PROBABILITY_ADDING_NEW_CONNECTION", "class_a_n_n___u_s_m_1_1_population.html#adafd4f7090f4ba3805672c072a6c6a22", null ],
     [ "SMALLER_POPULATIONS_PROBABILITY_ADDING_NEW_NODE", "class_a_n_n___u_s_m_1_1_population.html#a391f04ea20c20d03a69c5fc31f4c043b", null ]
 ];

@@ -5,28 +5,27 @@
 #include "fitness.hpp"
 #include <cmath>
 #include <unistd.h>
-
+#include <stdexcept>      // std::out_of_range
 
 namespace ANN_USM{
 
 	class Niche{
 		public:
-			bool 		exist;
-			int 		years;
-			double		total_fitness;
+			bool 		    exist;
+			int 		        years;
+			double		 total_fitness;
 			double 		total_shared_fitness;
 			int 		niche_champion_position;
 			int 		amount_of_offspring;
 			vector<int> organism_position;
-
 	};
 
 	class Population{
 		public:
-			
 
+			Population(char user_definitions[],char genetic_encoder[]);
 			//	The order of the functions is the same that the time ocurrence.
-			
+
 
 			/*! \brief generate the new poblation and their niches
 			*
@@ -37,15 +36,17 @@ namespace ANN_USM{
 									Genetic_Encoding 	organism,
 									int 				poblation_place
 									);
-			void 				init_population(char path[]);
 			void 				spatiation();
 			Genetic_Encoding 	mutation_node 			(Genetic_Encoding organism);
 			Genetic_Encoding 	mutation_create_new_node(Genetic_Encoding organism);
 			Genetic_Encoding 	mutation_connection 	(Genetic_Encoding organism);
 			Genetic_Encoding 	mutation_change_weight 	(Genetic_Encoding organism);
+			/*!\brief Changes all weights of an genome randomly
+			* \param organism is the genome that will change and will be returned.
+			*/
 			Genetic_Encoding 	put_randoms_weight 		(Genetic_Encoding organism);
 			int 				obtain_historical_node(
-									int initial_in, 
+									int initial_in,
 									int initial_out
 									);
 			int 				obtain_innovation(
@@ -53,39 +54,39 @@ namespace ANN_USM{
 									int out
 									);
 			int 				obtain_row(
-									int node, 
-									int node_initial_in, 
+									int node,
+									int node_initial_in,
 									int node_initial_out
 									);
 			double 				compatibility(
-									Genetic_Encoding orgm1, 
+									Genetic_Encoding orgm1,
 									Genetic_Encoding orgm2
 									); // Distance between two ANNs
 			Genetic_Encoding 	crossover(
-									Genetic_Encoding orgm1, 
+									Genetic_Encoding orgm1,
 									Genetic_Encoding orgm2
 									);
 			void 				save(char path[]);
 			void 				print_niches();
 			void 				load_user_definitions(char address[]);
-			
+
 
 
 			//============================ User definitions ================================//
 			/**
-				These variables are introduced through the user_definition file. 
+				These variables are introduced through the user_definition file.
 				These variables represent the probabilities, amount of genomes and amount of
-				generations of NEAT is important to know that are absolutely relevant.  				
+				generations of NEAT is important to know that are absolutely relevant.
 			*/
 			int 	POPULATION_MAX;
 
-		
+
 			double 	ORGANISM_DISTANCE_1;
 			double 	ORGANISM_DISTANCE_2;
 			double 	ORGANISM_DISTANCE_3;
 
 
-			
+
 			double 	DISTANCE_THRESHOLD;
 			double 	PERCENT_MUTATION_CONNECTION;
 			double 	PERCENTAGE_OFFSPRING_WITHOUT_CROSSOVER;
@@ -96,7 +97,7 @@ namespace ANN_USM{
 			double 	LARGER_POPULATIONS_PROBABILITY_ADDING_NEW_CONNECTION;
 			double 	PROB_ENABLE_AN_DISABLE_CONNECTION;
 			double 	LARGE_POPULATION_DISCRIMINATOR;
-			int 	GENERATIONS;
+			int 	        GENERATIONS;
 			//==============================================================================//
 
 			int 						lenght;

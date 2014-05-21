@@ -7,9 +7,9 @@
 
 var indexSectionsWithContent =
 {
-  0: "_acegnp",
-  1: "cgnp",
-  2: "_e",
+  0: "_acegjlnprs",
+  1: "cgnpr",
+  2: "_aejlps",
   3: "p",
   4: "a"
 };

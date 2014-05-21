@@ -50,7 +50,7 @@ double fitness(Genetic_Encoding organism){
 
 
 	// Fitness
-	cout << pow(4 - error_sum, 2) << endl;
+	//cout << pow(4 - error_sum, 2) << endl;
 	return pow(4 - error_sum, 2);
 }
 

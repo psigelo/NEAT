@@ -9,10 +9,7 @@
 using namespace ANN_USM;
 
 
-
-
-
-
+#define PROBABILITY_CHANGE_WEIGHT 0.9
 
 
 
@@ -30,7 +27,6 @@ using namespace ANN_USM;
 Genetic_Encoding Population::put_randoms_weight(Genetic_Encoding organism){
 	for (int i = 0; i < (int)organism.Lconnection_genes.size(); ++i)
 		organism.Lconnection_genes[i].weight=2.0*(rand()%10000)/10000.0-1.0;
-
 	return organism;
 }
 
@@ -70,7 +66,7 @@ Genetic_Encoding Population::put_randoms_weight(Genetic_Encoding organism){
 
 
 
-
+/* así no fue definida en el paper
 Genetic_Encoding Population::mutation_change_weight(Genetic_Encoding organism){
 	int number_of_connections = organism.Lconnection_genes.size();
 	int connection_to_mutate = round(rand()%number_of_connections);
@@ -78,97 +74,107 @@ Genetic_Encoding Population::mutation_change_weight(Genetic_Encoding organism){
 	organism.Lconnection_genes[connection_to_mutate].weight=delta*0.2 + 0.8*organism.Lconnection_genes[connection_to_mutate].weight;
 	return organism;
 }
+*/
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-void Population::init_population(char path[]){
-
-	Genetic_Encoding _organism;
-	_organism.load(path);
-	_organism.niche=0;
-
-	for (int i = 0; i < (int)_organism.Lnode_genes.size(); ++i)
-	{
-		if (_organism.Lnode_genes[i].type == INPUT)
-		{
-			_organism.Lnode_genes[i].row = 0;
-		}
-		else if(_organism.Lnode_genes[i].type == OUTPUT)
-		{
-			_organism.Lnode_genes[i].row = 1;
-		}
-		else{
-			cerr << "FATAL ERROR:: Your initial genome(Genetic_Encoding) can not have hiden nodes\n";
-			exit(1);
+Genetic_Encoding Population::mutation_change_weight(Genetic_Encoding organism){
+	double delta;
+	for(int i = 0; i < (int)organism.Lconnection_genes.size(); i++ ){
+		if( rand()/(double)RAND_MAX <= PROBABILITY_CHANGE_WEIGHT ){
+			delta = 2*(rand()%10000)/10000.0-1;
+			organism.Lconnection_genes.at(i).weight = delta*0.2 + 0.8*organism.Lconnection_genes.at(i).weight;
 		}
 	}
+	return organism;
+}
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Population::Population(char path1[],char path2[]){
+	load_user_definitions(path1);
+
+	lenght = POPULATION_MAX;
+	Genetic_Encoding _organism;
+	_organism.load(path2);
+	_organism.niche=0;
+	fitness_champion = 0;
+	last_innovation=0;
 	row_orderer_list = _organism.row_orderer_list;
 	last_row = _organism.row_orderer_list.size();
-
-	_organism.row_orderer_list = row_orderer_list;
-
-	fitness_champion = 0;
 	champion = _organism;
+	Niche niche_temp;
 
-	last_innovation=0;
-	for (int i = 0; i < (int)_organism.Lconnection_genes.size(); ++i)
-		obtain_innovation(_organism.Lconnection_genes[i].in, _organism.Lconnection_genes[i].out);
+	// ================FOR REDUNDANCE ============
+	for (int i = 0; i < (int)_organism.Lconnection_genes.size(); ++i){
+		int in = _organism.Lconnection_genes.at(i).in;
+		int out = _organism.Lconnection_genes.at(i).out;
+		while((int)historical_innovation.size()-1 < in)
+		{
+			vector <int> temp;
+			historical_innovation.push_back(temp);
+		}
+		while((int)historical_innovation[in].size()-1 < out)
+		{
+			historical_innovation[in].push_back(-1);
+		}
+		if(historical_innovation[in][out] < 0){
+			historical_innovation[in][out] = _organism.Lconnection_genes.at(i).innovation;
+			if(last_innovation < _organism.Lconnection_genes.at(i).innovation)
+				last_innovation = _organism.Lconnection_genes.at(i).innovation;
+		}
+	}
+	last_innovation++;
+	//============================================
+
 	last_node = (int)_organism.Lnode_genes.size()-1;
 
-
-
-	for (int i = 0; i < POPULATION_MAX; ++i){
+	for (int i = 0; i < POPULATION_MAX; ++i){}
 		organisms.push_back( put_randoms_weight(_organism) );
-	}
-	lenght = POPULATION_MAX;
+
+
 
 	prev_organisms.push_back(_organism);
-	Niche niche_temp;
 	niche_temp.organism_position.push_back(0);
 	niche_temp.exist=true;
 	niche_temp.niche_champion_position=0;
@@ -185,24 +191,19 @@ void Population::init_population(char path[]){
 
 
 Genetic_Encoding Population::mutation_node(Genetic_Encoding organism){
-
-
 	int number_of_connections = organism.Lconnection_genes.size();
 	int connection_to_mutate;
-	int innov1;
-	int innov2;
-	int node;
-	// add node
-	int count(0);
-	int row;
+	int innov1,innov2, node, row, count(0);
 
+
+	// add node
 	do{
 		while(true){
 			connection_to_mutate = round(rand()%number_of_connections);
-			if(organism.Lconnection_genes[connection_to_mutate].exist) break;
+			//if(organism.Lconnection_genes[connection_to_mutate].exist ) break;
+			if(organism.Lconnection_genes[connection_to_mutate].exist && organism.Lconnection_genes[connection_to_mutate].enable) break;
+			//cerr << "ESTO NO" << endl;
 		}
-
-
 		node = obtain_historical_node(organism.Lconnection_genes[connection_to_mutate].in, organism.Lconnection_genes[connection_to_mutate].out);
 		if(node < (int)organism.Lnode_genes.size()){
 			if(!organism.Lnode_genes[node].exist){
@@ -250,6 +251,12 @@ Genetic_Encoding Population::mutation_node(Genetic_Encoding organism){
 // Hay que mejorar esto
 int Population::obtain_row(int node, int row_node_initial_in, int row_node_initial_out){
 
+	try{
+		if(historical_row.at(node) >= 0) {
+			return historical_row[node];
+		}
+	}
+	catch (const std::out_of_range& oor){} 
 
 	int row_position_in(-1);
 	int row_position_out(-1);
@@ -266,18 +273,20 @@ int Population::obtain_row(int node, int row_node_initial_in, int row_node_initi
 	}
 
 	if( row_position_in > row_position_out){
+	//if( row_position_in == row_position_out)
 		cerr << row_node_initial_in << "\t" << row_position_in << "\t" << row_node_initial_out << "\t" << row_position_out << "\t" << row_orderer_list.size() << "\n";
 		cerr << "Error:: Function obtain_row :: ------------------------.\n"; exit(1);
 	}
+
 
 	while((int)historical_row.size()-1 < node)
 	{
 		historical_row.push_back(-1);
 	}
-
 	if(historical_row[node] >= 0) {
 		return historical_row[node];
 	}
+
 
 
 	if(row_position_in == row_position_out ){
@@ -295,6 +304,7 @@ int Population::obtain_row(int node, int row_node_initial_in, int row_node_initi
 			return historical_row[node];
 		}
 	}
+
 }
 
 
