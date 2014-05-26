@@ -6,6 +6,8 @@
 #include <cmath>
 #include <unistd.h>
 #include <stdexcept>      // std::out_of_range
+#include <list>
+#include <algorithm>
 
 namespace ANN_USM{
 
@@ -17,7 +19,8 @@ namespace ANN_USM{
 			double 		total_shared_fitness;
 			int 		niche_champion_position;
 			int 		amount_of_offspring;
-			vector<int> organism_position;
+			vector <int> organism_position;
+
 	};
 
 	class Population{
@@ -70,8 +73,6 @@ namespace ANN_USM{
 			void 				print_niches();
 			void 				load_user_definitions(char address[]);
 
-
-
 			//============================ User definitions ================================//
 			/**
 				These variables are introduced through the user_definition file.
@@ -114,9 +115,14 @@ namespace ANN_USM{
 			vector <int> 				row_orderer_list;
 			Genetic_Encoding 			champion;
 			double 						fitness_champion;
+			list <int> organims_position_orderer_by_fitness;
 	};
 }
 
 ostream & operator<<(ostream & o, ANN_USM::Population & pop);
+
+
+
+
 
 #endif
