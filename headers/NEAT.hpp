@@ -8,6 +8,8 @@
 #include <stdexcept>      // std::out_of_range
 #include <list>
 #include <algorithm>
+#include "discrete_probabilities.hpp"
+
 
 namespace ANN_USM{
 
