@@ -249,7 +249,7 @@ Genetic_Encoding Population::mutation_node(Genetic_Encoding organism){
 
 	if(inverse_to_connections.size() == 0){
 		cerr << "Error::Mutation_node()::Is imposible that no exist node to mutate";
-		return organism;
+		exit(1);
 	}
 
 	connection_to_mutate = inverse_to_connections.at(sack_of_nodes_to_take.take_one_randomly());
@@ -833,7 +833,23 @@ double Population::compatibility(Genetic_Encoding orgm1, Genetic_Encoding orgm2)
 		if(orgm2.Lconnection_genes.at(i).exist && orgm2.Lconnection_genes.at(i).enable )E++;
 	}
 
-	distance = ORGANISM_DISTANCE_1*E/(double)limit_sup + ORGANISM_DISTANCE_2*D/(double)limit_sup + ORGANISM_DISTANCE_3*W;
+
+	//Lo siguiente es para que los genomas pequeños sean capaces de generar nichos diferentes así lograr una diversificación desde un principio.
+	double divisor;
+	double small_gnomes_adjust;
+	if(limit_sup > 10){
+		divisor = 1.0 + ( 1.0 - exp(-(limit_sup + 10.0)/2.5) )*(limit_sup - 1.0); 
+		small_gnomes_adjust=1.0;
+	} 
+	else{
+		divisor = 1.0;
+		if(ORGANISM_DISTANCE_3 < 1.0) small_gnomes_adjust=1.0/ORGANISM_DISTANCE_3;
+		else small_gnomes_adjust=1.0;
+	}
+	distance = ORGANISM_DISTANCE_1*E/divisor + ORGANISM_DISTANCE_2*D/divisor + ORGANISM_DISTANCE_3*W*small_gnomes_adjust;
+	
+
+
 	return distance;
 }
 
@@ -974,7 +990,13 @@ Genetic_Encoding Population::crossover(Genetic_Encoding orgm1, Genetic_Encoding 
 
 
 
+
+
 /*
+
+
+//Version 2
+// No sé por qué pero tengo la impresión que este método funciona peor.
 Genetic_Encoding Population::crossover(Genetic_Encoding orgm1, Genetic_Encoding orgm2){
 	Genetic_Encoding orgm_resutl;
 	Genetic_Encoding * orgm_greater_connections;
@@ -1044,10 +1066,6 @@ Genetic_Encoding Population::crossover(Genetic_Encoding orgm1, Genetic_Encoding 
 
 
 
-
-
-
-
 */
 
 
@@ -1096,8 +1114,16 @@ Genetic_Encoding Population::crossover(Genetic_Encoding orgm1, Genetic_Encoding 
 
 
 
+
+
+
+
+//		PAPER VERSION.
+
 /*
+
 void Population::spatiation(){
+	//Se hace el traspaso generacional, ahora los nichos actuales pasan a ser nichos previos.
 	vector<Niche>().swap(prev_niches);
 	prev_niches = current_niches;
 	vector<Niche>().swap(current_niches);
@@ -1105,11 +1131,13 @@ void Population::spatiation(){
 
 	vector <Niche> real_niches;
 	vector <Niche> current_niches_temp;
+
 	for (int i = 0; i < (int)prev_niches.size(); ++i)
 	{
-		if (prev_niches.at(i).exist)
+		if (prev_niches.at(i).exist )
 		{
-			real_niches.push_back(prev_niches[i]);
+			if(prev_niches.at(i).organism_position.size() >0)
+				real_niches.push_back(prev_niches[i]);
 		}
 	}
 
@@ -1118,53 +1146,42 @@ void Population::spatiation(){
 	for(int i=0; i < (int)real_niches.size(); i++){
 		current_niches_temp.push_back(aux_niche);
 	}
+	// Obtain an random representant
+	vector <int> representant_of_niche;
+	for(int i = 0; i < (int)real_niches.size(); i++){
+		representant_of_niche.push_back( real_niches.at(i).organism_position.at(rand()%real_niches.at(i).organism_position.size()) );
+	}
 
-
-	bool have_niche;
-	int amount_of_new_niches(0);
-	for(int j=0; j < (int)organisms.size(); j++){
-		have_niche = false;
-
-		for (int i = 0; i < (int)real_niches.size(); ++i)
-		{
-
-			if(compatibility(organisms.at(j), prev_organisms[real_niches[i].niche_champion_position]) < DISTANCE_THRESHOLD ){
-				have_niche = true;
-				current_niches_temp.at(i).exist=true;
-				current_niches_temp.at(i).organism_position.push_back(j);
-				current_niches_temp.at(i).niche_champion_position=j; // this is temporal until in function epoch the real champion is decided respect its fitness
-				break;
-			}
-
-		}
-
-		if (!have_niche)
-		{
-			for (int i = 0; i < amount_of_new_niches; ++i)
-			{
-				if( compatibility( organisms[j], organisms[current_niches_temp[i + (int)real_niches.size()].niche_champion_position] ) < DISTANCE_THRESHOLD ){
-					have_niche = true;
-					current_niches_temp.at(i + (int)real_niches.size()).exist=true;
-					current_niches_temp.at(i + (int)real_niches.size()).organism_position.push_back(j);
-					current_niches_temp.at(i + (int)real_niches.size()).niche_champion_position=j; // this is temporal until in function epoch the real champion is decided respect its fitness
+	for(int i=0; i < (int)organisms.size(); i++ ){
+			bool have_niche(false);
+			for(int j=0; j < (int)real_niches.size(); j++){
+				if( compatibility(organisms.at(i), prev_organisms.at( representant_of_niche.at(j) ) )  < DISTANCE_THRESHOLD ){
+					have_niche=true;
+					current_niches_temp.at(j).exist=true;
+					current_niches_temp.at(j).organism_position.push_back(i);
 					break;
 				}
 			}
-		}
-
-		if(!have_niche){
-			Niche aux2_niche;
-			aux2_niche.exist=true;
-			aux2_niche.niche_champion_position=j;
-			aux2_niche.organism_position.push_back(j);
-			current_niches_temp.push_back(aux2_niche);
-			amount_of_new_niches++;
-		}
+			if(!have_niche){
+				for(int j= (int)real_niches.size(); j <   (int)current_niches_temp.size() ; j++){
+					if( compatibility(organisms.at(i), organisms.at( representant_of_niche.at(j) ) )  < DISTANCE_THRESHOLD ){
+						have_niche=true;
+						current_niches_temp.at(j).organism_position.push_back(i);
+						break;
+					}
+				}
+			}
+			if(!have_niche){
+				Niche temp_niche;
+				temp_niche.exist=true;
+				current_niches_temp.push_back(temp_niche);
+				representant_of_niche.push_back(i);
+				current_niches_temp.at(current_niches_temp.size()-1).organism_position.push_back(i);
+			}
 	}
 
-
 	for (int i = 0; i < (int)current_niches_temp.size(); ++i)
-		if( current_niches_temp[i].exist ) current_niches.push_back(current_niches_temp[i]);
+		if( current_niches_temp.at(i).exist ) current_niches.push_back(current_niches_temp.at(i));
 
 	for (int i = 0; i < (int)current_niches.size(); ++i)
 	{
@@ -1173,13 +1190,12 @@ void Population::spatiation(){
 				organisms.at(current_niches.at(i).organism_position.at(j)).niche = i;
 			}
 	}
-
 }
 
+
+
+
 */
-
-//		PAPER VERSION.
-
 
 
 void Population::spatiation(){
@@ -1214,20 +1230,27 @@ void Population::spatiation(){
 
 	for(int i=0; i < (int)organisms.size(); i++ ){
 			bool have_niche(false);
-			//cerr << "ENTRO41" << endl;
-			for(int j=0; j < (int)real_niches.size(); j++){
-				if( compatibility(organisms.at(i), prev_organisms.at( representant_of_niche.at(j) ) )  < DISTANCE_THRESHOLD ){
-					have_niche=true;
-					current_niches_temp.at(j).exist=true;
-					current_niches_temp.at(j).organism_position.push_back(i);
-					break;
-				}
+			Discrete_Probabilities sack_of_niches;
+
+			for(int j=0; j < (int)current_niches_temp.size(); j++){
+				sack_of_niches.add_element(0.0);
 			}
-			if(!have_niche){
-				for(int j= (int)real_niches.size(); j <   (int)current_niches_temp.size() ; j++){
-					if( compatibility(organisms.at(i), organisms.at( representant_of_niche.at(j) ) )  < DISTANCE_THRESHOLD ){
+
+			for(int j=0; j < (int)current_niches_temp.size(); j++){
+				int random_niche = sack_of_niches.take_one_randomly();
+
+				if(random_niche >= (int)real_niches.size()){ // El nicho elejido ha sido creado en el proceso.
+					if( compatibility(organisms.at(i), organisms.at( representant_of_niche.at(random_niche) ) )  < DISTANCE_THRESHOLD ){
 						have_niche=true;
-						current_niches_temp.at(j).organism_position.push_back(i);
+						current_niches_temp.at(random_niche).organism_position.push_back(i);
+						break;
+					}
+				}
+				else{	// El nicho elegido corresponde ser un nicho heredado.
+					if( compatibility(organisms.at(i), prev_organisms.at( representant_of_niche.at(random_niche) ) )  < DISTANCE_THRESHOLD ){
+						have_niche=true;
+						current_niches_temp.at(random_niche).exist=true;
+						current_niches_temp.at(random_niche).organism_position.push_back(i);
 						break;
 					}
 				}
@@ -1240,8 +1263,10 @@ void Population::spatiation(){
 				current_niches_temp.at(current_niches_temp.size()-1).organism_position.push_back(i);
 			}
 	}
+
 	for (int i = 0; i < (int)current_niches_temp.size(); ++i)
 		if( current_niches_temp.at(i).exist ) current_niches.push_back(current_niches_temp.at(i));
+
 	for (int i = 0; i < (int)current_niches.size(); ++i)
 	{
 			for (int j = 0; j < (int)current_niches.at(i).organism_position.size(); ++j)
@@ -1250,13 +1275,6 @@ void Population::spatiation(){
 			}
 	}
 }
-
-
-
-
-
-
-
 
 
 
@@ -1583,12 +1601,12 @@ void Population::epoch(){
 
 
 
-		cerr << "media: " << media_nicho << "\tdesv: " << desv_estandar << "\t maximo: "  <<  max_fitness  << "\t corte: " << media_nicho  << endl;
+		//cerr << "media: " << media_nicho << "\tdesv: " << desv_estandar << "\t maximo: "  <<  max_fitness  << "\t corte: " << media_nicho  << endl;
 
 
 	}
 
-
+	cerr << "cant_nichos: " << current_niches.size() << endl;
 	current_niches = temp_current_niches;
 	organisms = temp_current_organisms;
 
