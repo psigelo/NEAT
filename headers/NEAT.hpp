@@ -2,7 +2,6 @@
 #define NEAT_HPP
 
 #include "genetic_encoding.hpp"
-#include "fitness.hpp"
 #include <cmath>
 #include <unistd.h>
 #include <stdexcept>      // std::out_of_range
@@ -91,7 +90,6 @@ namespace ANN_USM{
 
 
 			double 	DISTANCE_THRESHOLD;
-			double 	PERCENT_MUTATION_CONNECTION;
 			double 	PERCENTAGE_OFFSPRING_WITHOUT_CROSSOVER;
 			double 	PROBABILITY_INTERSPACIES_MATING;
 			double 	SMALLER_POPULATIONS_PROBABILITY_ADDING_NEW_NODE;
@@ -100,7 +98,9 @@ namespace ANN_USM{
 			double 	LARGER_POPULATIONS_PROBABILITY_ADDING_NEW_CONNECTION;
 			double 	PROB_ENABLE_AN_DISABLE_CONNECTION;
 			double 	LARGE_POPULATION_DISCRIMINATOR;
-			int 	        GENERATIONS;
+			int 	GENERATIONS;
+			double 	PROBABILITY_CHANGE_WEIGHT;
+			double 	PROBABILITY_CHANGE_NODE_FUNCTION_PER_NODE;
 			//==============================================================================//
 
 			int 						lenght;

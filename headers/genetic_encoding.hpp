@@ -74,10 +74,15 @@ namespace ANN_USM{
 				Return_random_function random_function
 				);
 			/**
-			* \brief Change the value of the exist variable.
+			* \brief Changes the value of the exist variable.
 			* \param exist: if this node is present in the genome.
 			*/
 			void _node_genne(bool exist);
+
+			/**
+			* \brief Changes the random function of the node with another random function randomly (even may be the same)
+			*/
+			void change_random_function_randomly();
 
 			int 		row;
 			bool 		exist;

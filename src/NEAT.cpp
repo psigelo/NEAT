@@ -9,13 +9,11 @@
 using namespace ANN_USM;
 
 
-#define PROBABILITY_CHANGE_WEIGHT 0.7
+
 
 
 /*
 	IDEAS PARA OPTIMIZAR EL C�DIGO:
-		1) SACAR TODOS LOS ALGORITMOS PROBABILISTICOS QUE SE PUEDAN POR ALGORITMOS NORMALES.
-			-> EN OBTAIN_ROW();
 		2) INTEGRAR LISTAS DE NODOS Y DE CONNECCIONES CON LOS NODOS Y CONECCIONES ACTUALES (ESO SE DEBE IMPLEMENTAR DESDE GENETIC ENCODING TAMBI�N
 		POR EJEMPLO EN EL MOMENTO EN QUE SE CARGA UN GENOMA).
 
@@ -76,15 +74,7 @@ Genetic_Encoding Population::put_randoms_weight(Genetic_Encoding organism){
 
 
 
-/* as� no fue definida en el paper
-Genetic_Encoding Population::mutation_change_weight(Genetic_Encoding organism){
-	int number_of_connections = organism.Lconnection_genes.size();
-	int connection_to_mutate = round(rand()%number_of_connections);
-	double delta = 2*(rand()%10000)/10000.0-1;
-	organism.Lconnection_genes[connection_to_mutate].weight=delta*0.2 + 0.8*organism.Lconnection_genes[connection_to_mutate].weight;
-	return organism;
-}
-*/
+
 
 
 Genetic_Encoding Population::mutation_change_weight(Genetic_Encoding organism){
@@ -139,11 +129,8 @@ Genetic_Encoding Population::mutation_change_weight(Genetic_Encoding organism){
 
 
 
-
-
 Population::Population(char path1[],char path2[]){
 	load_user_definitions(path1);
-
 	lenght = POPULATION_MAX;
 	Genetic_Encoding _organism;
 	_organism.load(path2);
@@ -179,10 +166,10 @@ Population::Population(char path1[],char path2[]){
 
 	last_node = (int)_organism.Lnode_genes.size()-1;
 
-	for (int i = 0; i < POPULATION_MAX; ++i){}
+	for (int i = 0; i < POPULATION_MAX; ++i)
 		organisms.push_back( put_randoms_weight(_organism) );
 
-
+	cerr << "organisms.size(): " << organisms.size() << "\tPOPULATION_MAX:" << POPULATION_MAX  << endl;
 
 	prev_organisms.push_back(_organism);
 	niche_temp.organism_position.push_back(0);
@@ -207,28 +194,6 @@ Genetic_Encoding Population::mutation_node(Genetic_Encoding organism){
 	Discrete_Probabilities sack_of_nodes_to_take;
 	vector <int> inverse_to_connections;
 
-	/*
-	// add node
-	do{
-		do{
-			connection_to_mutate = rand()%number_of_connections;
-			if(organism.Lconnection_genes.at(connection_to_mutate).exist && organism.Lconnection_genes.at(connection_to_mutate).enable) break;
-		}while(true);
-		node = obtain_historical_node(organism.Lconnection_genes.at(connection_to_mutate).in, organism.Lconnection_genes.at(connection_to_mutate).out);
-		if(node < (int)organism.Lnode_genes.size()){
-			if(!organism.Lnode_genes.at(node).exist){
-				break;
-			}
-		}
-		else{
-			break;
-		}
-		if(count++ > 50){
-			cerr << "In function Mutation_node:: in 50 attempts not found an mutation option";
-			return organism;
-		}
-	}while(true);
-	*/
 
 
 	// Se obtienen todos los candidatos que cumplen con el requisito;
@@ -546,57 +511,6 @@ Genetic_Encoding Population::mutation_connection(Genetic_Encoding organism){
 	int number_of_nodes = (int)organism.Lnode_genes.size();
 	Discrete_Probabilities sack_of_nodes_to_take;
 	vector < vector < int > > inverse_to_nodes;
-
-
-	/*
-	while(true){ // esto parece muy costoso
-		counter=0;
-
-		while(true){
-			node_in = round(rand()%number_of_nodes);
-			node_out = round(rand()%number_of_nodes);
-			if(organism.Lnode_genes.at(node_out).exist  && organism.Lnode_genes.at(node_in).exist){
-				int row_position_in(-1);
-				int row_position_out(-1);
-				bool flag_in(false), flag_out(false);
-
-				for (int i = 0; i < (int)row_orderer_list.size(); ++i)
-				{
-					if(organism.Lnode_genes.at(node_in).row == row_orderer_list.at(i)){   row_position_in = i; flag_in=true;}
-					if(organism.Lnode_genes.at(node_out).row == row_orderer_list.at(i)){ 	row_position_out = i; flag_out=true;}
-					if(flag_in && flag_out)break;
-				}
-
-				if(   row_position_in <  row_position_out ) break;
-			}
-
-			if (counter++ > 30)
-			{
-				cerr << "WARNING::In function mutation_connection:: counter is greater than 30 \n";
-				return organism;
-			}
-		}
-
-
-
-		innovation = obtain_innovation(node_in, node_out);
-		if((int)organism.Lconnection_genes.size() - 1 < innovation){
-			organism.add_connection(innovation,node_in, node_out, 2*(rand()%RAND_MAX)/(double)RAND_MAX - 1.0);
-			break;
-		}
-		else if(!organism.Lconnection_genes[innovation].exist){
-			organism.add_connection(innovation,node_in, node_out, 2*(rand()%RAND_MAX)/(double)RAND_MAX - 1.0);
-			break;
-		}
-
-		if(count++>30){
-			cerr << "WARNING::In function mutation_connection:: in 30 attempts not found an mutation option \n";
-			break;
-		}
-
-
-	}
-	*/
 
 
 	
@@ -1192,9 +1106,6 @@ void Population::spatiation(){
 	}
 }
 
-
-
-
 */
 
 
@@ -1417,149 +1328,11 @@ void Population::print_niches(){
 
 
 
-/*
-
-void Population::epoch(){
-
-	double random;
-	double total_shared_fitness_population(0.0);
-	vector <double> random_organism;
-	double probability_acum;
-	int organism_acum(0);
-
-	// Se calculan todos los fitness de todos los organismos.
-	for (int i = 0; i < (int)organisms.size(); ++i){
-		organisms[i].fitness = fitness(organisms[i]);
-	}
-
-	for (int i = 0; i < (int)current_niches.size(); ++i)
-	{
-
-		current_niches[i].total_shared_fitness = 0;
-		for (int j = 0; j < (int)current_niches[i].organism_position.size(); ++j)
-		{
-			//current_niches[i].total_fitness += organisms[current_niches[i].organism_position[j]].fitness/current_niches[i].organism_position.size();
-
-			if(j == 0 || organisms[current_niches[i].organism_position[j]].fitness > organisms[current_niches[i].niche_champion_position].fitness){
-				current_niches[i].niche_champion_position = current_niches[i].organism_position[j];
-				if( organisms[current_niches[i].organism_position[j]].fitness > fitness_champion ){
-					fitness_champion	= organisms[ current_niches[i].organism_position[j] ].fitness;
-					champion			= organisms[ current_niches[i].organism_position[j] ];
-				}
-
-			}
-
-			organisms[current_niches[i].organism_position[j]].shared_fitness = organisms[current_niches[i].organism_position[j]].fitness/(double)current_niches[i].organism_position.size();
-			total_shared_fitness_population += organisms[current_niches[i].organism_position[j]].shared_fitness;
-			//organisms[current_niches[i].organism_position[j]].niche = i; //idealmente que esto se haga en spatiation()
-		}
-	}
-
-	// *Se calculan la cantidad de hijos por cada nicho.
-	// *Se trunca la cantidad de hijos
-	// *Se reparten los restantes uno a uno,
-	//	Para repartir primero se calcula la probabilidad que corresponde a cada nicho
-	//	Luego se obtiene un n�mero random, dependiendo del random se elije el nicho
-	//  Obviamente nichos con mayor fitness tienen m�s probabilidades de tener m�s hijos.
-
-	for (int i = 0; i < (int)organisms.size(); ++i)
-		random_organism.push_back((double)(organisms[i].shared_fitness)/total_shared_fitness_population);
-
-	vector < Genetic_Encoding >().swap(prev_organisms); // Se limpia prev_organisms
-	prev_organisms = organisms;
-	vector < Genetic_Encoding >().swap(organisms); // Se limpia organisms
-
-	while(organism_acum < POPULATION_MAX){
-		random = ((double)rand())/RAND_MAX;
-		probability_acum = 0.0;
-		for(int i=0; i < (int)prev_organisms.size(); i++){
-			probability_acum += random_organism[i];
-			if(random <= probability_acum){
-				organisms.push_back( epoch_reproduce(prev_organisms[i] , i) );
-				break;
-			}
-		}
-		organism_acum++;
-	}
-	spatiation();
-
-}
-
-
-
-Genetic_Encoding Population::epoch_reproduce(Genetic_Encoding organism, int poblation_place){
-	int random_mother; // for mating
-	int random_niche_mother;
-	Genetic_Encoding organism_father;
-	Genetic_Encoding organism_mother;// for mating
-
-	if(100 *((double)rand())/RAND_MAX < PERCENTAGE_OFFSPRING_WITHOUT_CROSSOVER){
-		while( (double)rand()/RAND_MAX < PERCENT_MUTATION_CONNECTION )
-			organism = mutation_change_weight(organism);
-	}
-	else{
-		if( ((double)rand())/RAND_MAX < PROBABILITY_INTERSPACIES_MATING){
-			while(true){
-				random_niche_mother = rand()%current_niches.size();
-				if(random_niche_mother != organism.niche)break;
-				if(current_niches.size() == 1 ){
-					cerr << "Warning:: In function Epoch:: Exist only one niche\n";
-					for(int k = 0; k < (int)organism.Lconnection_genes.size(); k++)
-							organism = mutation_change_weight(organism);
-					return(organism);
-				}
-			}
-
-			random_mother = current_niches[random_niche_mother].organism_position[rand()%current_niches[random_niche_mother].organism_position.size()];
-			organism_mother = prev_organisms[random_mother];
-			organism = crossover(organism, organism_mother);
-		}
-		else{
-
-			while(true){
-				random_mother = rand()%current_niches[organism.niche].organism_position.size();
-				if(current_niches[organism.niche].organism_position[random_mother] != poblation_place )break;
-				if(current_niches[organism.niche].organism_position.size()==1)break;
-			}
-
-			organism_mother = prev_organisms[current_niches[organism.niche].organism_position[random_mother]];
-			organism = crossover(organism, organism_mother);
-		}
-
-	}
-
-
-	if( (int)organism.Lnode_genes.size() <  LARGE_POPULATION_DISCRIMINATOR ){ // enter if is a small organism
-		if( ((double)rand()/RAND_MAX) < SMALLER_POPULATIONS_PROBABILITY_ADDING_NEW_NODE){
-			organism = mutation_node(organism);
-		}
-		if( ((double)rand()/RAND_MAX) < SMALLER_POPULATIONS_PROBABILITY_ADDING_NEW_CONNECTION) {
-			organism = mutation_connection(organism);
-		}
-	}
-	else{// enter if is a large niche
-		if( ((double)rand()/RAND_MAX) < LARGER_POPULATIONS_PROBABILITY_ADDING_NEW_NODE){
-			organism = mutation_node(organism);
-		}
-		if( ((double)rand()/RAND_MAX) < LARGER_POPULATIONS_PROBABILITY_ADDING_NEW_CONNECTION) {
-			organism = mutation_connection(organism);
-		}
-	}
-
-	return organism;
-}
-
-
-*/
-
 
 
 void Population::epoch(){
 	double total_shared_fitness_population(0.0);
-	// Se calculan todos los fitness de todos los organismos.
-	for (int i = 0; i < (int)organisms.size(); ++i){
-		organisms.at(i).fitness = fitness(organisms[i]);
-	}
+
 
 	//Se eliminan a los peores de cada nicho.
 	vector < Genetic_Encoding > temp_current_organisms;
@@ -1596,17 +1369,13 @@ void Population::epoch(){
 			}
 		}
 		temp_current_niches.push_back(temp_niche);
-		//current_niches.swap(temp_current_niches);
-		//organisms.swap(temp_current_organisms);
 
 
-
-		//cerr << "media: " << media_nicho << "\tdesv: " << desv_estandar << "\t maximo: "  <<  max_fitness  << "\t corte: " << media_nicho  << endl;
+		cerr << "media: " << media_nicho << "\tdesv: " << desv_estandar << "\t maximo: "  <<  max_fitness  << "\t corte: " << media_nicho  << endl;
 
 
 	}
 
-	cerr << "cant_nichos: " << current_niches.size() << endl;
 	current_niches = temp_current_niches;
 	organisms = temp_current_organisms;
 
@@ -1722,6 +1491,17 @@ Genetic_Encoding Population::epoch_reproduce(Genetic_Encoding organism, int pobl
 			organism = mutation_connection(organism);
 		}
 	}
+
+	if(PROBABILITY_CHANGE_NODE_FUNCTION_PER_NODE != 0){
+		for(int i = 0; i < (int)organism.Lnode_genes.size(); i++ ){
+			if( rand()/(double)RAND_MAX <= PROBABILITY_CHANGE_NODE_FUNCTION_PER_NODE ){
+				organism.Lnode_genes.at(i).change_random_function_randomly();
+			}
+		}
+	}
+
+
+
 	return organism;
 
 }
@@ -1756,9 +1536,6 @@ void Population::load_user_definitions(char address[]){
 	DISTANCE_THRESHOLD = atof(pch);
 	pch = strtok (NULL,delimiters);
 	pch = strtok (NULL,delimiters);
-	PERCENT_MUTATION_CONNECTION = atof(pch);
-	pch = strtok (NULL,delimiters);
-	pch = strtok (NULL,delimiters);
 	PERCENTAGE_OFFSPRING_WITHOUT_CROSSOVER = atof(pch);
 	pch = strtok (NULL,delimiters);
 	pch = strtok (NULL,delimiters);
@@ -1785,10 +1562,14 @@ void Population::load_user_definitions(char address[]){
 	pch = strtok (NULL,delimiters);
 	pch = strtok (NULL,delimiters);
 	GENERATIONS = atoi(pch);
-
+	pch = strtok (NULL,delimiters);
+	pch = strtok (NULL,delimiters);
+	PROBABILITY_CHANGE_WEIGHT = atof(pch);
+	pch = strtok (NULL,delimiters);
+	pch = strtok (NULL,delimiters);
+	PROBABILITY_CHANGE_NODE_FUNCTION_PER_NODE = atof(pch);
 
 	//cerr << "POPULATION_MAX" << POPULATION_MAX << endl;
-	//cerr << "PERCENT_MUTATION_CONNECTION: " << PERCENT_MUTATION_CONNECTION << endl;
 	//cerr << "PROBABILITY_INTERSPACIES_MATING: " << PROBABILITY_INTERSPACIES_MATING << endl;
 	//cerr << "SMALLER_POPULATIONS_PROBABILITY_ADDING_NEW_NODE: " <<SMALLER_POPULATIONS_PROBABILITY_ADDING_NEW_NODE << endl;
 	//cerr << "SMALLER_POPULATIONS_PROBABILITY_ADDING_NEW_CONNECTION: " << SMALLER_POPULATIONS_PROBABILITY_ADDING_NEW_CONNECTION<< endl;
@@ -1796,7 +1577,8 @@ void Population::load_user_definitions(char address[]){
 	//cerr << "LARGER_POPULATIONS_PROBABILITY_ADDING_NEW_CONNECTION: " <<LARGER_POPULATIONS_PROBABILITY_ADDING_NEW_CONNECTION << endl;
 	//cerr << "PROB_ENABLE_AN_DISABLE_CONNECTION: " << PROB_ENABLE_AN_DISABLE_CONNECTION << endl;
 	//cerr << "GENERATIONS" << GENERATIONS << endl;
-	//cerr << "SIGMOID_CONSTANT" << SIGMOID_CONSTANT << endl;
+	//cerr << "PROBABILITY_CHANGE_WEIGHT" << PROBABILITY_CHANGE_WEIGHT << endl;
+	//cerr << "PROBABILITY_CHANGE_NODE_FUNCTION_PER_NODE" << PROBABILITY_CHANGE_NODE_FUNCTION_PER_NODE << endl;
 
 }
 

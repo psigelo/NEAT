@@ -1,12 +1,12 @@
 EXECUTABLE = prueba_NEAT
-VPATH = ./src ./headers ./objects
+VPATH = ./src ./headers ./objects ./experiments
 CC = g++ -O3
 CFLAGS = -g -Wall -I./headers -I./objects -I./src
 
 
-NEAT: run_NEAT.cpp NEAT.o  genetic_encoding.o fitness.o random_function.o discrete_probabilities.o
+NEAT: xor.cpp NEAT.o  genetic_encoding.o random_function.o discrete_probabilities.o
 	@mkdir -p bin
-	$(CC) $(CFLAGS) ./src/run_NEAT.cpp ./objects/NEAT.o ./objects/genetic_encoding.o ./objects/fitness.o ./objects/random_function.o ./objects/discrete_probabilities.o -o ./bin/NEAT
+	$(CC) $(CFLAGS) ./experiments/xor.cpp ./objects/NEAT.o ./objects/genetic_encoding.o  ./objects/random_function.o ./objects/discrete_probabilities.o -o ./bin/NEAT
 
 NEAT.o: NEAT.cpp
 	@mkdir -p objects
@@ -19,10 +19,6 @@ example1.o: example1.cpp example1.hpp
 genetic_encoding.o: genetic_encoding.cpp random_function.o
 	@mkdir -p objects
 	$(CC) $(CFLAGS) -c ./src/genetic_encoding.cpp -o ./objects/genetic_encoding.o
-
-fitness.o: fitness.cpp
-	@mkdir -p objects
-	$(CC) $(CFLAGS) -c ./src/fitness.cpp  -o ./objects/fitness.o
 
 random_function.o: random_function.cpp
 	@mkdir -p objects

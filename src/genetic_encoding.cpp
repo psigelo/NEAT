@@ -36,6 +36,12 @@ void node_gene::_node_genne(bool exist){
 	this->exist = exist;
 	this->node_output_value = 0;
 }
+
+void node_gene::change_random_function_randomly(){
+	Return_random_function rf;
+	rf = get_random_function();
+	this->random_function = rf;
+}
 //=================================================================================================//
 
 
@@ -43,7 +49,7 @@ void node_gene::_node_genne(bool exist){
 
 
 
-/**
+/*
 procedure:
     if the historical value of the node is greater than the greater historical node
 	then is created all nodes that are between both with the variable exist equal
@@ -98,7 +104,7 @@ void Genetic_Encoding::add_node(int node, int row , gene_type type){
 
 
 
-/**
+/*
 procedure:
     if the historical value of the node is greater than the greater historical node
 	then is created all nodes that are between both with the variable exist equal
@@ -140,7 +146,7 @@ void Genetic_Encoding::add_node(node_gene node){
 
 
 
-/**
+/*
 procedure:
     if the innovation value of the connection is greater than the greater innovation value
 	then is created all connection that are between both with the variable exist equal
@@ -170,7 +176,7 @@ void Genetic_Encoding::add_connection(int innovation, int in, int out, double we
 }
 
 
-/**
+/*
 procedure:
     if the innovation value of the connection is greater than the greater innovation value
 	then is created all connection that are between both with the variable exist equal

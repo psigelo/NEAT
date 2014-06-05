@@ -57,7 +57,6 @@ void inicialization(){
 Return_random_function get_random_function(){
 	inicialization();
 	int i = rand()%(int)RANDOM_functions.size();
-
 	return RANDOM_functions[i];
 }
 

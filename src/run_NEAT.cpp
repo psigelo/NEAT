@@ -19,7 +19,7 @@ int main(int argc, char** argv){
 	for (int i = 0; i < poblacion.GENERATIONS; ++i)
 		poblacion.epoch();
 	cout << "Fitness champion: " << poblacion.fitness_champion << "\n\n"<< endl;
-	//cout << poblacion.champion.ANN_function() << endl;
-	//cout << poblacion.champion << endl;
+	cout << poblacion.champion.ANN_function() << endl;
+	cout << poblacion.champion << endl;
 	return 0;
 }
