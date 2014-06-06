@@ -150,6 +150,11 @@ namespace ANN_USM{
 			string 				ANN_function();
 
 
+			/**
+			\brief return the number of outputs of the NEAT
+			*/
+			int 				getNEATOutputSize();
+
 			vector <connection_gene> 	Lconnection_genes; //List of connections genes
 			vector <node_gene> 			Lnode_genes;
 			double 						fitness;

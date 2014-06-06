@@ -1331,7 +1331,10 @@ void Population::print_niches(){
 
 
 void Population::epoch(){
+
 	double total_shared_fitness_population(0.0);
+	static FILE * Statistics_file;
+	Statistics_file = fopen("./Statistics/prueba","a");
 
 
 	//Se eliminan a los peores de cada nicho.
@@ -1372,8 +1375,8 @@ void Population::epoch(){
 
 
 		cerr << "media: " << media_nicho << "\tdesv: " << desv_estandar << "\t maximo: "  <<  max_fitness  << "\t corte: " << media_nicho  << endl;
-
-
+		fprintf(Statistics_file, "%f\t%f\t%f\t%f\n", media_nicho, desv_estandar, max_fitness, media_nicho);
+		fflush(Statistics_file);
 	}
 
 	current_niches = temp_current_niches;

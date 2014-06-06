@@ -32,6 +32,7 @@ clean:
 	rm -f ./objects/*.o ./bin/*
 
 run:
+	@mkdir -p ./Statistics
 	./bin/NEAT user_definitions/user_def_standart genetics_encodings/test_encoding.genetic_encoding
 
 doc:
