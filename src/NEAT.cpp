@@ -1374,7 +1374,7 @@ void Population::epoch(){
 		temp_current_niches.push_back(temp_niche);
 
 
-		cerr << "media: " << media_nicho << "\tdesv: " << desv_estandar << "\t maximo: "  <<  max_fitness  << "\t corte: " << media_nicho  << endl;
+		//cerr << "media: " << media_nicho << "\tdesv: " << desv_estandar << "\t maximo: "  <<  max_fitness  << "\t corte: " << media_nicho  << endl;
 		fprintf(Statistics_file, "%f\t%f\t%f\t%f\n", media_nicho, desv_estandar, max_fitness, media_nicho);
 		fflush(Statistics_file);
 	}

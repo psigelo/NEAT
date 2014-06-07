@@ -401,14 +401,14 @@ vector <double> Genetic_Encoding::eval(std::vector<double> inputs){
 		inputs_to_node.push_back(empty_vector);
 	for (int i = 0; i < (int)Lconnection_genes.size(); ++i)
 	{
-		if(Lconnection_genes[i].exist && Lconnection_genes[i].enable) inputs_to_node[Lconnection_genes[i].out].push_back(i);
+		if(Lconnection_genes.at(i).exist && Lconnection_genes.at(i).enable) inputs_to_node.at(Lconnection_genes.at(i).out).push_back(i);
 	}
 
 	vector <int> row_orderer_list_adapted;
 	for(int i = 0; i < (int)row_orderer_list.size(); i++)
 	{
 		if(row_orderer_list.at(i)  < (int)nodes_at_row.size()){
-			if(nodes_at_row[row_orderer_list.at(i)].size() > 0){
+			if(nodes_at_row.at(row_orderer_list.at(i)).size() > 0){
 				row_orderer_list_adapted.push_back(row_orderer_list.at(i));
 			}
 		}
@@ -429,13 +429,13 @@ vector <double> Genetic_Encoding::eval(std::vector<double> inputs){
 		for (int j = 0; j < (int)nodes_at_row.at(row_orderer_list_adapted.at(i)).size(); ++j)
 		{
 			entradas_temp = 0;
-			int current_node_position = nodes_at_row[    row_orderer_list_adapted[i]    ] [ j ];
-			for (int k = 0; k < (int)inputs_to_node[current_node_position].size(); ++k)
+			int current_node_position = nodes_at_row.at(    row_orderer_list_adapted.at(i)    ).at( j );
+			for (int k = 0; k < (int)inputs_to_node.at(current_node_position).size(); ++k)
 			{
-				 connection_gene current_input_to_node_connection =  Lconnection_genes.at(  inputs_to_node.at( current_node_position ).at(k)  );
+				connection_gene current_input_to_node_connection =  Lconnection_genes.at(  inputs_to_node.at( current_node_position ).at(k)  );
 			 	entradas_temp += Lnode_genes.at(  current_input_to_node_connection.in  ).node_output_value * current_input_to_node_connection.weight;
 			}
-			Lnode_genes[current_node_position].node_output_value = (*Lnode_genes.at(current_node_position).random_function.function)(entradas_temp);
+			Lnode_genes.at(current_node_position).node_output_value = (*Lnode_genes.at(current_node_position).random_function.function)(entradas_temp);
 
 		}
 	}
@@ -464,14 +464,14 @@ string Genetic_Encoding::ANN_function(){
 		inputs_to_node.push_back(empty_vector);
 	for (int i = 0; i < (int)Lconnection_genes.size(); ++i)
 	{
-		if(Lconnection_genes[i].exist && Lconnection_genes[i].enable) inputs_to_node[Lconnection_genes[i].out].push_back(i);
+		if(Lconnection_genes[i].exist && Lconnection_genes.at(i).enable) inputs_to_node.at(Lconnection_genes.at(i).out).push_back(i);
 	}
 
 	vector <int> row_orderer_list_adapted;
 	for(int i = 0; i < (int)row_orderer_list.size(); i++)
 	{
 		if(row_orderer_list.at(i)  < (int)nodes_at_row.size()){
-			if(nodes_at_row[row_orderer_list.at(i)].size() > 0){
+			if(nodes_at_row.at(row_orderer_list.at(i)).size() > 0){
 				row_orderer_list_adapted.push_back(row_orderer_list.at(i));
 			}
 		}
@@ -496,20 +496,24 @@ string Genetic_Encoding::ANN_function(){
 		ss.str("");
 	}
 
-	for (int i = 0; i < (int)row_orderer_list_adapted.size(); ++i)
+	for (int i = 1; i < (int)row_orderer_list_adapted.size(); ++i)
 	{
 		for (int j = 0; j < (int)nodes_at_row.at(row_orderer_list_adapted.at(i)).size(); ++j)
 		{
 			int current_node_position = nodes_at_row[    row_orderer_list_adapted[i]    ] [ j ];
-			for (int k = 0; k < (int)inputs_to_node[current_node_position].size(); ++k)
+			
+			for (int k = 0; k < (int)inputs_to_node.at(current_node_position).size(); ++k)
 			{
-				if(k==0) ss << " " << Lnode_genes[  Lconnection_genes[  inputs_to_node[ nodes_at_row[row_orderer_list_adapted[i]][j] ][k]  ].in  ].random_function.str_name << "[ ";
+				if(k==0){
+					ss << " " << Lnode_genes[  current_node_position  ].random_function.str_name << "[ ";
+				
+				}
 				else{
 					ss << " + ";
 				}
-				connection_gene current_input_to_node_connection =  Lconnection_genes.at(  inputs_to_node.at( current_node_position ).at(k)  );
-			 	
-			 	ss <<  Lnode_genes.at(  current_input_to_node_connection.in  ).random_function.str_name <<  " * " <<  current_input_to_node_connection.weight;
+
+				connection_gene current_input_to_node_connection =  Lconnection_genes[  inputs_to_node[ current_node_position ][k] ];
+			 	ss <<  Lnode_genes.at(  current_input_to_node_connection.in  ).str <<  " * " <<  current_input_to_node_connection.weight;
 			}
 			ss << "] ";
 			Lnode_genes[nodes_at_row[row_orderer_list_adapted[i]][j]].str = ss.str();
@@ -525,84 +529,7 @@ string Genetic_Encoding::ANN_function(){
 	return outputs.str();
 }
 
-/*
 
-
-string Genetic_Encoding::ANN_function(){
-
-	vector < vector <int> > inputs_to_node;
-	vector < int > 			empty_vector;
-	int 					amount_inputs_nodes(0);
-
-	for(int i=0; i < (int)Lnode_genes.size() ; i++)
-		if(Lnode_genes[i].exist)
-			if(Lnode_genes[i].type == INPUT)
-				amount_inputs_nodes++;
-
-	for (int i = 0; i < (int)Lnode_genes.size(); ++i)
-		inputs_to_node.push_back(empty_vector);
-
-	for (int i = 0; i < (int)Lconnection_genes.size(); ++i)
-	{
-		if(Lconnection_genes[i].exist && Lconnection_genes[i].enable) inputs_to_node[Lconnection_genes[i].out].push_back(i);
-	}
-
-	vector <int> row_orderer_list_adapted;
-	for(int i = 0; i < (int)row_orderer_list.size(); i++)
-	{
-		if(row_orderer_list.at(i)  < (int)nodes_at_row.size()){
-			if(nodes_at_row[row_orderer_list.at(i)].size() > 0){
-				row_orderer_list_adapted.push_back(row_orderer_list.at(i));
-			}
-		}
-	}
-
-
-	stringstream ss;
-
-	//inputs
-	for (int i = 0; i < amount_inputs_nodes; ++i)
-	{
-		ss << Lnode_genes[i].random_function.str_name << "[ ";
-		ss << "X" << i;
-		ss << " ]" ;
-		Lnode_genes[i].str  = ss.str();
-		ss.str("");
-	}
-
-	for (int i = 1; i < (int)row_orderer_list_adapted.size(); ++i)
-	{
-		for (int j = 0; j < (int)nodes_at_row [row_orderer_list_adapted[i]].size(); ++j)
-		{
-			for (int k = 0; k < (int)inputs_to_node[nodes_at_row[row_orderer_list_adapted[i]][j]].size(); ++k)
-			{
-				if(k==0){
-					ss << " " << Lnode_genes[  Lconnection_genes[  inputs_to_node[ nodes_at_row[row_orderer_list_adapted[i]][j] ][k]  ].in  ].random_function.str_name;
-					if(true){// Para representar que con esto se puede cambiar para mathematica o para otro lenguaje
-						ss << "[ ";
-					}
-				}
-				else{
-					ss << " + ";
-				}
-				ss << Lnode_genes[  Lconnection_genes[  inputs_to_node[ nodes_at_row[row_orderer_list_adapted[i]][j] ][k]  ].in  ].str << " * " << Lconnection_genes[   inputs_to_node[ nodes_at_row[row_orderer_list_adapted[i]][j] ][k]   ].weight;
-			}
-			if(true){ // Para representar que con esto se puede cambiar para mathematica o para otro lenguaje
-				ss << " ]";
-			}
-			Lnode_genes[nodes_at_row[row_orderer_list_adapted[i]][j]].str = ss.str();
-			ss.str("");
-		}
-	}
-	stringstream outputs;
-	for (int i = 0; i < (int)outputs_positions.size(); ++i)
-	{
-		outputs << Lnode_genes[outputs_positions[i]].str << endl;
-	}
-	return outputs.str();
-}
-
-*/
 
 ostream & operator<<(ostream & o, Genetic_Encoding & encoding) {
 	o << encoding.JSON();

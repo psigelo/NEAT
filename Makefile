@@ -8,7 +8,7 @@ NEAT: xor.cpp NEAT.o  genetic_encoding.o random_function.o discrete_probabilitie
 	@mkdir -p bin
 	$(CC) $(CFLAGS) ./experiments/xor.cpp ./objects/NEAT.o ./objects/genetic_encoding.o  ./objects/random_function.o ./objects/discrete_probabilities.o -o ./bin/NEAT
 
-NEAT.o: NEAT.cpp
+NEAT.o: NEAT.cpp discrete_probabilities.o genetic_encoding.o
 	@mkdir -p objects
 	$(CC) $(CFLAGS) -c ./src/NEAT.cpp  -o ./objects/NEAT.o
 
