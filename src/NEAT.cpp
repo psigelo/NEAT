@@ -1374,7 +1374,7 @@ void Population::epoch(){
 		temp_current_niches.push_back(temp_niche);
 
 
-		//cerr << "media: " << media_nicho << "\tdesv: " << desv_estandar << "\t maximo: "  <<  max_fitness  << "\t corte: " << media_nicho  << endl;
+		cerr << "media: " << media_nicho << "\tdesv: " << desv_estandar << "\t maximo: "  <<  max_fitness  << "\t corte: " << media_nicho  << endl;
 		fprintf(Statistics_file, "%f\t%f\t%f\t%f\n", media_nicho, desv_estandar, max_fitness, media_nicho);
 		fflush(Statistics_file);
 	}
@@ -1448,13 +1448,13 @@ Genetic_Encoding Population::epoch_reproduce(Genetic_Encoding organism, int pobl
 	if(100 *((double)rand())/RAND_MAX < PERCENTAGE_OFFSPRING_WITHOUT_CROSSOVER){
 			organism = mutation_change_weight(organism);
 	}
+
 	else{
 		if( ((double)rand())/RAND_MAX < PROBABILITY_INTERSPACIES_MATING){
 			while(true){
 				random_niche_mother = rand()%current_niches.size();
 				if(random_niche_mother != organism.niche)break;
 				if(current_niches.size() == 1 ){
-					//cerr << "Warning:: In function Epoch:: Exist only one niche\n";
 					organism = mutation_change_weight(organism);
 					return(organism);
 				}
@@ -1465,15 +1465,24 @@ Genetic_Encoding Population::epoch_reproduce(Genetic_Encoding organism, int pobl
 			organism = crossover(organism, organism_mother);
 		}
 		else{
-
-			while(true){
-				random_mother = rand()%current_niches.at(organism.niche).organism_position.size();
-				if(current_niches.at(organism.niche).organism_position.at(random_mother) != poblation_place )break;
-				if(current_niches.at(organism.niche).organism_position.size()==1)break;
+			if(current_niches.at(organism.niche).organism_position.size()==1){
+				organism = mutation_change_weight(organism); // Si no se puede encontrar pareja en el nicho que mute.
 			}
+			else{
+				Discrete_Probabilities organisms_probabilities;
+				for(int i=0; i < (int)current_niches.at(organism.niche).organism_position.size(); i++ ){
+					if(current_niches.at(organism.niche).organism_position.at(i) == poblation_place){
+						organisms_probabilities.add_element(0.0);// Para que no salga elegido el mismo organimsmo.
+					}
+					else
+						organisms_probabilities.add_element(prev_organisms.at(current_niches.at(organism.niche).organism_position.at(i)).shared_fitness);
+				}
 
-			organism_mother = prev_organisms.at(current_niches.at(organism.niche).organism_position.at(random_mother));
-			organism = crossover(organism, organism_mother);
+				random_mother = organisms_probabilities.obtain_uniformrandom_element();
+
+				organism_mother = prev_organisms.at(current_niches.at(organism.niche).organism_position.at(random_mother));	
+				organism = crossover(organism, organism_mother);	
+			}
 		}
 
 	}
