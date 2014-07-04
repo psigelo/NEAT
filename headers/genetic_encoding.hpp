@@ -84,12 +84,18 @@ namespace ANN_USM{
 			*/
 			void change_random_function_randomly();
 
+			/**
+			*	\brief Return the past output.
+			*/
+			double obtain_past_value();
+
 			int 		row;
 			bool 		exist;
 			int 		node;
 			gene_type 	type;
 			double 		node_output_value;
 			string 		str;
+			double		output_t_minus_1;
 			Return_random_function random_function;
 	};
 
@@ -154,6 +160,11 @@ namespace ANN_USM{
 			\brief return the number of outputs of the NEAT
 			*/
 			int 				getNEATOutputSize();
+
+			/**
+			\brief Put to 0 the past value of all nodes.
+			*/
+			void 				reset_past_values();
 
 			vector <connection_gene> 	Lconnection_genes; //List of connections genes
 			vector <node_gene> 			Lnode_genes;

@@ -1,12 +1,20 @@
 EXECUTABLE = prueba_NEAT
-VPATH = ./src ./headers ./objects ./experiments
+VPATH = ./src ./headers ./objects ./experiments ./VREP/include ./VREP/remoteApi ./VREP/robotSimulator/headers ./VREP/robotSimulator/src ./VREP/robotSimulator/objects
 CC = g++ -O3
-CFLAGS = -g -Wall -I./headers -I./objects -I./src
+CFLAGS = -g -Wall -I./headers -I./objects -I./src -I./VREP/include -I./VREP/remoteApi -I./VREP/robotSimulator/src -I./VREP/robotSimulator/headers -DNON_MATLAB_PARSING -DMAX_EXT_API_CONNECTIONS=255
 
 
-NEAT: xor.cpp NEAT.o  genetic_encoding.o random_function.o discrete_probabilities.o
+Quadratot: quadratot.cpp NEAT.o  genetic_encoding.o random_function.o discrete_probabilities.o 
+	@mkdir -p bin
+	@cd VREP/robotSimulator/; make
+	@cd VREP/; make
+	$(CC) $(CFLAGS) ./experiments/quadratot.cpp ./objects/NEAT.o ./objects/genetic_encoding.o  ./objects/random_function.o ./objects/discrete_probabilities.o ./VREP/robotSimulator/objects/RobotSimulator.o ./VREP/robotSimulator/objects/Object.o ./VREP/robotSimulator/objects/Joint.o ./VREP/robotSimulator/objects/Dummy.o ./VREP/remoteApi/extApiPlatform.o ./VREP/remoteApi/extApi.o -o ./bin/Quadratot -lpthread
+
+xor: xor.cpp NEAT.o  genetic_encoding.o random_function.o discrete_probabilities.o
 	@mkdir -p bin
 	$(CC) $(CFLAGS) ./experiments/xor.cpp ./objects/NEAT.o ./objects/genetic_encoding.o  ./objects/random_function.o ./objects/discrete_probabilities.o -o ./bin/NEAT
+
+
 
 NEAT.o: NEAT.cpp discrete_probabilities.o genetic_encoding.o
 	@mkdir -p objects

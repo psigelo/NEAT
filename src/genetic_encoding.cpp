@@ -31,16 +31,21 @@ void node_gene::_node_genne(int node, gene_type type, int row, Return_random_fun
 	this->exist = true;
 	this->random_function = random_function;
 	this->node_output_value = 0;
+	this->output_t_minus_1 = 0.0;
 }
 void node_gene::_node_genne(bool exist){
 	this->exist = exist;
-	this->node_output_value = 0;
+	this->node_output_value = 0.0;
 }
 
 void node_gene::change_random_function_randomly(){
 	Return_random_function rf;
 	rf = get_random_function();
 	this->random_function = rf;
+}
+
+double node_gene::obtain_past_value(){
+	return this->output_t_minus_1;
 }
 //=================================================================================================//
 
@@ -387,16 +392,19 @@ void Genetic_Encoding::load(char path[]){
 
 /*
 * falta: enlaces hacia atrás.
+
+
+
 */
 vector <double> Genetic_Encoding::eval(std::vector<double> inputs){
-
+	//cerr << "ENTRO!" << endl;
 	vector <double> 				outputs;
 	vector < vector <int> > 	inputs_to_node;
 	vector < int > 					  empty_vector;
 	double entradas_temp(0.0);
 
 
-	// ================= COSAS QUE PODRIAN MEJORARSE (POR VELOCIDAD)===================
+	// ================= COSAS QUE PODRIAN MEJORARSE (POR VELOCIDAD) ===================
 	for (int i = 0; i < (int)Lnode_genes.size(); ++i)
 		inputs_to_node.push_back(empty_vector);
 	for (int i = 0; i < (int)Lconnection_genes.size(); ++i)
@@ -413,6 +421,17 @@ vector <double> Genetic_Encoding::eval(std::vector<double> inputs){
 			}
 		}
 	}
+
+	vector < int > inverse_row_orderer_list; // A partir de la fila te da su posición.
+	for(int i = 0; i < (int)row_orderer_list.size(); i++)
+	{
+		for(int j=0; j < (int)row_orderer_list.size(); j++){
+			if(i == row_orderer_list.at(j)){
+				inverse_row_orderer_list.push_back(j);
+			}
+		}
+	}
+
 	//======================================================================
 
 
@@ -433,11 +452,25 @@ vector <double> Genetic_Encoding::eval(std::vector<double> inputs){
 			for (int k = 0; k < (int)inputs_to_node.at(current_node_position).size(); ++k)
 			{
 				connection_gene current_input_to_node_connection =  Lconnection_genes.at(  inputs_to_node.at( current_node_position ).at(k)  );
-			 	entradas_temp += Lnode_genes.at(  current_input_to_node_connection.in  ).node_output_value * current_input_to_node_connection.weight;
+			 	if(inverse_row_orderer_list.at(Lnode_genes.at(current_input_to_node_connection.in).row) >= inverse_row_orderer_list.at(Lnode_genes.at(current_node_position).row) ){
+			 		// Entonces es una conección hacia atrás o hacia el lado. Se usan los valores pasados:
+			 		entradas_temp += Lnode_genes.at(current_input_to_node_connection.in).obtain_past_value();
+			 	}
+			 	else
+			 		entradas_temp += Lnode_genes.at(  current_input_to_node_connection.in  ).node_output_value * current_input_to_node_connection.weight;
 			}
 			Lnode_genes.at(current_node_position).node_output_value = (*Lnode_genes.at(current_node_position).random_function.function)(entradas_temp);
 
 		}
+
+		// Se ponen los valores de los nodos a valores pasados de los nodos para la siguiente iteración.
+		// Se hace después dado que así no se afecta a los nodos que tengan connección y sean de la misma fila.
+		for (int j = 0; j < (int)nodes_at_row.at(row_orderer_list_adapted.at(i)).size(); ++j)
+		{
+			int current_node_position = nodes_at_row.at(    row_orderer_list_adapted.at(i)    ).at( j );			
+			Lnode_genes.at(current_node_position).output_t_minus_1 = Lnode_genes.at(current_node_position).node_output_value;
+		}
+
 	}
 	for (int i = 0; i < (int)outputs_positions.size(); ++i)
 	{
@@ -453,8 +486,8 @@ vector <double> Genetic_Encoding::eval(std::vector<double> inputs){
 string Genetic_Encoding::ANN_function(){
 
 	vector < vector <int> > 	inputs_to_node;
-	vector < int > 					  empty_vector;
-	int 					amount_inputs_nodes(0);
+	vector < int > 				empty_vector;
+	int 						amount_inputs_nodes(0);
 
 
 
@@ -473,6 +506,15 @@ string Genetic_Encoding::ANN_function(){
 		if(row_orderer_list.at(i)  < (int)nodes_at_row.size()){
 			if(nodes_at_row.at(row_orderer_list.at(i)).size() > 0){
 				row_orderer_list_adapted.push_back(row_orderer_list.at(i));
+			}
+		}
+	}
+	vector < int > inverse_row_orderer_list; // A partir de la fila te da su posición.
+	for(int i = 0; i < (int)row_orderer_list.size(); i++)
+	{
+		for(int j=0; j < (int)row_orderer_list.size(); j++){
+			if(i == row_orderer_list.at(j)){
+				inverse_row_orderer_list.push_back(j);
 			}
 		}
 	}
@@ -501,19 +543,28 @@ string Genetic_Encoding::ANN_function(){
 		for (int j = 0; j < (int)nodes_at_row.at(row_orderer_list_adapted.at(i)).size(); ++j)
 		{
 			int current_node_position = nodes_at_row[    row_orderer_list_adapted[i]    ] [ j ];
+
 			
 			for (int k = 0; k < (int)inputs_to_node.at(current_node_position).size(); ++k)
 			{
-				if(k==0){
-					ss << " " << Lnode_genes[  current_node_position  ].random_function.str_name << "[ ";
 				
+				connection_gene current_input_to_node_connection =  Lconnection_genes[  inputs_to_node[ current_node_position ][k] ];
+				if(inverse_row_orderer_list.at(Lnode_genes.at(current_input_to_node_connection.in).row) >= inverse_row_orderer_list.at(Lnode_genes.at(current_node_position).row) ){
+					ss << " N[t-1] ";
 				}
 				else{
-					ss << " + ";
+					if(k==0){
+					ss << " " << Lnode_genes[  current_node_position  ].random_function.str_name << "[ ";
+				
+					}
+					else{
+						ss << " + ";
+					}
+
+				 	ss <<  Lnode_genes.at(  current_input_to_node_connection.in  ).str <<  " * " <<  current_input_to_node_connection.weight;
 				}
 
-				connection_gene current_input_to_node_connection =  Lconnection_genes[  inputs_to_node[ current_node_position ][k] ];
-			 	ss <<  Lnode_genes.at(  current_input_to_node_connection.in  ).str <<  " * " <<  current_input_to_node_connection.weight;
+				
 			}
 			ss << "] ";
 			Lnode_genes[nodes_at_row[row_orderer_list_adapted[i]][j]].str = ss.str();
@@ -534,6 +585,14 @@ string Genetic_Encoding::ANN_function(){
 ostream & operator<<(ostream & o, Genetic_Encoding & encoding) {
 	o << encoding.JSON();
 	return o;
+}
+
+
+void Genetic_Encoding::reset_past_values(){
+	for (int i = 0; i < (int)Lnode_genes.size(); ++i)
+	{
+		Lnode_genes.at(i).output_t_minus_1=0.0;
+	}
 }
 
 

@@ -68,7 +68,6 @@ int main(int argc, char** argv){
 		}
 		poblacion.epoch();
 	}
-
 	cout << "Fitness champion: " << poblacion.fitness_champion << "\n\n"<< endl;
 	cout << poblacion.champion.ANN_function() << endl;
 	cout << poblacion.champion << endl;
