@@ -1,6 +1,6 @@
 // This file is part of the REMOTE API
 // 
-// Copyright 2006-2014 Dr. Marc Andreas Freese. All rights reserved. 
+// Copyright 2006-2014 Coppelia Robotics GmbH. All rights reserved. 
 // marc@coppeliarobotics.com
 // www.coppeliarobotics.com
 // 
@@ -12,16 +12,19 @@
 // the Free Software Foundation, either version 3 of the License, or
 // (at your option) any later version.
 // 
-// The REMOTE API is distributed in the hope that it will be useful,
-// but WITHOUT ANY WARRANTY; without even the implied warranty of
-// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-// GNU General Public License for more details.
+// THE REMOTE API IS DISTRIBUTED "AS IS", WITHOUT ANY EXPRESS OR IMPLIED
+// WARRANTY. THE USER WILL USE IT AT HIS/HER OWN RISK. THE ORIGINAL
+// AUTHORS AND COPPELIA ROBOTICS GMBH WILL NOT BE LIABLE FOR DATA LOSS,
+// DAMAGES, LOSS OF PROFITS OR ANY OTHER KIND OF LOSS WHILE USING OR
+// MISUSING THIS SOFTWARE.
+// 
+// See the GNU General Public License for more details.
 // 
 // You should have received a copy of the GNU General Public License
 // along with the REMOTE API.  If not, see <http://www.gnu.org/licenses/>.
 // -------------------------------------------------------------------
 //
-// This file was automatically created for V-REP release V3.1.0 on January 20th 2014
+// This file was automatically created for V-REP release V3.1.2 on June 16th 2014
 
 #include "extApiPlatform.h"
 #include <stdio.h>
@@ -29,14 +32,20 @@
 #ifdef _WIN32
 	#include <Windows.h>
 	#include <process.h>
-	#pragma message("Adding library: Winmm.lib")
-	#pragma comment(lib,"Winmm.lib")
-	#pragma message("Adding library: Ws2_32.lib")
-	#pragma comment(lib,"Ws2_32.lib")
+	#ifndef QT_COMPIL
+		#pragma message("Adding library: Winmm.lib")
+		#pragma comment(lib,"Winmm.lib")
+		#pragma message("Adding library: Ws2_32.lib")
+		#pragma comment(lib,"Ws2_32.lib")
+	#endif
 	#define MUTEX_HANDLE HANDLE
 	#define MUTEX_HANDLE_X MUTEX_HANDLE
 	#define THREAD_ID DWORD
 	WSADATA	_socketWsaData;
+	#ifdef USE_ALSO_SHARED_MEMORY
+		HANDLE _mmfConn[MAX_EXT_API_CONNECTIONS];
+		simxInt _mmfSize[MAX_EXT_API_CONNECTIONS];
+	#endif
 #elif defined (__linux) || defined (__APPLE__)
 	#include <pthread.h>
 	#include <stdlib.h>
@@ -69,6 +78,14 @@ THREAD_ID _lock2ThreadId[MAX_EXT_API_CONNECTIONS];
 
 SOCKET _socketConn[MAX_EXT_API_CONNECTIONS];
 struct sockaddr_in _socketServer[MAX_EXT_API_CONNECTIONS];
+
+#ifdef USE_ALSO_SHARED_MEMORY
+	#ifdef _WIN32
+
+	#elif defined (__linux) || defined (__APPLE__)
+
+	#endif
+#endif
 
 simxShort extApi_endianConversionShort(simxShort shortValue)
 { /* just used for testing purposes. Endianness is detected on the server side */
@@ -523,3 +540,181 @@ simxInt extApi_recv_socket(simxInt clientID,simxUChar* data,simxInt maxDataLengt
 	return(recv(_socketConn[clientID],(char*)data,maxDataLength,0));
 }
 
+
+
+#ifdef USE_ALSO_SHARED_MEMORY
+simxUChar extApi_connectToServer_sharedMem(simxInt clientID,simxInt theConnectionPort)
+{ /* return 1: success */
+#ifdef _WIN32
+	HANDLE memoryMapedFile;
+	simxUChar* buff;
+	simxChar theName[27];
+	simxChar* _theName="Local\\VREP_REMOTE_API00000";
+	theConnectionPort=-theConnectionPort;
+	memcpy(theName,_theName,27);
+	theName[21]=(simxChar)(48+(theConnectionPort/10000));
+	theConnectionPort=theConnectionPort-(theConnectionPort/10000)*10000;
+	theName[22]=(simxChar)(48+(theConnectionPort/1000));
+	theConnectionPort=theConnectionPort-(theConnectionPort/1000)*1000;
+	theName[23]=(simxChar)(48+(theConnectionPort/100));
+	theConnectionPort=theConnectionPort-(theConnectionPort/100)*100;
+	theName[24]=(simxChar)(48+(theConnectionPort/10));
+	theConnectionPort=theConnectionPort-(theConnectionPort/10)*10;
+	theName[25]=(simxChar)(48+theConnectionPort);
+	memoryMapedFile=OpenFileMapping(FILE_MAP_ALL_ACCESS,FALSE,theName);   
+	if (memoryMapedFile!=NULL)
+	{
+		buff=(simxUChar*)MapViewOfFile(memoryMapedFile,FILE_MAP_ALL_ACCESS,0,0,5);
+		if (buff!=NULL)
+		{
+			if (buff[0]==0)
+			{
+				_mmfConn[clientID]=memoryMapedFile;
+				_mmfSize[clientID]=((simxInt*)(buff+1))[0];
+				buff[5]=0; /* client has nothing to send */
+				buff[0]=1; /* connected */
+				UnmapViewOfFile(buff);
+				return(1);
+			}
+			UnmapViewOfFile(buff);
+			CloseHandle(memoryMapedFile);
+			return(0);
+		}
+		else
+			CloseHandle(memoryMapedFile);
+		return(0);
+	}
+	return(0);
+#elif defined (__linux) || defined (__APPLE__)
+	return(0);
+#endif
+}
+
+simxVoid extApi_cleanUp_sharedMem(simxInt clientID)
+{
+#ifdef _WIN32
+	simxUChar* buff;
+	buff=(simxUChar*)MapViewOfFile(_mmfConn[clientID],FILE_MAP_ALL_ACCESS,0,0,_mmfSize[clientID]+20);
+	if (buff!=0)
+	{
+		buff[0]=0;
+		UnmapViewOfFile(buff);
+	}
+	CloseHandle(_mmfConn[clientID]);
+#elif defined (__linux) || defined (__APPLE__)
+
+#endif
+}
+
+simxInt extApi_send_sharedMem(simxInt clientID,const simxUChar* data,simxInt dataLength)
+{
+	simxUChar* buff;
+	simxInt startTime;
+	simxInt off=0;
+	simxInt initDataLength=dataLength;
+	if (dataLength==0)
+		return(0);
+#ifdef _WIN32
+		startTime=extApi_getTimeInMs();
+	buff=(simxUChar*)MapViewOfFile(_mmfConn[clientID],FILE_MAP_ALL_ACCESS,0,0,_mmfSize[clientID]+20);
+	if (buff!=0)
+	{
+		if (buff[0]!=1)
+		{
+			UnmapViewOfFile(buff);
+			return(0);
+		}
+
+		while (dataLength>0)
+		{
+			/* Wait for previous data to be gone: */
+			while (buff[5]!=0)
+			{
+				if (extApi_getTimeDiffInMs(startTime)>1000)
+				{
+					UnmapViewOfFile(buff);
+					return(0);
+				}
+			}
+			/* ok, we can send the data: */
+			if (dataLength<=_mmfSize[clientID])
+			{ /* we can send the data in one shot: */
+				memcpy(buff+20,data+off,dataLength);
+				((int*)(buff+6))[0]=dataLength;
+				((int*)(buff+6))[1]=20;
+				((int*)(buff+6))[2]=initDataLength;
+				dataLength=0;
+			}
+			else
+			{ /* just send a smaller part first: */
+				memcpy(buff+20,data+off,_mmfSize[clientID]);
+				((int*)(buff+6))[0]=_mmfSize[clientID];
+				((int*)(buff+6))[1]=20;
+				((int*)(buff+6))[2]=initDataLength;
+				dataLength-=(_mmfSize[clientID]);
+				off+=(_mmfSize[clientID]);
+			}
+			buff[5]=1; /* client has something to send! */
+		}
+		UnmapViewOfFile(buff);
+		return(initDataLength);
+	}
+	return(0);
+#elif defined (__linux) || defined (__APPLE__)
+	return(0);
+#endif
+}
+
+simxUChar* extApi_recv_sharedMem(simxInt clientID,simxInt* dataLength)
+{
+	simxUChar* buff;
+	simxInt startT;
+	simxInt l=0;
+	simxInt off=0;
+	simxInt retDataOff=0;
+	simxUChar* retData=0;
+	simxInt totalLength=-1;
+#ifdef _WIN32
+	buff=(simxUChar*)MapViewOfFile(_mmfConn[clientID],FILE_MAP_ALL_ACCESS,0,0,_mmfSize[clientID]+20);
+	if (buff!=0)
+	{
+		if (buff[0]!=1)
+		{ /* we are not connected anymore */
+			UnmapViewOfFile(buff);
+			return(0);
+		}
+
+		startT=extApi_getTimeInMs();
+		while (retDataOff!=totalLength)
+		{
+			/* Wait for data: */
+			while (buff[5]!=2)
+			{
+				if (extApi_getTimeDiffInMs(startT)>1000)
+				{
+					UnmapViewOfFile(buff);
+					return(0);
+				}
+			}
+			/* ok, data is there! */
+			/* Read the data with correct length: */
+			l=((int*)(buff+6))[0];
+			off=((int*)(buff+6))[1];
+			totalLength=((int*)(buff+6))[2];
+			if (retData==0)
+				retData=extApi_allocateBuffer(totalLength);
+			memcpy(retData+retDataOff,buff+off,l);
+			retDataOff=retDataOff+l;
+			/* Tell the other side we have read that part and additional parts could be sent (if present): */
+			buff[5]=0;
+		}
+		UnmapViewOfFile(buff);
+		dataLength[0]=retDataOff;
+		return(retData);
+	}
+	return(0);
+#elif defined (__linux) || defined (__APPLE__)
+	return(0);
+#endif
+}
+#endif

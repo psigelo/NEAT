@@ -25,9 +25,6 @@ namespace ANN_USM{
 
 	class connection_gene{
 		public:
-
-
-
 			/**
 			* \brief Change or set the value to the variables to innovation, in, out, weight, enable.
 			* \param innovation: the innovation of the genne_connection.

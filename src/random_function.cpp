@@ -24,6 +24,9 @@ double node_cos(double x){ // becose the node entry is in [-1,1] and the cos dom
 	return cos(M_PI*x);
 }
 
+double identity(double x){
+	return x;
+}
 
 static int RANDOM_f_iterator = 0;
 static vector <Return_random_function> RANDOM_functions;
@@ -47,6 +50,10 @@ void inicialization(){
 		
 		rrf.function = node_cos;
 		rrf.str_name = "cos";
+		RANDOM_functions.push_back(rrf);
+
+		rrf.function = identity;
+		rrf.str_name = "identity";
 		RANDOM_functions.push_back(rrf);
 
 		RANDOM_f_iterator = 1;

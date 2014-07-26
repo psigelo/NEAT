@@ -1,6 +1,6 @@
 // This file is part of the REMOTE API
 // 
-// Copyright 2006-2014 Dr. Marc Andreas Freese. All rights reserved. 
+// Copyright 2006-2014 Coppelia Robotics GmbH. All rights reserved. 
 // marc@coppeliarobotics.com
 // www.coppeliarobotics.com
 // 
@@ -12,16 +12,19 @@
 // the Free Software Foundation, either version 3 of the License, or
 // (at your option) any later version.
 // 
-// The REMOTE API is distributed in the hope that it will be useful,
-// but WITHOUT ANY WARRANTY; without even the implied warranty of
-// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-// GNU General Public License for more details.
+// THE REMOTE API IS DISTRIBUTED "AS IS", WITHOUT ANY EXPRESS OR IMPLIED
+// WARRANTY. THE USER WILL USE IT AT HIS/HER OWN RISK. THE ORIGINAL
+// AUTHORS AND COPPELIA ROBOTICS GMBH WILL NOT BE LIABLE FOR DATA LOSS,
+// DAMAGES, LOSS OF PROFITS OR ANY OTHER KIND OF LOSS WHILE USING OR
+// MISUSING THIS SOFTWARE.
+// 
+// See the GNU General Public License for more details.
 // 
 // You should have received a copy of the GNU General Public License
 // along with the REMOTE API.  If not, see <http://www.gnu.org/licenses/>.
 // -------------------------------------------------------------------
 //
-// This file was automatically created for V-REP release V3.1.0 on January 20th 2014
+// This file was automatically created for V-REP release V3.1.2 on June 16th 2014
 
 #ifndef _EXTAPI__
 #define _EXTAPI__
@@ -95,6 +98,8 @@ simxUChar* _appendCommand_s_buff(simxInt cmd,simxUChar options,const simxUChar* 
 simxUChar* _appendChunkToBuffer(const simxUChar* chunk,simxInt chunkSize,simxUChar* buffer,simxInt* buffer_bufferSize,simxInt* buffer_dataSize);
 simxVoid _removeChunkFromBuffer(const simxUChar* bufferStart,simxUChar* chunkStart,simxInt chunkSize,simxInt* buffer_dataSize);
 
+simxUChar* _appendCommandToBufferAndTakeIntoAccountPreviouslyReceivedData(const simxUChar* cmdPtr,simxUChar* cmdBuffer,simxInt cmdBufferSize,const simxUChar* chunk,simxInt chunkSize,simxUChar* buffer,simxInt* buffer_bufferSize,simxInt* buffer_dataSize);
+
 simxInt _removeCommandReply_null(simxInt clientID,simxInt cmdRaw);
 simxInt _removeCommandReply_int(simxInt clientID,simxInt cmdRaw,simxInt intValue);
 simxInt _removeCommandReply_intint(simxInt clientID,simxInt cmdRaw,simxInt intValue1,simxInt intValue2);
@@ -105,15 +110,16 @@ SIMX_THREAD_RET_TYPE _communicationThread(simxVoid* p);
 
 simxUShort _getCRC(const simxUChar* data,simxInt length);
 
-simxUChar _sendMessage_socket(simxInt clientID,const simxUChar* message,simxInt messageSize);
-simxUChar* _receiveReplyMessage_socket(simxInt clientID,simxInt* messageSize);
+simxUChar _sendMessage_socketOrSharedMem(simxInt clientID,const simxUChar* message,simxInt messageSize,simxUChar usingSharedMem);
+simxUChar* _receiveReplyMessage_socketOrSharedMem(simxInt clientID,simxInt* messageSize,simxUChar usingSharedMem);
 simxUChar _sendSimplePacket_socket(simxInt clientID,const simxUChar* packet,simxShort packetLength,simxShort packetsLeft);
-simxInt _receiveSimplePacket_socket(simxInt clientID,simxUChar* packet,simxShort* packetSize);
+simxInt _receiveSimplePacket_socket(simxInt clientID,simxUChar** packet,simxShort* packetSize);
 
 #endif /* NON_MATLAB_PARSING */
 
 
 /* The remote API functions */
+/* EXTAPI_DLLEXPORT simxFloat mtlb_simxTest(simxFloat* b); */
 EXTAPI_DLLEXPORT simxInt simxGetJointPosition(simxInt clientID,simxInt jointHandle,simxFloat* position,simxInt operationMode);
 EXTAPI_DLLEXPORT simxInt simxSetJointPosition(simxInt clientID,simxInt jointHandle,simxFloat position,simxInt operationMode);
 EXTAPI_DLLEXPORT simxInt simxGetJointMatrix(simxInt clientID,simxInt jointHandle,simxFloat* matrix,simxInt operationMode);
@@ -121,6 +127,7 @@ EXTAPI_DLLEXPORT simxInt simxSetSphericalJointMatrix(simxInt clientID,simxInt jo
 EXTAPI_DLLEXPORT simxInt simxSetJointTargetVelocity(simxInt clientID,simxInt jointHandle,simxFloat targetVelocity,simxInt operationMode);
 EXTAPI_DLLEXPORT simxInt simxSetJointTargetPosition(simxInt clientID,simxInt jointHandle,simxFloat targetPosition,simxInt operationMode);
 EXTAPI_DLLEXPORT simxInt simxJointGetForce(simxInt clientID,simxInt jointHandle,simxFloat* force,simxInt operationMode);
+EXTAPI_DLLEXPORT simxInt simxGetJointForce(simxInt clientID,simxInt jointHandle,simxFloat* force,simxInt operationMode);
 EXTAPI_DLLEXPORT simxInt simxSetJointForce(simxInt clientID,simxInt jointHandle,simxFloat force,simxInt operationMode);
 EXTAPI_DLLEXPORT simxInt simxReadForceSensor(simxInt clientID,simxInt forceSensorHandle,simxUChar* state,simxFloat* forceVector,simxFloat* torqueVector,simxInt operationMode);
 EXTAPI_DLLEXPORT simxInt simxBreakForceSensor(simxInt clientID,simxInt forceSensorHandle,simxInt operationMode);
@@ -187,6 +194,8 @@ EXTAPI_DLLEXPORT simxInt simxGetFloatSignal(simxInt clientID,const simxChar* sig
 EXTAPI_DLLEXPORT simxInt simxGetIntegerSignal(simxInt clientID,const simxChar* signalName,simxInt* signalValue,simxInt operationMode);
 EXTAPI_DLLEXPORT simxInt simxGetStringSignal(simxInt clientID,const simxChar* signalName,simxUChar** signalValue,simxInt* signalLength,simxInt operationMode);
 EXTAPI_DLLEXPORT simxInt simxGetAndClearStringSignal(simxInt clientID,const simxChar* signalName,simxUChar** signalValue,simxInt* signalLength,simxInt operationMode);
+EXTAPI_DLLEXPORT simxInt simxReadStringStream(simxInt clientID,const simxChar* signalName,simxUChar** signalValue,simxInt* signalLength,simxInt operationMode);
+EXTAPI_DLLEXPORT simxInt simxWriteStringStream(simxInt clientID,const simxChar* signalName,const simxUChar* signalValue,simxInt signalLength,simxInt operationMode);
 EXTAPI_DLLEXPORT simxInt simxSetFloatSignal(simxInt clientID,const simxChar* signalName,simxFloat signalValue,simxInt operationMode);
 EXTAPI_DLLEXPORT simxInt simxSetIntegerSignal(simxInt clientID,const simxChar* signalName,simxInt signalValue,simxInt operationMode);
 EXTAPI_DLLEXPORT simxInt simxSetStringSignal(simxInt clientID,const simxChar* signalName,const simxUChar* signalValue,simxInt signalLength,simxInt operationMode);
@@ -223,5 +232,22 @@ EXTAPI_DLLEXPORT simxUChar* simxCreateBuffer(simxInt bufferSize);
 EXTAPI_DLLEXPORT simxVoid simxReleaseBuffer(simxUChar* buffer);
 EXTAPI_DLLEXPORT simxInt simxTransferFile(simxInt clientID,const simxChar* filePathAndName,const simxChar* fileName_serverSide,simxInt timeOut,simxInt operationMode);
 EXTAPI_DLLEXPORT simxInt simxEraseFile(simxInt clientID,const simxChar* fileName_serverSide,simxInt operationMode);
+
+/* Following so that we do not have to use thunk files with Matlab 64bit */
+EXTAPI_DLLEXPORT simxInt mtlb_simxSetJointPosition(simxInt clientID,simxInt jointHandle,simxFloat* position,simxInt operationMode);
+EXTAPI_DLLEXPORT simxInt mtlb_simxSetJointTargetVelocity(simxInt clientID,simxInt jointHandle,simxFloat* targetVelocity,simxInt operationMode);
+EXTAPI_DLLEXPORT simxInt mtlb_simxSetJointTargetPosition(simxInt clientID,simxInt jointHandle,simxFloat* targetPosition,simxInt operationMode);
+EXTAPI_DLLEXPORT simxInt mtlb_simxSetJointForce(simxInt clientID,simxInt jointHandle,simxFloat* force,simxInt operationMode);
+EXTAPI_DLLEXPORT simxInt mtlb_simxSetFloatSignal(simxInt clientID,const simxChar* signalName,simxFloat* signalValue,simxInt operationMode);
+EXTAPI_DLLEXPORT simxInt mtlb_simxSetObjectFloatParameter(simxInt clientID,simxInt objectHandle,simxInt parameterID,simxFloat* parameterValue,simxInt operationMode);
+EXTAPI_DLLEXPORT simxInt mtlb_simxSetFloatingParameter(simxInt clientID,simxInt paramIdentifier,simxFloat* paramValue,simxInt operationMode);
+EXTAPI_DLLEXPORT simxInt mtlb_simxCreateDummy(simxInt clientID,simxFloat* size,const simxUChar* colors,simxInt* objectHandle,simxInt operationMode);
+
+EXTAPI_DLLEXPORT simxInt mtlb_simxReadProximitySensor(simxInt* clientIDandSensorHandle,simxUChar* detectionState,simxFloat* detectedPoint,simxInt* detectedObjectHandle,simxFloat* detectedSurfaceNormalVector,simxInt operationMode);
+EXTAPI_DLLEXPORT simxInt mtlb_simxAuxiliaryConsoleOpen(simxInt* clientIDandMaxLinesAndModeAndPositionAndSize,const simxChar* title,simxFloat* textColor,simxFloat* backgroundColor,simxInt* consoleHandle,simxInt operationMode);
+EXTAPI_DLLEXPORT simxInt mtlb_simxDisplayDialog(simxInt* clientIDandDlgTypeAndOperationMode,const simxChar* titleText,const simxChar* mainText,const simxChar* initialText,const simxFloat* titleColorsAndDlgColors,simxInt* dialogHandleAndUiHandle);
+EXTAPI_DLLEXPORT simxInt mtlb_simxQuery(simxInt* clientIDandSignalLengthAndTimeOutInMs,const simxChar* signalName,const simxUChar* signalValue,const simxChar* retSignalName,simxUChar** retSignalValue,simxInt* retSignalLength);
+EXTAPI_DLLEXPORT simxInt mtlb_simxGetObjectGroupData(simxInt* clientIDandObjectTypeAndDataTypeAndOperationMode,simxInt* handlesCountAndIntDataCountAndFloatDataCountAndStringDataCount,simxInt** handles,simxInt** intData,simxFloat** floatData,simxChar** stringData);
+
 
 #endif /* _EXTAPI__ */		

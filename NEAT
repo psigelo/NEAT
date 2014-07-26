@@ -1,0 +1,4 @@
+#include "NEAT_headers/NEAT.hpp"
+#include "NEAT_headers/discrete_probabilities.hpp"
+#include "NEAT_headers/genetic_encoding.hpp"
+#include "NEAT_headers/random_function.hpp"

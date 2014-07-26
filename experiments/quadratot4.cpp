@@ -21,14 +21,7 @@ using namespace std;
 
 
 #define RAD (double)M_PI/180.0
-#define MAX_ANGLE_INNER 60.0*RAD
-#define MIN_ANGLE_INNER -85.0*RAD
-#define MAX_ANGLE_OUTER 39.0*RAD
-#define MIN_ANGLE_OUTER -113.0*RAD
-#define MAX_ANGLE_CENTER 23.0*RAD
-#define MIN_ANGLE_CENTER -23.0*RAD
-#define MAX_ANGLE_LIMIT {MAX_ANGLE_INNER,	MAX_ANGLE_INNER,	MAX_ANGLE_INNER,	MAX_ANGLE_INNER,	MAX_ANGLE_OUTER,	MAX_ANGLE_OUTER,	MAX_ANGLE_OUTER,	MAX_ANGLE_OUTER,	MAX_ANGLE_CENTER}
-#define MIN_ANGLE_LIMIT {MIN_ANGLE_INNER,	MIN_ANGLE_INNER,	MIN_ANGLE_INNER,	MIN_ANGLE_INNER,	MIN_ANGLE_OUTER,	MIN_ANGLE_OUTER,	MIN_ANGLE_OUTER,	MIN_ANGLE_OUTER,	MIN_ANGLE_CENTER}
+
 
 
 
@@ -107,14 +100,13 @@ double fitness( Genetic_Encoding organism ,int handle_joints[N_LEGS*GRA_LIB + GR
 				inputs_to_NEAT.clear(); //SE BORRAN LOS DATOS DE ENTRADA.
 										//OBTENER LAS ENTRADAS A LA RED
 										//PRIMERO LAS ENTRADAS SINUSOIDALES Y COSENOIDALES.
-				inputs_to_NEAT.push_back(sin(2.0*M_PI*WAVE_FRECUENCY*getTimeSimulation(final,init)));
-				inputs_to_NEAT.push_back(cos(2.0*M_PI*WAVE_FRECUENCY*getTimeSimulation(final,init)));
+				inputs_to_NEAT.push_back(getTimeSimulation(final,init));
 
 				// SE USAN LOS VALORES DE SALIDA DEL NEAT COMO ENTRADAS DEL NEAT, DADO QUE LA SALIDA DEL NEAT SON LOS VALORES QUE 
 				// EN ESTE MOMENTO CORRESPONDEN A LA POSICION ACTUAL DEL NEAT.
-				for(int i=0; i < N_LEGS*GRA_LIB + GRA_LIB_EXT; i++){
-					inputs_to_NEAT.push_back(output_from_NEAT_t_minis_1.at(i));
-				}
+				//for(int i=0; i < N_LEGS*GRA_LIB + GRA_LIB_EXT; i++){
+				//	inputs_to_NEAT.push_back(output_from_NEAT_t_minis_1.at(i));
+				//}
 				temp_output = organism.eval(inputs_to_NEAT);
 				// EL PROMEDIO DE LAS ENTRA
 				for (int i = 0; i < N_LEGS*GRA_LIB + GRA_LIB_EXT; ++i)
@@ -175,14 +167,13 @@ double fitness( Genetic_Encoding organism ,int handle_joints[N_LEGS*GRA_LIB + GR
 				inputs_to_NEAT.clear(); //SE BORRAN LOS DATOS DE ENTRADA.
 										//OBTENER LAS ENTRADAS A LA RED
 										//PRIMERO LAS ENTRADAS SINUSOIDALES Y COSENOIDALES.
-				inputs_to_NEAT.push_back(sin(2.0*M_PI*WAVE_FRECUENCY*getTimeSimulation(final,init)));
-				inputs_to_NEAT.push_back(cos(2.0*M_PI*WAVE_FRECUENCY*getTimeSimulation(final,init)));
+				inputs_to_NEAT.push_back(getTimeSimulation(final,init) );
 
 				// SE USAN LOS VALORES DE SALIDA DEL NEAT COMO ENTRADAS DEL NEAT, DADO QUE LA SALIDA DEL NEAT SON LOS VALORES QUE 
 				// EN ESTE MOMENTO CORRESPONDEN A LA POSICION ACTUAL DEL NEAT.
-				for(int i=0; i < N_LEGS*GRA_LIB + GRA_LIB_EXT; i++){
-					inputs_to_NEAT.push_back(output_from_NEAT_t_minis_1.at(i));
-				}
+				//for(int i=0; i < N_LEGS*GRA_LIB + GRA_LIB_EXT; i++){
+				//	inputs_to_NEAT.push_back(output_from_NEAT_t_minis_1.at(i));
+				//}
 				temp_output = organism.eval(inputs_to_NEAT);
 				// EL PROMEDIO DE LAS ENTRA
 				for (int i = 0; i < N_LEGS*GRA_LIB + GRA_LIB_EXT; ++i)
@@ -205,11 +196,10 @@ double fitness( Genetic_Encoding organism ,int handle_joints[N_LEGS*GRA_LIB + GR
 			{
 				pass_positions.at(i).at(2) = pass_positions.at(i).at(1);
 				pass_positions.at(i).at(1) = pass_positions.at(i).at(0);
-				pass_positions.at(i).at(0) = ((int)(output_from_NEAT[i]*1000) )/1000.0;
+				pass_positions.at(i).at(0) = output_from_NEAT[i];
 
 				int pass_slope = next_slope.at(i);
 				double aux_slope = pass_positions.at(i).at(0) - pass_positions.at(i).at(1);
-
 				if(aux_slope != 0)
 				{
 					if(aux_slope < 0) next_slope.at(i) = -1;
@@ -217,7 +207,6 @@ double fitness( Genetic_Encoding organism ,int handle_joints[N_LEGS*GRA_LIB + GR
 				}	
 				if(next_slope.at(i) != pass_slope) cantidad_cambios_direccion_totales++;
 				
-
 
 				simxSetJointTargetPosition(*clientID, handle_joints[i], output_from_NEAT[i] * M_PI , simx_opmode_oneshot);
 			} 
@@ -233,11 +222,12 @@ double fitness( Genetic_Encoding organism ,int handle_joints[N_LEGS*GRA_LIB + GR
 	//cerr << position_init[0] << "\t"<< position_init[1] << "\t"<< position_init[2] << "\t"<< position_end[0] << "\t"<< position_end[1] << "\t"<< position_end[2] << endl;
 	//cerr << "cambios totales: " << cantidad_cambios_direccion_totales << "\tDistancia total: " << sqrt(pow(position_init[0] - position_end[0],2) + pow(position_init[1] - position_end[1],2)) << endl;
 	
-	double distance =  sqrt(pow(position_init[0] - position_end[0],2) + pow(position_init[1] - position_end[1],2));
-	cerr << "distancia: " << distance << endl;
+	//double distance =  sqrt(pow(position_init[0] - position_end[0],2) + pow(position_init[1] - position_end[1],2));
+	double distance_in_rect = abs((1.0/sqrt(2.0)) * (position_end[0] - position_end[1])) ;
+	cerr << "distance_in_rect: " << distance_in_rect << endl;
 	double frec = cantidad_cambios_direccion_totales/(9.0 * (double)(TIME_SIMULATION - TIME_WITHOUT_FITNESS_CALC)) ;
 	cerr << "frec: " << frec << endl;
-	double fitness = pow(2, distance*gaussian( frec ) ) - 0.99999;
+	double fitness = pow(2, distance_in_rect*gaussian( frec ) ) - 0.99999;
 	cerr << "fitness: " << fitness << endl;
 	return fitness;
 

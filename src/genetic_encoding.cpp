@@ -3,7 +3,6 @@
 
 #include "genetic_encoding.hpp"
 
-
 using namespace ANN_USM;
 
 
@@ -289,13 +288,37 @@ void Genetic_Encoding::save(char path[]){
 
 
 
+
+
+
 void Genetic_Encoding::load(char path[]){
+	
+	// Idea: Volver a compactar la informacion lo maximo posible y ademas cargarlo para poder hacer calculos o seguir con el entrenamiento desde este punto de partida.
+	// Pasos:
+	// 1) Obtener todos los datos: filas, nodos y connecciones en vectores para luego procesarlos y hacer el genoma inicial.
+	// 2) examinar las filas que realmente se usan.
+	// 3) organizar los nodos de forma incremental (cambiando el numero con que llegaron) y hacer la transformacion de 
+	//		sus valorres antiguos a los nuevos para despues poder hacer las connecciones con los valores de nodos correctos
+	// 4) Volver a hacer las conecciones
+
+
+
+
+
+
+	Lconnection_genes.clear(); // Por cautela
+	Lnode_genes.clear();
+
+	vector < node_gene > Vector_nodes;
+	vector < connection_gene > Vector_connectoins;
+	vector < int > 		 row_orderer_list_temp;
 
 	node_gene Nnew_node;
 	connection_gene Cnew_node;
 
-	Lconnection_genes.clear();
-	Lnode_genes.clear();
+
+
+	
 
 	ifstream file (path);
 	file.seekg (0, file.end);
@@ -321,15 +344,26 @@ void Genetic_Encoding::load(char path[]){
 	pch = strtok (buffer,delimiters);
 
 	pch = strtok (NULL, delimiters);
+
+
+
+
+
+
+
+	// ====================================================================================================================
+	// 1) Obtener todos los datos: filas, nodos y connecciones en vectores para luego procesarlos y hacer el genoma inicial.
+
+	// ROW ORDERER LIST
 	while( true ){ // rows
 		pch = strtok (NULL, delimiters);
 		if(pch[0] == ']')break;
-		row_orderer_list.push_back(atoi(pch));
+		row_orderer_list_temp.push_back(atoi(pch));
 	}
 
 
 	pch = strtok (NULL, delimiters);
-	while( 1 ){ // nodes
+	while( true ){ // nodes
 		pch = strtok (NULL, delimiters);
 		if(pch[0] == ']')break;
 		pch = strtok (NULL, delimiters);
@@ -348,11 +382,11 @@ void Genetic_Encoding::load(char path[]){
 			pch = strtok (NULL, delimiters);
 			random_function = obtain_function_fromm_name(pch);
 			Nnew_node._node_genne(node, (gene_type) type, row, random_function);
-			add_node(Nnew_node);
+			Vector_nodes.push_back(Nnew_node);
 		}
 		else{
 			Nnew_node._node_genne(false);
-			add_node(Nnew_node);
+			Vector_nodes.push_back(Nnew_node);
 		}
 	}
 
@@ -379,30 +413,155 @@ void Genetic_Encoding::load(char path[]){
 			pch = strtok (NULL, delimiters);
 			enable = atoi(pch);
 			Cnew_node._connection_gene(innovation, in, out, weight, (bool)enable);
-			add_connection(Cnew_node);
+			//add_connection(Cnew_node);
+			Vector_connectoins.push_back(Cnew_node);
 		}
 		else{
 			Cnew_node._connection_gene(false);
+			Vector_connectoins.push_back(Cnew_node);
+		}
+	}
+	//==============================================================================================================================
+
+
+
+
+
+
+
+	//==============================================================================================================================
+	// 2) examinar las filas que realmente se usan.
+
+	
+	
+	vector < int > transform_old_row_order_to_new; // idea: transform_old_row_order_to_new.at( old_position ) = new_position 
+
+	vector < int > row_orderer_list_temp_compressed;
+
+
+	// Esto se puede mejorar mucho con un buen plantiamiento
+	// Aca puede pasar por un mismo nodo n veces, lo que lo hace poco eficiente.
+	// Dado que este proceso no debería hacerce a menudo, por lo pronto se dejara asi
+	for (int j = 0; j < (int)row_orderer_list_temp.size(); ++j)
+	{
+		for (int i = 0; i < (int)Vector_nodes.size(); ++i)
+		{
+			if(Vector_nodes.at(i).row == row_orderer_list_temp.at(j)){
+				row_orderer_list_temp_compressed.push_back(row_orderer_list_temp.at(j));
+				break;
+			}
+		}
+		transform_old_row_order_to_new.push_back(-1);
+	}
+	
+	int new_row(0);
+	for (int i = 0; i < (int)row_orderer_list_temp_compressed.size(); ++i)
+	{
+		transform_old_row_order_to_new.at(row_orderer_list_temp_compressed.at(i)) = new_row;
+		row_orderer_list.push_back(new_row++);
+	}
+
+
+
+	for (int i = 0; i < (int) transform_old_row_order_to_new.size(); ++i)
+	{	
+		cerr << transform_old_row_order_to_new.at(i) << "\t";
+	}
+	cerr << endl;
+	//=================================================================================================================================
+
+
+
+
+
+
+
+	//=================================================================================================================================
+	// 3) organizar los nodos de forma incremental (cambiando el numero con que llegaron) y hacer la transformacion de 
+	//		sus valorres antiguos a los nuevos para despues poder hacer las connecciones con los valores de nodos correctos
+
+
+
+	//vector < int > new_nodes_list; 
+	vector < int > transform_old_nodes_to_news; // idea: transform_old_nodes_to_news.at( old_node_number ) = new_node_number
+
+	for (int i = 0; i < (int)Vector_nodes.size(); ++i)
+	{
+		transform_old_nodes_to_news.push_back(-1); // No deberia nunca usarse este valor, por lo tanto corresponde a un error.
+	}
+
+	int amount_of_nodes(0);
+	for (int i = 0; i < (int)Vector_nodes.size(); ++i)
+	{
+		if( Vector_nodes.at(i).exist == true)
+		{
+			transform_old_nodes_to_news.at(Vector_nodes.at(i).node) = amount_of_nodes;
+			Nnew_node._node_genne(amount_of_nodes, Vector_nodes.at(i).type, transform_old_row_order_to_new.at(Vector_nodes.at(i).row), Vector_nodes.at(i).random_function);
+			add_node(Nnew_node);
+			amount_of_nodes++;
+		}
+	}
+	//=================================================================================================================================
+
+
+
+
+	//=================================================================================================================================
+	// 4) Volver a hacer las conecciones
+
+	int amount_of_connections(0);
+	for (int i = 0; i < (int)Vector_connectoins.size(); ++i)
+	{
+		if( Vector_connectoins.at(i).exist == true)
+		{
+			Cnew_node._connection_gene(amount_of_connections++, transform_old_nodes_to_news.at(Vector_connectoins.at(i).in), transform_old_nodes_to_news.at(Vector_connectoins.at(i).out), Vector_connectoins.at(i).weight, Vector_connectoins.at(i).enable);
 			add_connection(Cnew_node);
 		}
 	}
+
+	//=================================================================================================================================
+
+
+
 }
 
 
 
-/*
-* falta: enlaces hacia atrás.
 
 
 
-*/
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 vector <double> Genetic_Encoding::eval(std::vector<double> inputs){
-	//cerr << "ENTRO!" << endl;
+	
+
+
 	vector <double> 				outputs;
 	vector < vector <int> > 	inputs_to_node;
 	vector < int > 					  empty_vector;
 	double entradas_temp(0.0);
-
 
 	// ================= COSAS QUE PODRIAN MEJORARSE (POR VELOCIDAD) ===================
 	for (int i = 0; i < (int)Lnode_genes.size(); ++i)
@@ -411,7 +570,6 @@ vector <double> Genetic_Encoding::eval(std::vector<double> inputs){
 	{
 		if(Lconnection_genes.at(i).exist && Lconnection_genes.at(i).enable) inputs_to_node.at(Lconnection_genes.at(i).out).push_back(i);
 	}
-
 	vector <int> row_orderer_list_adapted;
 	for(int i = 0; i < (int)row_orderer_list.size(); i++)
 	{
@@ -421,7 +579,6 @@ vector <double> Genetic_Encoding::eval(std::vector<double> inputs){
 			}
 		}
 	}
-
 	vector < int > inverse_row_orderer_list; // A partir de la fila te da su posición.
 	for(int i = 0; i < (int)row_orderer_list.size(); i++)
 	{
@@ -436,12 +593,12 @@ vector <double> Genetic_Encoding::eval(std::vector<double> inputs){
 
 
 
-
 	// Loading inputs
 	for (int i = 0; i < (int)inputs.size(); ++i)
 	{
 		Lnode_genes.at(i).node_output_value = (*Lnode_genes.at(i).random_function.function)(inputs[i]);
 	}
+
 
 	for (int i = 1; i < (int)row_orderer_list_adapted.size(); ++i)
 	{
@@ -455,6 +612,7 @@ vector <double> Genetic_Encoding::eval(std::vector<double> inputs){
 			 	if(inverse_row_orderer_list.at(Lnode_genes.at(current_input_to_node_connection.in).row) >= inverse_row_orderer_list.at(Lnode_genes.at(current_node_position).row) ){
 			 		// Entonces es una conección hacia atrás o hacia el lado. Se usan los valores pasados:
 			 		entradas_temp += Lnode_genes.at(current_input_to_node_connection.in).obtain_past_value();
+			 		//cerr << "PAST_VALUE: "  << Lnode_genes.at(current_input_to_node_connection.in).obtain_past_value() << endl; 
 			 	}
 			 	else
 			 		entradas_temp += Lnode_genes.at(  current_input_to_node_connection.in  ).node_output_value * current_input_to_node_connection.weight;

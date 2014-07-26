@@ -9,6 +9,13 @@
 #include <algorithm>
 #include "discrete_probabilities.hpp"
 
+/*
+	Por implementar:
+		- Que la generacion actual sea un dato en NEAT.
+		- 
+
+*/
+
 
 namespace ANN_USM{
 
@@ -28,6 +35,8 @@ namespace ANN_USM{
 		public:
 
 			Population(char user_definitions[],char genetic_encoder[]);
+			Population(char user_definitions[],char genetic_encoder[], char name[]);
+			
 			//	The order of the functions is the same that the time ocurrence.
 
 
@@ -73,6 +82,17 @@ namespace ANN_USM{
 			void 				save(char path[]);
 			void 				print_niches();
 			void 				load_user_definitions(char address[]);
+			double 				obtain_while_limit(int amount_of_times);
+			double 				obtain_while_limit(double amount_of_times);
+			void 				change_window_of_fitness_generation(double fitness_mean_current_generation);
+			/**
+			\brief 	Imprime toda la generacion a archivo, en la carpeta Stattistics
+			\param generation corresponde a el nombre de la generacion para su mas posterior
+			*/
+			void				print_to_file_currrent_generation(int generation);
+			void 				print_to_file_currrent_generation();
+
+			
 
 			//============================ User definitions ================================//
 			/**
@@ -101,8 +121,9 @@ namespace ANN_USM{
 			int 	GENERATIONS;
 			double 	PROBABILITY_CHANGE_WEIGHT;
 			double 	PROBABILITY_CHANGE_NODE_FUNCTION_PER_NODE;
+			
 			//==============================================================================//
-
+			double 						expectative_iterations; // Is the amount of times that probably enter in where the mutations can be produced.
 			int 						lenght;
 			vector<Genetic_Encoding> 	organisms;
 			vector<Genetic_Encoding> 	prev_organisms;
@@ -118,6 +139,9 @@ namespace ANN_USM{
 			Genetic_Encoding 			champion;
 			double 						fitness_champion;
 			list <int> organims_position_orderer_by_fitness;
+			vector < double >			fitness_mean_of_past_generation; // if the fitness of the current generation is not better than any of the 5 past generations then expectative_iterations will decreases.  
+			char *						name;			
+			int 						current_generation;	
 	};
 }
 

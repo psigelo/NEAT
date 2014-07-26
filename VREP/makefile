@@ -14,7 +14,6 @@ endif
 
 all: $(OBJS)
 	@echo "Compiling RobotSimulator"
-	@cd ./robotSimulator; make
 
 
 %.o: %.cpp

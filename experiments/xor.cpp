@@ -1,5 +1,4 @@
-#include "NEAT.hpp"
-#include "genetic_encoding.hpp"
+#include <NEAT>
 #include <ctime>
 
 using namespace ANN_USM;

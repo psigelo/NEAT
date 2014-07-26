@@ -1,6 +1,6 @@
 // This file is part of V-REP, the Virtual Robot Experimentation Platform.
 // 
-// Copyright 2006-2014 Dr. Marc Andreas Freese. All rights reserved. 
+// Copyright 2006-2014 Coppelia Robotics GmbH. All rights reserved. 
 // marc@coppeliarobotics.com
 // www.coppeliarobotics.com
 // 
@@ -15,19 +15,28 @@
 // the Free Software Foundation, either version 3 of the License, or
 // (at your option) any later version.
 // 
-// V-REP is distributed in the hope that it will be useful,
-// but WITHOUT ANY WARRANTY; without even the implied warranty of
-// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-// GNU General Public License for more details.
+// V-REP IS DISTRIBUTED "AS IS", WITHOUT ANY EXPRESS OR IMPLIED
+// WARRANTY. THE USER WILL USE IT AT HIS/HER OWN RISK. THE ORIGINAL
+// AUTHORS AND COPPELIA ROBOTICS GMBH WILL NOT BE LIABLE FOR DATA LOSS,
+// DAMAGES, LOSS OF PROFITS OR ANY OTHER KIND OF LOSS WHILE USING OR
+// MISUSING THIS SOFTWARE.
+// 
+// See the GNU General Public License for more details.
 // 
 // You should have received a copy of the GNU General Public License
 // along with V-REP.  If not, see <http://www.gnu.org/licenses/>.
 // -------------------------------------------------------------------
 //
-// This file was automatically created for V-REP release V3.1.0 on January 20th 2014
+// This file was automatically created for V-REP release V3.1.2 on June 16th 2014
 
 #if !defined(V_REPCONST_INCLUDED_)
 #define V_REPCONST_INCLUDED_
+
+#define VREP_PROGRAM_VERSION_NB 30102
+#define VREP_PROGRAM_VERSION "3.1.2."
+
+#define VREP_PROGRAM_REVISION_NB 1
+#define VREP_PROGRAM_REVISION "(rev. 1)"
 
 /* Scene object types. Values are serialized */
 enum { 
@@ -247,6 +256,11 @@ enum { /* Check the documentation instead of comments below!! */
 		sim_message_eventcallback_proxsensorselectup, /* a "geometric" click select (mouse up) was registered. Enable with sim_intparam_prox_sensor_select_down. aux[0]=objectID, customData[0-2]=pt coord (floats), customData[3-5]=pt normal vector (floats)*/
 		sim_message_eventcallback_pickselectdown, /* a "pick" click select (mouse down) was registered. aux[0]=objectID */
 
+		sim_message_eventcallback_rmlpos, /* the command simRMLPos was called. The appropriate plugin should handle the call */
+		sim_message_eventcallback_rmlvel, /* the command simRMLVel was called. The appropriate plugin should handle the call */
+		sim_message_eventcallback_rmlstep, /* the command simRMLStep was called. The appropriate plugin should handle the call */
+		sim_message_eventcallback_rmlremove, /* the command simRMLRemove was called. The appropriate plugin should handle the call */
+		sim_message_eventcallback_rmlinfo, /* used internally */
 
 		sim_message_simulation_start_resume_request=0x1000,
 		sim_message_simulation_pause_request,
@@ -268,8 +282,8 @@ enum {
 		sim_displayattribute_originalcolors	=0x0200,
 		sim_displayattribute_ignorelayer	=0x0400,
 		sim_displayattribute_forvisionsensor	=0x0800,
-		sim_displayattribute_FREE1				=0x1000, /* free */
-		sim_displayattribute_FREE2				=0x2000, /* free */
+		sim_displayattribute_colorcodedpickpass	=0x1000,
+		sim_displayattribute_colorcoded			=0x2000,
 		sim_displayattribute_trianglewireframe	=0x4000, 
 		sim_displayattribute_simplifyasboundingbox	=0x8000,
 		sim_displayattribute_thickEdges				=0x10000,
@@ -302,6 +316,7 @@ enum { /* type of arguments (input and output) for custom lua commands */
 	sim_lua_arg_float,
 	sim_lua_arg_string,
 	sim_lua_arg_invalid,
+	sim_lua_arg_charbuff,
 	sim_lua_arg_table=8
 };
 
@@ -388,7 +403,8 @@ enum { /* special argument of some functions: */
 	sim_handle_single					=-8,
 	sim_handle_default					=-9,
 	sim_handle_all_except_self			=-10,
-	sim_handle_parent					=-11
+	sim_handle_parent					=-11,
+	sim_handle_scene					=-12
 };
 
 enum { /* distance calculation methods: (serialized) */
@@ -548,7 +564,7 @@ enum { /* Boolean parameters: */
 
 enum { /* Integer parameters: */
 	sim_intparam_error_report_mode=0, /* Check sim_api_errormessage_... constants above for valid values */
-	sim_intparam_program_version,		/* e.g Version 2.1.4 --> 20104. Can only be read */
+	sim_intparam_program_version,		/* e.g Version 2.1.4 --> 20104. Can only be read. See also sim_intparam_program_revision */
 	sim_intparam_instance_count,	/* do not use anymore (always returns 1 since V-REP 2.5.11) */
 	sim_intparam_custom_cmd_start_id, /* can only be read */
 	sim_intparam_compilation_version, /* 0=evaluation version, 1=full version, 2=player version. Can only be read */
@@ -569,19 +585,22 @@ enum { /* Integer parameters: */
 	sim_intparam_platform, /* can only be read */
 	sim_intparam_scene_unique_id, /* can only be read */
 	sim_intparam_work_thread_count, /* 0-256. 0 to disable, -1 to try to automatically set */
-	sim_intparam_mouse_x,
-	sim_intparam_mouse_y,
+	sim_intparam_mouse_x, /* can only be read */
+	sim_intparam_mouse_y, /* can only be read */
 	sim_intparam_core_count, /* can only be read */
 	sim_intparam_work_thread_calc_time_ms,
 	sim_intparam_idle_fps,
 	sim_intparam_prox_sensor_select_down,
 	sim_intparam_prox_sensor_select_up,
-	sim_intparam_stop_request_counter
+	sim_intparam_stop_request_counter,
+	sim_intparam_program_revision, /* Can only be read. See also sim_intparam_program_version */
+	sim_intparam_mouse_buttons /* can only be read */
 };
 
 enum { /* Float parameters: */
 	sim_floatparam_rand=0, /* random value (0.0-1.0) */
-	sim_floatparam_simulation_time_step
+	sim_floatparam_simulation_time_step,
+	sim_floatparam_stereo_distance
 };
 
 enum { /* String parameters: */
@@ -761,7 +780,8 @@ Remote API constants:
 *******************************************
 *******************************************/
 
-#define SIMX_VERSION 4  // max is 255!!!
+#define SIMX_VERSION 6  // max is 255!!!
+// version to 6 for release 3.1.2
 
 /*
 Messages sent/received look like this:
@@ -889,6 +909,8 @@ enum {	simx_cmdnull_start				=0,
 		simx_cmd_set_object_int_parameter,
 		simx_cmd_get_object_child,
 		simx_cmd_get_object_group_data,
+		simx_cmd_get_object_orientation2,
+		simx_cmd_get_object_position2,
 
 		simx_cmd8bytes_custom_start		=0x002800,
 
@@ -916,7 +938,9 @@ enum {	simx_cmdnull_start				=0,
 		simx_cmd_set_integer_signal,
 		simx_cmd_set_string_signal,
 		simx_cmd_append_string_signal,
+		simx_cmd_write_string_stream=simx_cmd_append_string_signal,
 		simx_cmd_get_and_clear_string_signal,
+		simx_cmd_read_string_stream,
 
 		simx_cmd1string_custom_start	=0x003800,
 
@@ -941,15 +965,26 @@ enum {	simx_cmdnull_start				=0,
 		simx_opmode_remove				=0x070000		/* doesn't send anything and doesn't return any specific value. It just erases a similar command reply in the inbox (to free some memory) */
 };
 
-/* Command error codes */
+/* Command return codes (bit-coded) */
+enum {	simx_return_ok						=0x000000,
+		simx_return_novalue_flag			=0x000001,		/* input buffer doesn't contain the specified command */
+		simx_return_timeout_flag			=0x000002,		/* command reply not received in time for simx_opmode_oneshot_wait operation mode */
+		simx_return_illegal_opmode_flag		=0x000004,		/* command doesn't support the specified operation mode */
+		simx_return_remote_error_flag		=0x000008,		/* command caused an error on the server side */
+		simx_return_split_progress_flag		=0x000010,		/* previous similar command not yet fully processed (applies to simx_opmode_oneshot_split operation modes) */
+		simx_return_local_error_flag		=0x000020,		/* command caused an error on the client side */
+		simx_return_initialize_error_flag	=0x000040		/* simxStart was not yet called */
+};
+
+/* Following only for backward compatibility, but equivalent to above return values */
 enum {	simx_error_noerror					=0x000000,
-		simx_error_novalue_flag				=0x000001,		/* input buffer doesn't contain the specified command */
-		simx_error_timeout_flag				=0x000002,		/* command reply not received in time for simx_opmode_oneshot_wait operation mode */
-		simx_error_illegal_opmode_flag		=0x000004,		/* command doesn't support the specified operation mode */
-		simx_error_remote_error_flag		=0x000008,		/* command caused an error on the server side */
-		simx_error_split_progress_flag		=0x000010,		/* previous similar command not yet fully processed (applies to simx_opmode_oneshot_split operation modes) */
-		simx_error_local_error_flag			=0x000020,		/* command caused an error on the client side */
-		simx_error_initialize_error_flag	=0x000040		/* simxStart was not yet called */
+		simx_error_novalue_flag				=0x000001,
+		simx_error_timeout_flag				=0x000002,
+		simx_error_illegal_opmode_flag		=0x000004,
+		simx_error_remote_error_flag		=0x000008,
+		simx_error_split_progress_flag		=0x000010,
+		simx_error_local_error_flag			=0x000020,
+		simx_error_initialize_error_flag	=0x000040
 };
 
 
@@ -972,6 +1007,7 @@ enum {	simros_strmcmdnull_start				=0,
 		simros_strmcmd_set_object_selection,
 		simros_strmcmd_set_joint_state,
 
+		
 		simros_strmcmdint_start			=0x001000, 
 		/* from here on, commands are also identified by 1 additional int */
 		simros_strmcmd_get_array_parameter,
@@ -992,6 +1028,10 @@ enum {	simros_strmcmdnull_start				=0,
 		simros_strmcmd_read_proximity_sensor,
 		simros_strmcmd_read_vision_sensor,
 		simros_strmcmd_get_vision_sensor_info,
+		simros_strmcmd_get_range_finder_data,
+		simros_strmcmd_get_laser_scanner_data,
+		simros_strmcmd_get_odom_data,
+		simros_strmcmd_get_depth_sensor_data,
 
 		simros_strmcmdint_subscriber_start			=0x001800, 
 		simros_strmcmd_auxiliary_console_print,
@@ -1005,7 +1045,9 @@ enum {	simros_strmcmdnull_start				=0,
 		simros_strmcmd_set_joint_target_velocity,
 		simros_strmcmd_set_vision_sensor_image,
 		simros_strmcmd_set_joy_sensor, 
+		simros_strmcmd_set_twist_command,
 
+		
 		simros_strmcmdintint_start			=0x002000, 
 		/* from here on, commands are also identified by 2 additional ints */
 		simros_strmcmd_get_object_pose,
@@ -1032,11 +1074,8 @@ enum {	simros_strmcmdnull_start				=0,
 		simros_strmcmd_get_float_signal,
 		simros_strmcmd_get_integer_signal,
 		simros_strmcmd_get_string_signal,
-		simros_strmcmd_get_range_finder_data,
+		simros_strmcmd_reserved1,
 		simros_strmcmd_get_and_clear_string_signal,
-		simros_strmcmd_get_depth_sensor_data,
-		simros_strmcmd_get_laser_scanner_data,
-		simros_strmcmd_get_odom_data,
 
 		simros_strmcmdstring_subscriber_start			=0x003800, 
 		simros_strmcmd_clear_float_signal,
@@ -1045,8 +1084,9 @@ enum {	simros_strmcmdnull_start				=0,
 		simros_strmcmd_set_float_signal,
 		simros_strmcmd_set_integer_signal,
 		simros_strmcmd_set_string_signal,
-		simros_strmcmd_set_twist_command,
+		simros_strmcmd_reserved2,
 		simros_strmcmd_append_string_signal,
+		simros_strmcmd_set_joint_trajectory,
 
 		simros_strmcmdintstring_start			=0x004000,
 		/* from here on, commands are also identified by one additional int and one additional string */

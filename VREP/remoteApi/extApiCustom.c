@@ -1,6 +1,6 @@
 // This file is part of the REMOTE API
 // 
-// Copyright 2006-2014 Dr. Marc Andreas Freese. All rights reserved. 
+// Copyright 2006-2014 Coppelia Robotics GmbH. All rights reserved. 
 // marc@coppeliarobotics.com
 // www.coppeliarobotics.com
 // 
@@ -12,16 +12,19 @@
 // the Free Software Foundation, either version 3 of the License, or
 // (at your option) any later version.
 // 
-// The REMOTE API is distributed in the hope that it will be useful,
-// but WITHOUT ANY WARRANTY; without even the implied warranty of
-// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-// GNU General Public License for more details.
+// THE REMOTE API IS DISTRIBUTED "AS IS", WITHOUT ANY EXPRESS OR IMPLIED
+// WARRANTY. THE USER WILL USE IT AT HIS/HER OWN RISK. THE ORIGINAL
+// AUTHORS AND COPPELIA ROBOTICS GMBH WILL NOT BE LIABLE FOR DATA LOSS,
+// DAMAGES, LOSS OF PROFITS OR ANY OTHER KIND OF LOSS WHILE USING OR
+// MISUSING THIS SOFTWARE.
+// 
+// See the GNU General Public License for more details.
 // 
 // You should have received a copy of the GNU General Public License
 // along with the REMOTE API.  If not, see <http://www.gnu.org/licenses/>.
 // -------------------------------------------------------------------
 //
-// This file was automatically created for V-REP release V3.1.0 on January 20th 2014
+// This file was automatically created for V-REP release V3.1.2 on June 16th 2014
 
 #include "extApiCustom.h"
 #include "extApi.h"
@@ -37,7 +40,7 @@ EXTAPI_DLLEXPORT simxInt simxCustomGetObjectCount(simxInt clientID,simxInt* obje
 
 	/* First catch a possible error: */
 	if (_communicationThreadRunning[clientID]==0)
-		return(simx_error_initialize_error_flag);
+		return(simx_return_initialize_error_flag);
 
 	/* Then take care of the "remove" operation mode: */
 	if (operationMode==simx_opmode_remove)
@@ -61,7 +64,7 @@ EXTAPI_DLLEXPORT simxInt simxCustomGetObjectType(simxInt clientID,simxInt object
 
 	/* First catch a possible error: */
 	if (_communicationThreadRunning[clientID]==0)
-		return(simx_error_initialize_error_flag);
+		return(simx_return_initialize_error_flag);
 
 	/* Then take care of the "remove" operation mode: */
 	if (operationMode==simx_opmode_remove)
@@ -84,7 +87,7 @@ EXTAPI_DLLEXPORT simxInt simxCustomSetObjectName(simxInt clientID,simxInt object
 
 	/* First catch a possible error: */
 	if (_communicationThreadRunning[clientID]==0)
-		return(simx_error_initialize_error_flag);
+		return(simx_return_initialize_error_flag);
 
 	/* Then take care of the "remove" operation mode: */
 	if (operationMode==simx_opmode_remove)
@@ -104,7 +107,7 @@ EXTAPI_DLLEXPORT simxInt simxCustomGetUIButtonLabel(simxInt clientID,simxInt uiH
 
 	/* First catch a possible error: */
 	if (_communicationThreadRunning[clientID]==0)
-		return(simx_error_initialize_error_flag);
+		return(simx_return_initialize_error_flag);
 
 	/* Then take care of the "remove" operation mode: */
 	if (operationMode==simx_opmode_remove)
@@ -128,7 +131,7 @@ EXTAPI_DLLEXPORT simxInt simxCustomGetScriptHandle(simxInt clientID,const simxCh
 
 	/* First catch a possible error: */
 	if (_communicationThreadRunning[clientID]==0)
-		return(simx_error_initialize_error_flag);
+		return(simx_return_initialize_error_flag);
 
 	/* Then take care of the "remove" operation mode: */
 	if (operationMode==simx_opmode_remove)
