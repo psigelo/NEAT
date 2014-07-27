@@ -9,12 +9,7 @@
 #include <algorithm>
 #include "discrete_probabilities.hpp"
 
-/*
-	Por implementar:
-		- Que la generacion actual sea un dato en NEAT.
-		- 
 
-*/
 
 
 namespace ANN_USM{
@@ -34,8 +29,7 @@ namespace ANN_USM{
 	class Population{
 		public:
 
-			Population(char user_definitions[],char genetic_encoder[]);
-			Population(char user_definitions[],char genetic_encoder[], char name[]);
+			Population(char user_definitions[],char genetic_encoder[], char _name[], char _save_path[]);
 			
 			//	The order of the functions is the same that the time ocurrence.
 
@@ -89,7 +83,6 @@ namespace ANN_USM{
 			\brief 	Imprime toda la generacion a archivo, en la carpeta Stattistics
 			\param generation corresponde a el nombre de la generacion para su mas posterior
 			*/
-			void				print_to_file_currrent_generation(int generation);
 			void 				print_to_file_currrent_generation();
 
 			
@@ -140,7 +133,8 @@ namespace ANN_USM{
 			double 						fitness_champion;
 			list <int> organims_position_orderer_by_fitness;
 			vector < double >			fitness_mean_of_past_generation; // if the fitness of the current generation is not better than any of the 5 past generations then expectative_iterations will decreases.  
-			char *						name;			
+			char *						name;		
+			char *						save_path;	
 			int 						current_generation;	
 	};
 }

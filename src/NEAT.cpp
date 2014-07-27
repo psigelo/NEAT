@@ -129,75 +129,18 @@ Genetic_Encoding Population::mutation_change_weight(Genetic_Encoding organism){
 
 
 
-Population::Population(char path1[],char path2[]){
-	name = NULL;
-	current_generation=0;
-	load_user_definitions(path1);
-	lenght = POPULATION_MAX;
-	Genetic_Encoding _organism;
-	_organism.load(path2);
-
-	expectative_iterations = 1;
-	_organism.niche=0;
-	fitness_champion = 0;
-	last_innovation=0;
-	row_orderer_list = _organism.row_orderer_list;
-	last_row = _organism.row_orderer_list.size();
-	champion = _organism;
-	Niche niche_temp;
-
-	for (int i = 0; i < 5; ++i)
-	{
-		fitness_mean_of_past_generation.push_back(0.0);
-	}
-	
-
-	// ================FOR REDUNDANCE ============
-	for (int i = 0; i < (int)_organism.Lconnection_genes.size(); ++i){
-		int in = _organism.Lconnection_genes.at(i).in;
-		int out = _organism.Lconnection_genes.at(i).out;
-		while((int)historical_innovation.size()-1 < in)
-		{
-			vector <int> temp;
-			historical_innovation.push_back(temp);
-		}
-		while((int)historical_innovation.at(in).size()-1 < out)
-		{
-			historical_innovation.at(in).push_back(-1);
-		}
-		if(historical_innovation.at(in).at(out) < 0){
-			historical_innovation.at(in).at(out) = _organism.Lconnection_genes.at(i).innovation;
-			if(last_innovation < _organism.Lconnection_genes.at(i).innovation)
-				last_innovation = _organism.Lconnection_genes.at(i).innovation;
-		}
-	}
-	last_innovation++;
-	//============================================
-
-	last_node = (int)_organism.Lnode_genes.size()-1;
-
-	for (int i = 0; i < POPULATION_MAX; ++i)
-		organisms.push_back( put_randoms_weight(_organism) );
-
-	cerr << "organisms.size(): " << organisms.size() << "\tPOPULATION_MAX:" << POPULATION_MAX  << endl;
-
-	prev_organisms.push_back(_organism);
-	niche_temp.organism_position.push_back(0);
-	niche_temp.exist=true;
-	niche_temp.niche_champion_position=0;
-	current_niches.push_back(niche_temp);
-	spatiation();
-}
 
 
 
-
-
-Population::Population(char path1[],char path2[], char _name[]){
+Population::Population(char path1[],char path2[], char _name[], char _save_path[]){
 
 	name = (char *)malloc(strlen(_name)+1);
+	save_path = (char *)malloc(strlen(_save_path)+1);
 	strcpy(name,_name);
+	strcpy(save_path,_save_path);
+
 	current_generation=0;
+
 	load_user_definitions(path1);
 	lenght = POPULATION_MAX;
 	Genetic_Encoding _organism;
@@ -1684,33 +1627,15 @@ void Population::change_window_of_fitness_generation(double fitness_mean_current
 
 
 
-
-
-
-void	Population::print_to_file_currrent_generation(int generation){
-	for (int i = 0; i < (int)organisms.size(); ++i)
-	{
-		stringstream archive_name;
-		archive_name << "./Statistics/";
-		if(name != NULL){
-			archive_name << name ;
-		}
-		 archive_name <<  "G" << generation << "P" << i; 
-		organisms.at(i).save((char *)archive_name.str().c_str());
-	}
-}
-
-
-
 void	Population::print_to_file_currrent_generation(){
 	for (int i = 0; i < (int)organisms.size(); ++i)
 	{
 		stringstream archive_name;
-		archive_name << "./Statistics/";
+		archive_name << save_path;
 		if(name != NULL){
 			archive_name << name ;
 		}
-		 archive_name <<  "G" << current_generation << "P" << i; 
+		archive_name <<  "G" << current_generation << "P" << i; 
 		organisms.at(i).save((char *)archive_name.str().c_str());
 	}
 }
