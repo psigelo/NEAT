@@ -1,4 +1,10 @@
-#include <NEAT>
+//======================
+//	XOR
+//======================
+
+
+#include "NEAT.hpp"
+#include "genetic_encoding.hpp"
 #include <ctime>
 
 using namespace ANN_USM;
@@ -11,9 +17,7 @@ double fitness(Genetic_Encoding organism){
 
 	double error_sum = 0;
 
-	//======================
-	//	XOR
-	//======================
+	
 
 	//cout << organism << endl;
 
@@ -53,12 +57,12 @@ double fitness(Genetic_Encoding organism){
 
 int main(int argc, char** argv){
 	if(argc < 3){
-		cerr << "Arguments missing, The relative path to the user definitions and genetic encoding files (.genetic_encoding files) must be defined!. \n";
+		cerr << "Error of inputs parameters:: Correct parameters are [1] user definition file, [2] genetic encoding file, [3] path to save files. \n";
 		exit(1);
 	}
 	
 	std::srand(std::time(0)); // use current time as seed for random generator
-	Population poblacion(argv[1],argv[2]);
+	Population poblacion(argv[1],argv[2], (char *) "NEAT_XOR" ,argv[3]);
 	cerr << poblacion.GENERATIONS << "\t" << poblacion.POPULATION_MAX << "\t" << poblacion.organisms.size() << endl;
 	for (int i = 0; i < poblacion.GENERATIONS; ++i){
 		for (int i = 0; i < (int)poblacion.organisms.size(); ++i)
@@ -66,6 +70,7 @@ int main(int argc, char** argv){
 			poblacion.organisms.at(i).fitness = fitness(poblacion.organisms.at(i));
 		}
 		poblacion.epoch();
+		poblacion.print_to_file_currrent_generation();
 	}
 	cout << "Fitness champion: " << poblacion.fitness_champion << "\n\n"<< endl;
 	cout << poblacion.champion.ANN_function() << endl;

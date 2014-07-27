@@ -1,0 +1,21 @@
+{
+	"Genetic_Encoding":
+	{
+		"row_order":
+		[
+			0,1
+		],
+		"nodes":
+		[
+			{"exist": 1,"node": 0,"type": 0, "row": 0, "function": "sigmoid"},
+			{"exist": 1,"node": 1,"type": 0, "row": 0, "function": "sigmoid"},
+			{"exist": 1,"node": 2,"type": 2, "row": 1, "function": "sigmoid"}
+
+		],
+		"connection_genes":
+		[
+			{"exist": 1,"innovation": 0,"in": 0,"out": 2,"weight": 1.0,"enable": 1},
+			{"exist": 1,"innovation": 1,"in": 1,"out": 2,"weight": 1.0,"enable": 1}
+		]
+	}
+}
