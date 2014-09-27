@@ -1,0 +1,82 @@
+ (TRADUCIR A ESP)
+
+ NEAT stands for NeuroEvolution of Augmenting Topologies. It is a method for evolving artificial neural networks with a genetic algorithm. NEAT implements the idea that it is most effective to start evolution with small, simple networks and allow them to become increasingly complex over generations. That way, just as organisms in nature increased in complexity since the first cell, so do neural networks in NEAT. This process of continual elaboration allows finding highly sophisticated and complex neural networks. 
+ 
+ For more information please visit the following <a href="http://www.cs.ucf.edu/~kstanley/neat.html">site</a>.
+ 
+
+Nuestras versiones posteriores de NEAT serán subidas al git https://github.com/psigelo/NEAT si se desea estar actualizado se recomienda ejecutar un "git pull" con frecuencia.
+
+Para un completo entendimiento de NEAT se recomienda fuertemente la lectura del informe que lo presenta en [1].
+
+
+Instalacion (Sólo en linux por lo pronto)
+-----------------------------------------
+
+Instalacion completa por terminal de linux:
+
+Si no está instalado git se debe instalar del repositorio oficial de la distribución:
+	Ubuntu, Debian, Mint:
+	$	sudo apt-get install git
+	Arch:
+	$ sudo pacman -S git
+
+Una vez instalado git:
+
+	$ git clone https://github.com/psigelo/NEAT
+
+Con esto se descargará el proyecto en la ruta ./NEAT, Se entra a la carpeta:
+
+	$ cd ./NEAT
+
+Se crean los objetos y se instala la libreŕía:
+
+	$ make
+	$ sudo make install
+
+Con esto queda instalada la librería neat en su linux, la librearía queda instalada con el nombre neat y los headers son alcanzables como <NEAT>, por lo que para incluir los headers se debe agregar:
+
+archivo.hpp (agregar):
+	#include <NEAT>
+
+y en el makefile ó al momento de la compilación agregar:
+
+-lneat
+
+ejemplo:
+
+g++ ejemplo.cpp -o ejecutable -lneat
+
+OBSERVAR:
+
+No es estrictamente necesario instalar la librería (el paso "$sudo make install") pero es más cómodo, en caso de no instalarla se deben agregar los objetos que resulten de "$make" en el makefile de su proyecto ya sea a través de enrutamiento o copiarlos a su carpeta de trabajo, en ese caso también es necesario que haga lo mismo con los headers (.hpp) que se encuentran en la carpeta headers.
+
+
+EJEMPLOS
+--------
+
+Como ejemplo se tienen 4 benchmarks típicos de las redes neuronales: XOR
+
+Observación: Para probarlos no es necesario la instalación de la librería (en caso que no tuviera permisos de administrador) simplemente es necesario hacer los objetos con "$make" en la carpeta NEAT.
+
+Los ejemplos se encuentran en la carpeta ./NEAT/experiments/ y se pueden compilar y ejecutar con el makefile de la carpeta:
+
+XOR
+---
+El benchmark XOR corresponde a un xor (or excluyente), la idea es que la red neuronal aprenda a funcionar como xor. 
+
+compilación:
+----------
+
+make xor
+
+ejecución:
+---------
+
+make runXor
+
+
+Bibliografía
+============
+
+[1] Kenneth O. Stanley and Risto Miikkulainen (2002). "Evolving Neural Networks Through Augmenting Topologies". Journal Evolutionary Computation, Vol. 10, No. 2, pp 99­127.

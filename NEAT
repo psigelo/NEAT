@@ -1,4 +1,9 @@
-#include "NEAT_headers/NEAT.hpp"
-#include "NEAT_headers/discrete_probabilities.hpp"
-#include "NEAT_headers/genetic_encoding.hpp"
-#include "NEAT_headers/random_function.hpp"
+#include "NEAT_include/NEAT.hpp"
+#include "NEAT_include/discreteProbabilities.hpp"
+#include "NEAT_include/geneticEncoding.hpp"
+#include "NEAT_include/randomFunction.hpp"
+#include "NEAT_include/globalInformationOfNEAT.hpp"
+#include "NEAT_include/nodeGene.hpp"
+#include "NEAT_include/connectionGene.hpp"
+#include "NEAT_include/specie.hpp"
+#include <ctime> 

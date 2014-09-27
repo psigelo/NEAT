@@ -1,19 +1,16 @@
-CC = g++ -O3
-CFLAGS = -Wall -I../headers -I../objects -I../src 
-
+CC = g++ -std=c++11 -O3
+CFLAGS = -Wall 
 
 xor: xor.cpp 
-	@cd ..; make 
+	@cd ..; make; make install
 	@mkdir -p bin
 	@mkdir -p XOR_results_files
 	@rm -f XOR_results_files/**
-	$(CC) $(CFLAGS) ./xor.cpp ../objects/NEAT.o ../objects/genetic_encoding.o  ../objects/random_function.o ../objects/discrete_probabilities.o -o ./bin/NEAT
-
+	$(CC) $(CFLAGS) ./xor.cpp  -o ./bin/NEAT -lneat
 
 runXor:
 	@mkdir -p ./XOR_results_files
-	./bin/NEAT user_definitions/user_def_standart genetics_encodings/test_encoding ./XOR_results_files/
-
+	./bin/NEAT user_definitions/user_def_standart genetics_encodings/xor.genetic_encoding 
 
 clean:
 	@cd ..; make clean

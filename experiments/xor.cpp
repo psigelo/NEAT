@@ -3,54 +3,44 @@
 //======================
 
 
-#include "NEAT.hpp"
-#include "genetic_encoding.hpp"
+#include <NEAT>
 #include <ctime>
 
-using namespace ANN_USM;
+using namespace NEAT_USM;
 using namespace std;
 
-double fitness(Genetic_Encoding organism){
-
+double fitness(geneticEncoding & organism){
 	vector<double> output;
 	vector<double> input;
 
 	double error_sum = 0;
-
-	
-
 	//cout << organism << endl;
 
 	// XOR(0,0) -> 0
 	input.push_back(0);
 	input.push_back(0);
-
 	output = organism.eval(input);
-
 	error_sum += abs(output.at(0));
 	input.clear();
-
 	// XOR(0,1) -> 1
 	input.push_back(0);
 	input.push_back(1);
 	output = organism.eval(input);
-	error_sum += abs(1 - output.at(0));
+	error_sum += abs(1 - abs(output.at(0)) );
 	input.clear();
-
 	// XOR(1,0) -> 1
 	input.push_back(1);
 	input.push_back(0);
 	output = organism.eval(input);
-	error_sum += abs(1 - output.at(0));
+	error_sum += abs(1 - abs(output.at(0)) );
 	input.clear();
-
 	// XOR(1,1) -> 0
 	input.push_back(1);
 	input.push_back(1);
 	output = organism.eval(input);
 	error_sum += abs(output.at(0));
 	input.clear();
-
+	//cerr << "Fitness: " << pow(4 - error_sum, 2) << endl;
 	return pow(4 - error_sum, 2);
 }
 
@@ -60,20 +50,18 @@ int main(int argc, char** argv){
 		cerr << "Error of inputs parameters:: Correct parameters are [1] user definition file, [2] genetic encoding file, [3] path to save files. \n";
 		exit(1);
 	}
-	
-	std::srand(std::time(0)); // use current time as seed for random generator
-	Population poblacion(argv[1],argv[2], (char *) "NEAT_XOR" ,argv[3]);
-	cerr << poblacion.GENERATIONS << "\t" << poblacion.POPULATION_MAX << "\t" << poblacion.organisms.size() << endl;
-	for (int i = 0; i < poblacion.GENERATIONS; ++i){
-		for (int i = 0; i < (int)poblacion.organisms.size(); ++i)
+	srand(time(0)); // use current time as seed for random generator
+	population poblacion(argv[1],argv[2]);
+	int generations = poblacion.getGenerations();
+	for (int i = 0; i < generations; ++i){
+		int cantidadDeOrganismos = poblacion.getOrganismsAmount();
+		for (int j = 0; j < cantidadDeOrganismos; ++j)
 		{
-			poblacion.organisms.at(i).fitness = fitness(poblacion.organisms.at(i));
+			geneticEncoding * organism = poblacion.getPointerToNewOrganismAtPosition(j);
+			organism->setFitness( fitness( *organism ) );
 		}
 		poblacion.epoch();
-		poblacion.print_to_file_currrent_generation();
+		poblacion.printStatistics();
 	}
-	cout << "Fitness champion: " << poblacion.fitness_champion << "\n\n"<< endl;
-	cout << poblacion.champion.ANN_function() << endl;
-	cout << poblacion.champion << endl;
 	return 0;
 }
