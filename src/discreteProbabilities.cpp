@@ -39,19 +39,15 @@ organismProbabilities discreteProbabilities::getFatherRandomly(){
 organismProbabilities discreteProbabilities::getMotherRandomly(int fatherSpecie){
     if(listSpecies.at( transformSpecieInPositionIntoSpecieList.at(fatherSpecie) ).getTotal() > 0)
         return listSpecies.at( transformSpecieInPositionIntoSpecieList.at(fatherSpecie) ).getOrganismRandomly();
-    else{
+    else
         return getMotherInterSpecieRandomly(fatherSpecie);
-    }
 }
 organismProbabilities discreteProbabilities::getMotherInterSpecieRandomly(int fatherSpecie){
     int fatherSpecieInList =  transformSpecieInPositionIntoSpecieList.at(fatherSpecie);
-    cerr << "k1" << endl;
     if(listSpecies.size()  == 1){
-        cerr << "size: " << listSpecies.at(fatherSpecieInList).listOrganisms.size() << endl;
         return listSpecies.at( fatherSpecieInList ).getOrganismRandomly(); // No exist other specie then the mother is in the same specie
     }
 
-    cerr << "k2" << endl;
     while(true){
         int randomSpecie = rand()%listSpecies.size();
         if(fatherSpecieInList != randomSpecie){

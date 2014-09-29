@@ -97,9 +97,7 @@ void population::epoch(){
 	newOrganisms.clear();
 	newYear(); //Old organism can die with an probability
 	computeStatistics();
-	cerr << "1) listSpecies.at(0).getAmountOfOrganism(): " << listSpecies.at(0).getAmountOfOrganism() << endl;
 	eliminateWorseOrganism(); 
-	cerr << "2) listSpecies.at(0).getAmountOfOrganism(): " << listSpecies.at(0).getAmountOfOrganism() << endl;
 	setOrganismProbabilities(sackOfProbabilities); 
 	//Note that  organismRandomlyElecter :
 		// [0] -> father
@@ -107,17 +105,12 @@ void population::epoch(){
 		// [2] -> mother if exist interspace mating
 	expectativeOfPopulation = informationForGenome.getExpectativeOfPopulation();
 	
-	cerr <<  "Epoch 2" << endl;
 	//while( rand()/(double)RAND_MAX < expectativeOfPopulation/(1 + expectativeOfPopulation) ){
-	for(uint k=0; k < expectativeOfPopulation; k++){
-		cerr << "Epoch 3 " << listSpecies.at(0).getAmountOfOrganism() << endl;
+	for( int i = 0; i < expectativeOfPopulation ; i++){
 		getOrganismToRerpoduceRandomly(sackOfProbabilities, organismsRandomlyElected); 
-	cerr << "Epoch 4" << endl;
 		reproduce(organismsRandomlyElected);
-	cerr << "Epoch 5" << endl;
 	}
 	speciate();
-	cerr << "Epoch 6" << endl;
 	currenGeneration++;
 } 
 void population::eliminateWorseOrganism(){ 
@@ -144,13 +137,13 @@ void population::getOrganismToRerpoduceRandomly(discreteProbabilities & sackOfPr
 		sackOfProbabilities.repositioningOrganism(father);
 	}
 	organismProbabilities mother =  sackOfProbabilities.getMotherRandomly(father.specie );
+
 	parents[1] = listSpecies.at(mother.specie ).getPointerToOrganismAt(mother.positionInSpecie );//mother of the same specie
 	if( listSpecies.at(father.specie).getAmountOfOrganism() == 0 ){
 		sackOfProbabilities.repositioningOrganism(father);
 	}
 	organismProbabilities motherInterspecie =  sackOfProbabilities.getMotherInterSpecieRandomly(father.specie);
 	parents[2] = listSpecies.at(motherInterspecie.specie).getPointerToOrganismAt(motherInterspecie.positionInSpecie);//mother of the same specie
-
 	// Thereby the next time have all organisms 
 	sackOfProbabilities.repositioningOrganism(father);
 	sackOfProbabilities.repositioningOrganism(mother);
@@ -190,7 +183,6 @@ void population::computeStatistics(){
 	for (int i = 0; i < amountSpecies; ++i)
 		listSpecies.at(i).computeStatistics();
 }
-
 void population::printStatistics(){
 	int amountSpecies=listSpecies.size();
 	cout << "===================================\nGeneration " << currenGeneration << endl;
@@ -205,7 +197,6 @@ int population::getGenerations(){
 int population::getOrganismsAmount(){
 	return (int)newOrganisms.size();
 }
-
 geneticEncoding * population::getPointerToNewOrganismAtPosition(int position){
 	return newOrganisms.at(position);
 }

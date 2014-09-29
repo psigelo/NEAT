@@ -70,14 +70,14 @@ void geneticEncoding::addNode(nodeGene _node){
 	listNodesAtLayer.at(_node.getLayer()).push_back(_node.getHistoricalNumber());
 
 	//For mutation connections:
-	//If a node is created then 2*|nodes| is the amount of posibly new connections to mutate (becose is with directions forward or backward)
+	//If a node is created then 2*|nodes| is the amount of posibly new connections to mutate (because is with directions forward and backward)
 	int superiorLimit = (int)listNodeGenes.size()-1;
 	for (int i = 0; i < superiorLimit; ++i)
 	{		
-		connectionsThatCanBeMutated.push_back({ i , superiorLimit});
-		connectionsThatCanBeMutated.push_back({superiorLimit, i});
+		connectionsThatCanBeMutated.push_back({listNodeGenes.at(i).getHistoricalNumber() , listNodeGenes.at(superiorLimit).getHistoricalNumber()});
+		connectionsThatCanBeMutated.push_back({listNodeGenes.at(superiorLimit).getHistoricalNumber(), listNodeGenes.at(i).getHistoricalNumber()});
 	}
-	connectionsThatCanBeMutated.push_back({superiorLimit, superiorLimit});
+	connectionsThatCanBeMutated.push_back({listNodeGenes.at(superiorLimit).getHistoricalNumber(), listNodeGenes.at(superiorLimit).getHistoricalNumber()	});
 }
 
 /*
@@ -89,9 +89,7 @@ procedure:
 	in other case the connection is present in the genome and only is changed its values.
 */
 void geneticEncoding::addConnection(connectionGene _connection){
-	cerr << "c1" << endl;
 	listConnectionGenes.push_back(_connection);
-	cerr << "c2" << endl;
 	while((int)transformInnovationToListConnectionGenes.size() <= _connection.getInnovation()){
 		transformInnovationToListConnectionGenes.push_back(-1);
 	}
@@ -100,21 +98,19 @@ void geneticEncoding::addConnection(connectionGene _connection){
 	// For eval, we need listConnectionTowardSpecificLayer completed.
 	// thus we can optimize time in eval method.
 	try{
-	while((int)listConnectionTowardSpecificLayer.size() <= listNodeGenes.at( transformHistoricalNodeToListNodeGenes.at(_connection.getOut()) ).getLayer() ){
-		listConnectionTowardSpecificLayer.push_back(vector <int>());
-	}
+		while((int)listConnectionTowardSpecificLayer.size() <= listNodeGenes.at( transformHistoricalNodeToListNodeGenes.at(_connection.getOut()) ).getLayer() ){
+			listConnectionTowardSpecificLayer.push_back(vector <int>());
+		}
 	}
 	catch(...){
 		cerr << "node: " << _connection.getOut() << endl;
 		cerr << *this << endl;
+		exit(1);
 	}
-	cerr << "c3.1" << endl;
 	listConnectionTowardSpecificLayer.at( listNodeGenes.at( transformHistoricalNodeToListNodeGenes.at( _connection.getOut()) ).getLayer() ).push_back(_connection.getInnovation());
-	cerr << "c4" << endl;
 	//For mutationNode
 	//When a connection is created is an candidate for a new node mutation
-	connectionsThatCanMutateNodes.push_back(listConnectionGenes.size()-1);
-	cerr << "c5" << endl;
+	connectionsThatCanMutateNodes.push_back( listConnectionGenes.at(listConnectionGenes.size()-1).getInnovation() );
 }
 
 void geneticEncoding::save(char path[]){
@@ -242,9 +238,6 @@ vector <double> geneticEncoding::eval(std::vector<double> inputs){
 }
 
 
-
-
-
 void geneticEncoding::putRandomsWeight(){
 	for (uint i = 0; i < listConnectionGenes.size(); ++i)
 		listConnectionGenes.at(i).setWeight(2*(rand()/(double)RAND_MAX) -1);
@@ -265,15 +258,15 @@ void geneticEncoding::mutateNode(){
 	// Steps: 1) Find stochaticatlly the connection to be mutated.
 	// 		  2) Obtain the historical node value and its layer.
 	//		  3) Obtain innovation of connection to create.
-	cerr << "m1" << endl;
 	if (connectionsThatCanMutateNodes.size()==0)return;
 	int random = rand()%connectionsThatCanMutateNodes.size();
-	int connectionToMutate = connectionsThatCanMutateNodes.at(random);
-	listConnectionGenes.at(connectionToMutate).setEnable(false);
-	int in 	= listConnectionGenes.at(connectionToMutate).getIn();
-	int out = listConnectionGenes.at(connectionToMutate).getOut();
-	int layer_in = listNodeGenes.at(in).getLayer();
-	int layer_out = listNodeGenes.at(out).getLayer();
+	int connectionToMutateInListConnectionGenes =  transformInnovationToListConnectionGenes.at(connectionsThatCanMutateNodes.at(random));
+	listConnectionGenes.at(connectionToMutateInListConnectionGenes).setEnable(false);
+	int in 	= listConnectionGenes.at(connectionToMutateInListConnectionGenes).getIn();
+	int out = listConnectionGenes.at(connectionToMutateInListConnectionGenes).getOut();
+	int layer_in = listNodeGenes.at( transformHistoricalNodeToListNodeGenes.at(in) ).getLayer();
+	int layer_out = -1;
+	layer_out = listNodeGenes.at(transformHistoricalNodeToListNodeGenes.at(out)).getLayer();
 	int historicalNumber = obtainHistoricalNodeNumber(
 													in,
 													out
@@ -283,18 +276,15 @@ void geneticEncoding::mutateNode(){
 							layer_in,
 							layer_out
 							);
-	cerr << "m2" << endl;
 	addNode( nodeGene(historicalNumber, HIDDEN, layer , RANDOM) );
 	int innovation1 = obtainInnovation(in,historicalNumber);
 	int innovation2 = obtainInnovation(historicalNumber, out);
-	cerr << "m3" << endl;
-	addConnection( connectionGene(innovation1, in, historicalNumber, listConnectionGenes.at(connectionToMutate).getWeight(),1 ) );
-	cerr << "m4" << endl;
+	addConnection( connectionGene(innovation1, in, historicalNumber, listConnectionGenes.at(connectionToMutateInListConnectionGenes).getWeight(),1 ) );
 	addConnection( connectionGene(innovation2, in, historicalNumber, 1.0,1 ) );
-	connectionsThatCanMutateNodes.push_back(listConnectionGenes.size() -1 );
-	connectionsThatCanMutateNodes.push_back(listConnectionGenes.size() -2 );
+	//Segun yo las siguientes lineas no deberian ir porque estan en addConnection
+	//connectionsThatCanMutateNodes.push_back(listConnectionGenes.size() -1 );
+	//connectionsThatCanMutateNodes.push_back(listConnectionGenes.size() -2 );
 	connectionsThatCanMutateNodes.erase(connectionsThatCanMutateNodes.begin()+random);
-	cerr << "m5" << endl;
 }
 
 
@@ -302,6 +292,8 @@ void geneticEncoding::mutateConnection(){
 	if(connectionsThatCanBeMutated.size() == 0) return;
 	int random = rand()%connectionsThatCanBeMutated.size();
 	vector < int > connectionToCreate = connectionsThatCanBeMutated.at(random);
+	connectionToCreate.at(0) = transformHistoricalNodeToListNodeGenes.at(connectionToCreate.at(0)) ;
+	connectionToCreate.at(1) = transformHistoricalNodeToListNodeGenes.at(connectionToCreate.at(1)) ;
 	int innovation = obtainInnovation( listNodeGenes.at(connectionToCreate.at(0)).getHistoricalNumber(), listNodeGenes.at(connectionToCreate.at(1)).getHistoricalNumber());
 	addConnection( connectionGene(innovation, connectionToCreate.at(0), connectionToCreate.at(1), 2.0*(rand()%RAND_MAX)/(double)RAND_MAX - 1.0 ,1) );
 	connectionsThatCanBeMutated.erase(connectionsThatCanBeMutated.begin() + random);
