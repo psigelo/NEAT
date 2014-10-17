@@ -31,15 +31,15 @@ geneticEncoding::geneticEncoding(const geneticEncoding & genetic_encoding){
 	}
 }
 
+
 geneticEncoding::geneticEncoding(char path[], globalInformationOfNEAT * NEATinformation)
 {
 	this->NEATinformation = NEATinformation;
 	load(path);
 }
 
-geneticEncoding::geneticEncoding(){
 
-}
+geneticEncoding::geneticEncoding(){}
 /*
 procedure:
     if the historical value of the node is greater than the greater historical node
@@ -63,7 +63,7 @@ void geneticEncoding::addNode(nodeGene _node){
 		output_pointer.push_back(listNodeGenes.size()-1);
 	}
 	// For eval, we need listNodesAtLayer completed.
-	// thus we can optimize time in eval method.|
+	// thus we can optimize time in eval method.
 	while((int)listNodesAtLayer.size() <=  _node.getLayer()){
 		listNodesAtLayer.push_back(vector <int>());
 	}
@@ -79,7 +79,6 @@ void geneticEncoding::addNode(nodeGene _node){
 	}
 	connectionsThatCanBeMutated.push_back({listNodeGenes.at(superiorLimit).getHistoricalNumber(), listNodeGenes.at(superiorLimit).getHistoricalNumber()	});
 }
-
 /*
 procedure:
     if the innovation value of the connection is greater than the greater innovation value
@@ -94,19 +93,12 @@ void geneticEncoding::addConnection(connectionGene _connection){
 		transformInnovationToListConnectionGenes.push_back(-1);
 	}
 	transformInnovationToListConnectionGenes.at(_connection.getInnovation()) = listConnectionGenes.size()-1;
-	cerr << "c3" << "listNodeGenes.size"  << listNodeGenes.size() << " transformHistoricalNodeToListNodeGenes.at(_connection.getOut()): "<< transformHistoricalNodeToListNodeGenes.at(_connection.getOut()) << endl;
 	// For eval, we need listConnectionTowardSpecificLayer completed.
 	// thus we can optimize time in eval method.
-	try{
-		while((int)listConnectionTowardSpecificLayer.size() <= listNodeGenes.at( transformHistoricalNodeToListNodeGenes.at(_connection.getOut()) ).getLayer() ){
-			listConnectionTowardSpecificLayer.push_back(vector <int>());
-		}
+	while((int)listConnectionTowardSpecificLayer.size() <= listNodeGenes.at( transformHistoricalNodeToListNodeGenes.at( _connection.getOut() ) ).getLayer() ){
+		listConnectionTowardSpecificLayer.push_back(vector <int>());
 	}
-	catch(...){
-		cerr << "node: " << _connection.getOut() << endl;
-		cerr << *this << endl;
-		exit(1);
-	}
+	
 	listConnectionTowardSpecificLayer.at( listNodeGenes.at( transformHistoricalNodeToListNodeGenes.at( _connection.getOut()) ).getLayer() ).push_back(_connection.getInnovation());
 	//For mutationNode
 	//When a connection is created is an candidate for a new node mutation
@@ -122,7 +114,6 @@ void geneticEncoding::save(char path[]){
 
 
 void geneticEncoding::load(char path[]){
-
 	FILE *fp;
 	char *line = NULL;
 	size_t len = 0;
@@ -155,8 +146,8 @@ void geneticEncoding::load(char path[]){
 						transformLayerInPositionOfLayer.push_back({-1});
 					transformLayerInPositionOfLayer.at(layer) = layerOrdererList.size() - 1;
 
-					while(presentLayers.size() <= (uint)layer)
-						presentLayers.push_back(0);
+					while( (int)presentLayers.size() <= layer)
+						presentLayers.push_back(-1);
 					presentLayers.at(layer)=1;
 
 					pch = strtok (NULL,"\t");
@@ -210,28 +201,29 @@ void geneticEncoding::load(char path[]){
 }
 
 vector <double> geneticEncoding::eval(std::vector<double> inputs){
-
 	if(inputs.size() != input_pointer.size()) {cerr << "Error::geneticEncoding::eval::inputs.size is not correct"<< endl;exit(1);}
 	vector <double> result;
 	for (uint i = 0; i < input_pointer.size(); ++i)
 		listNodeGenes.at(input_pointer.at(i)).sumIncomingConnections(inputs.at(i));
 
 	for (uint i = 0; i < layerOrdererList.size(); ++i)
-	{
+	{	
 		for (uint j = 0; j < listConnectionTowardSpecificLayer.at( layerOrdererList.at(i) ).size(); ++j){
 			int connection = listConnectionTowardSpecificLayer.at(layerOrdererList.at(i)).at(j);
 			int connectionPosition = transformInnovationToListConnectionGenes.at(connection);
 			if( listConnectionGenes.at( connectionPosition ).getEnable() ){
-				int out = transformHistoricalNodeToListNodeGenes.at(listConnectionGenes.at(connectionPosition).getOut()) ;
-				int in = listConnectionGenes.at(connectionPosition).getIn();
+				int out = transformHistoricalNodeToListNodeGenes.at(listConnectionGenes.at(connectionPosition).getOut());
+				int in = transformHistoricalNodeToListNodeGenes.at(listConnectionGenes.at(connectionPosition).getIn());
 				listNodeGenes.at( out ).sumIncomingConnections(listNodeGenes.at(in).getNodeOutputValue()*listConnectionGenes.at(connectionPosition).getWeight());
 				//listNodeGenes.at(listConnectionGenes.at(connectionPosition).getOut()).sumIncomingConnections(listNodeGenes.at(listConnectionGenes.at(listConnectionTowardSpecificLayer.at(layerOrdererList.at(i)).at(j)).getIn()).getNodeOutputValue() * listConnectionGenes.at(listConnectionTowardSpecificLayer.at(layerOrdererList.at(i)).at(j)).getWeight());
 			}
 		}
+		
 		for(uint j=0; j< listNodesAtLayer.at(layerOrdererList.at(i)).size(); ++j){
 			listNodeGenes.at( transformHistoricalNodeToListNodeGenes.at( listNodesAtLayer.at(layerOrdererList.at(i)).at(j) ) ).spread();		
 		}
 	}
+	
 	for (uint i = 0; i < output_pointer.size(); ++i)
 		result.push_back( listNodeGenes.at(output_pointer.at(i)).getNodeOutputValue() );	
 	return result;
@@ -265,8 +257,9 @@ void geneticEncoding::mutateNode(){
 	int in 	= listConnectionGenes.at(connectionToMutateInListConnectionGenes).getIn();
 	int out = listConnectionGenes.at(connectionToMutateInListConnectionGenes).getOut();
 	int layer_in = listNodeGenes.at( transformHistoricalNodeToListNodeGenes.at(in) ).getLayer();
-	int layer_out = -1;
-	layer_out = listNodeGenes.at(transformHistoricalNodeToListNodeGenes.at(out)).getLayer();
+	int layer_out = listNodeGenes.at(transformHistoricalNodeToListNodeGenes.at(out)).getLayer();
+
+
 	int historicalNumber = obtainHistoricalNodeNumber(
 													in,
 													out
@@ -280,7 +273,7 @@ void geneticEncoding::mutateNode(){
 	int innovation1 = obtainInnovation(in,historicalNumber);
 	int innovation2 = obtainInnovation(historicalNumber, out);
 	addConnection( connectionGene(innovation1, in, historicalNumber, listConnectionGenes.at(connectionToMutateInListConnectionGenes).getWeight(),1 ) );
-	addConnection( connectionGene(innovation2, in, historicalNumber, 1.0,1 ) );
+	addConnection( connectionGene(innovation2, historicalNumber, out, 1.0,1 ) );
 	//Segun yo las siguientes lineas no deberian ir porque estan en addConnection
 	//connectionsThatCanMutateNodes.push_back(listConnectionGenes.size() -1 );
 	//connectionsThatCanMutateNodes.push_back(listConnectionGenes.size() -2 );
@@ -291,10 +284,8 @@ void geneticEncoding::mutateNode(){
 void geneticEncoding::mutateConnection(){
 	if(connectionsThatCanBeMutated.size() == 0) return;
 	int random = rand()%connectionsThatCanBeMutated.size();
-	vector < int > connectionToCreate = connectionsThatCanBeMutated.at(random);
-	connectionToCreate.at(0) = transformHistoricalNodeToListNodeGenes.at(connectionToCreate.at(0)) ;
-	connectionToCreate.at(1) = transformHistoricalNodeToListNodeGenes.at(connectionToCreate.at(1)) ;
-	int innovation = obtainInnovation( listNodeGenes.at(connectionToCreate.at(0)).getHistoricalNumber(), listNodeGenes.at(connectionToCreate.at(1)).getHistoricalNumber());
+	vector < int > connectionToCreate = connectionsThatCanBeMutated.at(random); // connectionToCreate.at(1) = hitorical_number_of_initial_in_node  connectionToCreate.at(1) = hitorical_number_of_initial_out_node
+	int innovation = obtainInnovation( connectionToCreate.at(0), connectionToCreate.at(1) );
 	addConnection( connectionGene(innovation, connectionToCreate.at(0), connectionToCreate.at(1), 2.0*(rand()%RAND_MAX)/(double)RAND_MAX - 1.0 ,1) );
 	connectionsThatCanBeMutated.erase(connectionsThatCanBeMutated.begin() + random);
 }
@@ -347,16 +338,18 @@ int geneticEncoding::obtainInnovation(int initial_in, int initial_out){
 }
 
 
+
 int geneticEncoding::obtainLayer(int historicalNodeNumber, int layerNodeInitialIn, int layerNodeInitialOut){
+	cerr << "obtainLayer 1" << endl;
 	vector <int> & historicalLayer = NEATinformation->getHistoricalLayerReference();
-	vector <int> & transformLayerInPositionOfLayer = NEATinformation->getTransformLayerInPositionOfLayerReference();
-	vector <int> & globalLayerOrderer = NEATinformation->getGlobalLayerOrdererReference();
-	//this->globalLayerOrderer = globalLayerOrderer;
 	try{
 		if(historicalLayer.at(historicalNodeNumber) >= 0) 
 			return historicalLayer.at(historicalNodeNumber);
 	}
 	catch (...){}
+
+	vector <int> & transformLayerInPositionOfLayer = NEATinformation->getTransformLayerInPositionOfLayerReference();
+	vector <int> & globalLayerOrderer = NEATinformation->getGlobalLayerOrdererReference();
 	int rowPositionIn = transformLayerInPositionOfLayer.at(layerNodeInitialIn);
 	int rowPositionOut = transformLayerInPositionOfLayer.at(layerNodeInitialOut);
 	int position = ((rowPositionOut > rowPositionIn) ? rowPositionIn + 1: rowPositionOut + 1);
@@ -374,27 +367,41 @@ int geneticEncoding::obtainLayer(int historicalNodeNumber, int layerNodeInitialI
 		for (uint i = 0; i < transformLayerInPositionOfLayer.size()-1; ++i)
 			if(transformLayerInPositionOfLayer.at(i) >= position ){transformLayerInPositionOfLayer.at(i)++;}
 	}
-	else
+	else{
 		historicalLayer.at(historicalNodeNumber) = globalLayerOrderer.at(position);
-	
-
-	while((int)presentLayers.size() <= historicalLayer.at(historicalNodeNumber))
-		presentLayers.push_back(0);
-	if(presentLayers.at(historicalLayer.at(historicalNodeNumber)) == 0){
-		presentLayers.at(historicalLayer.at(historicalNodeNumber))=1;
-		int j(0),i(0),inf(0);
-		for(; i < position; ++i)
-			if( presentLayers.at(globalLayerOrderer.at(i)) )
-				for(;j<(int)layerOrdererList.size();++j)
-					if(layerOrdererList.at(j) == globalLayerOrderer.at(i)){
-						inf = j;
-						break;
-					}
-		layerOrdererList.insert(layerOrdererList.begin() + inf + 1, globalLayerOrderer.at(position));
 	}
+	
+	while((int)presentLayers.size() <= historicalLayer.at(historicalNodeNumber))
+		presentLayers.push_back(-1);
+
+
+	if(presentLayers.at(historicalLayer.at(historicalNodeNumber)) == -1){
+		presentLayers.at(historicalLayer.at(historicalNodeNumber)) = 1;
+		int inferior;
+		int position_inf;
+		
+		if(rowPositionIn > rowPositionOut){
+			inferior = layerNodeInitialIn;
+		}else{
+			inferior = layerNodeInitialOut;
+		}
+
+		for (int i = 0; i < (int)layerOrdererList.size(); ++i)
+		{
+			if(layerOrdererList.at(i) == inferior){
+				position_inf = i;
+				break;
+			}
+		}
+	
+		this->printHumanReadable();
+		layerOrdererList.insert(layerOrdererList.begin() + position_inf, globalLayerOrderer.at(position));
+		
+
+	}	
+
 	return historicalLayer.at(historicalNodeNumber);
 }
-
 
 
 void geneticEncoding::changeConnection(connectionGene & conn){
@@ -450,9 +457,19 @@ void 	geneticEncoding::setYear(int year){
 void 	geneticEncoding::incrementYear(){
 	year++;
 }
+
+
+
+
+
+
+
+
 namespace NEAT_USM{
 	// Crossover
 	geneticEncoding * operator * (geneticEncoding & encoding1, geneticEncoding & encoding2){
+
+
 		geneticEncoding * resultOrganism = new geneticEncoding(encoding1); // The copi constructor is called.
 		resultOrganism->setSpecie(-1);
 		resultOrganism->setFatherSpecie(encoding1.getSpecie());
@@ -561,7 +578,7 @@ namespace NEAT_USM{
 			else if(*resultOrganism %  encoding1 < resultOrganism->NEATinformation->getDistanceThreshold() )
 				resultOrganism->setSpecie(encoding1.getSpecie());
 		}
-		
+
 		return resultOrganism;
 	}
 
@@ -634,4 +651,35 @@ namespace NEAT_USM{
 		
 		return (encoding1.NEATinformation->getOrganismDistanceE()*E/divisor + encoding1.NEATinformation->getOrganismDistanceD()*D/divisor + encoding1.NEATinformation->getOrganismDistanceW()*W);	
 	}
+}
+
+
+
+void geneticEncoding::printHumanReadable(){
+	cerr << "layers: \n";
+	for (int i = 0; i < (int)this->layerOrdererList.size(); ++i)
+	{
+		cerr << this->layerOrdererList.at(i) << "\t";
+	}
+	cerr << "\n";
+	//Second Nodes
+	for (uint i = 0; i < this->listNodeGenes.size(); ++i)
+	{
+			cerr << "node \tId: " << this->listNodeGenes.at(i).getHistoricalNumber() << "\tTipe: " << this->listNodeGenes.at(i).getType() << "\tLayer: " << this->listNodeGenes.at(i).getLayer() << "\tFunction: " << this->listNodeGenes.at(i).getFunction() << endl;	
+	}
+	//Third Connections
+	for (uint i = 0; i < this->listConnectionGenes.size(); ++i)
+	{
+			cerr << "c\tId: " << this->listConnectionGenes.at(i).getInnovation() << "\tIn: " << this->listConnectionGenes.at(i).getIn() << "\tOut: " << this->listConnectionGenes.at(i).getOut() << "\tWiehght: " << this->listConnectionGenes.at(i).getWeight() << "\tEnable: " << this->listConnectionGenes.at(i).getEnable() << endl;
+	}
+}
+
+
+void geneticEncoding::printLayersOnly(){ // for debuging mode
+	cerr << "layers: \n";
+	for (int i = 0; i < (int)this->layerOrdererList.size(); ++i)
+	{
+		cerr << this->layerOrdererList.at(i) << "\t";
+	}
+	cerr << "\n";
 }

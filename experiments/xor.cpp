@@ -19,8 +19,10 @@ double fitness(geneticEncoding & organism){
 	// XOR(0,0) -> 0
 	input.push_back(0);
 	input.push_back(0);
+	
 	output = organism.eval(input);
 	error_sum += abs(output.at(0));
+	
 	input.clear();
 	// XOR(0,1) -> 1
 	input.push_back(0);
@@ -61,7 +63,7 @@ int main(int argc, char** argv){
 			organism->setFitness( fitness( *organism ) );
 		}
 		poblacion.epoch();
-		poblacion.printStatistics();
+		//poblacion.printStatistics();
 	}
 	return 0;
 }

@@ -1,0 +1,13 @@
+organismDistanceW: 0.4
+organismDistanceD: 1.0
+organismDistanceE: 1.0
+distanceThreshold: 3
+expectativeOfPopulation: 150
+probabilityOfInterspecieMating: 0.0001
+probabilityOfMutateNode: 0.08
+probabilityOfMutateConnection: 0.06
+probabilityOfMutateFunction: 0.01
+probabilityOfMatingOnly: 0.2
+expectativeOfLife: 10.0
+expectativeOfSpecies: 4.0
+generations: 100

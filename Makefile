@@ -41,6 +41,9 @@ clean:
 	rm -f ./objects/*.o ./bin/*
 	rm -rf ./Statistics ./objects
 	rm -rf ./doc
+	cd test; make clean
+	cd experiments; make clean
+
 
 doc: Doxyfile
 	doxygen Doxyfile

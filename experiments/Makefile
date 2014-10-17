@@ -1,6 +1,7 @@
 CC = g++ -std=c++11 -O3
 CFLAGS = -Wall 
 
+
 xor: xor.cpp 
 	@cd ..; make; make install
 	@mkdir -p bin
@@ -13,5 +14,4 @@ runXor:
 	./bin/NEAT user_definitions/user_def_standart genetics_encodings/xor.genetic_encoding 
 
 clean:
-	@cd ..; make clean
 	@rm -rf XOR_results_files/ bin

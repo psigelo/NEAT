@@ -26,14 +26,14 @@ uint specie::getAmountOfOrganism(){
 void specie::computeStatistics(){
 	int amountOfOrganism = organisms.size();
  	totalFitness = 0.0;
- 	cerr << "amount of organisms" << amountOfOrganism << endl;
+ 	//cerr << "amount of organisms" << amountOfOrganism << endl;
 	for (int i = 0; i < amountOfOrganism; ++i){
 		totalFitness += organisms.at(i)->getFitness();
-		cerr << "fitness: " << organisms.at(i)->getFitness() << endl;
+		//cerr << "fitness: " << organisms.at(i)->getFitness() << endl;
 	}
 	fitnessAverage = totalFitness/(double)amountOfOrganism;
 
-	cerr << fitnessAverage << endl;
+	//cerr << fitnessAverage << endl;
 }
 void specie::deleteWorseOrganisms(){ // this is after of compute statistics, in other way is probably that deleteWorseOrganism() will fail
 	totalFitness=0.0;

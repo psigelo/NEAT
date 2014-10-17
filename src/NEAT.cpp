@@ -90,7 +90,6 @@ void population::assignSpecie(geneticEncoding & organism){
 
 */
 void population::epoch(){
-	
 	double expectativeOfPopulation;
 	discreteProbabilities sackOfProbabilities; 
 	geneticEncoding  * organismsRandomlyElected[3];
@@ -107,17 +106,19 @@ void population::epoch(){
 	
 	//while( rand()/(double)RAND_MAX < expectativeOfPopulation/(1 + expectativeOfPopulation) ){
 	for( int i = 0; i < expectativeOfPopulation ; i++){
-		getOrganismToRerpoduceRandomly(sackOfProbabilities, organismsRandomlyElected); 
+		getOrganismToRerpoduceRandomly(sackOfProbabilities, organismsRandomlyElected);
 		reproduce(organismsRandomlyElected);
 	}
 	speciate();
 	currenGeneration++;
 } 
+
 void population::eliminateWorseOrganism(){ 
 	int speciesAmount = listSpecies.size();
 	for (int i = 0; i < speciesAmount; ++i)
 		listSpecies.at(i).deleteWorseOrganisms();
 }
+
 void population::setOrganismProbabilities(discreteProbabilities & sackOfProbabilities){
 	uint speciesAmount = listSpecies.size();
 	double totalFitnessOfPopulation(0.0);
@@ -130,6 +131,7 @@ void population::setOrganismProbabilities(discreteProbabilities & sackOfProbabil
 		}
 	}
 }
+
 void population::getOrganismToRerpoduceRandomly(discreteProbabilities & sackOfProbabilities, geneticEncoding * parents[3]){
 	organismProbabilities father = sackOfProbabilities.getFatherRandomly();
 	parents[0] = listSpecies.at(father.specie).getPointerToOrganismAt(father.positionInSpecie);//father
@@ -150,27 +152,34 @@ void population::getOrganismToRerpoduceRandomly(discreteProbabilities & sackOfPr
 	sackOfProbabilities.repositioningOrganism(motherInterspecie);
 }
 void population::reproduce(geneticEncoding * parents[3]){
+	cerr << "reproduce 1" << endl;
 	geneticEncoding * child;
 	if( rand()/(double)RAND_MAX < informationForGenome.getProbabilityOfInterspecieMating() )
 		child = (*parents[0])*(*parents[2]); // where * is for crossover
 	else
 		child = (*parents[0])*(*parents[1]);
+	cerr << "reproduce 2" << endl;
 	if(rand()/(double)RAND_MAX < informationForGenome.getProbabilityOfMatingOnly()){ 
+		cerr << "reproduce 2.1" << endl;
 		newOrganisms.push_back(child);
 		return;
 	}
 	else{
+		cerr << "reproduce 2.2" << endl;
 		if( ((double)rand()/RAND_MAX) < informationForGenome.getProbabilityOfMutateNode()){
+			cerr << "reproduce 2.2.1" << endl;
 			child->mutateNode();	
 		}
 		if( ((double)rand()/RAND_MAX) < informationForGenome.getProbabilityOfMutateConnection()) {
+			cerr << "reproduce 2.2.2" << endl;
 			child->mutateConnection();
 		}
 		if( ((double)rand()/RAND_MAX) < informationForGenome.getProbabilityOfMutateFunction()) {
+			cerr << "reproduce 2.2.3" << endl;
 			child->mutateFunction();
 		}
 	}
-
+cerr << "reproduce 3" << endl;
 	newOrganisms.push_back(child);
 }
 void population::newYear(){

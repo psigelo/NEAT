@@ -73,7 +73,8 @@ namespace NEAT_USM{
 			void changeNode(nodeGene &);
 			void setSpecie(int niche);
 			int  getSpecie();
-
+			void printHumanReadable();
+			void printLayersOnly();
 			double getFitness();
 			void   setFitness(double fitness);
 
